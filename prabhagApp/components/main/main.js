@@ -45,7 +45,7 @@ export default class Main extends React.Component {
 
         <View style = {styles.header}>
           <Text style = {styles.headerText}>Shreyanagar Prabhag</Text>
-          <Animatable.View animation = "slideInRight" duration={500} style = {styles.searchBar}>
+          <Animatable.View animation = "slideInRight" duration={500} style = {styles.searchBar}> //Animation
             <Animatable.View animation={this.state.searchBarFocused ? "fadeInLeft" : "fadeInRight"} duration={400}>
               <Icon name={this.state.searchBarFocused ? "md-arrow-back" : "ios-search"} style={styles.searchIcon} />
             </Animatable.View>
