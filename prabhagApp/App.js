@@ -1,11 +1,10 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import Main from './components/main/main';
+import Routes from "./config/routes";
 
-export default class App extends React.Component {
-  render() {
-    return (
-      <Main />
-    );
-  }
+function App() {
+  return (
+    <Routes />
+  );
 }
+
+export default App
