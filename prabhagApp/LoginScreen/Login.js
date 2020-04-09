@@ -3,7 +3,6 @@ import {
     View,
     Text,
     Button,
-    SafeAreaView,
 } from "react-native";
 import { styles } from "./style";
 
