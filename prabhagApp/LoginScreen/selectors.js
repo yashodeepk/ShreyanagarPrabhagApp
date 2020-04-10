@@ -1,9 +1,8 @@
 import { createSelector } from 'reselect';
 
-const selectGlobal = state => state.get('login');
+const selectLoginDomain = state => state.get('login');
 
-export const fetchAppData = () =>
-  createSelector(
-    selectGlobal,
-    globalState => globalState.get('appData'),
-  );
+export const getMobileNumber = () => 
+createSelector(selectLoginDomain, subState => 
+  subState.get('mobileNumber')  
+)

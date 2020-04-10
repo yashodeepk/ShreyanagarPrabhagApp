@@ -1,18 +1,18 @@
 import { fromJS } from 'immutable';
 
 import {
-  INIT,
-} from './constants';
+  SET_MOBILE_NUMBER,
+} from './actions';
 
 const initialState = fromJS({
-  data : []
+  mobileNumber: '',
 });
 
 export default function appReducer(state = initialState, action) {
   const immutableData = fromJS(action.data);
   switch (action.type) {
-    case INIT: 
-      return state
+    case SET_MOBILE_NUMBER: 
+      return state.set('mobileNumber',immutableData)
     default:
       return state;
   }

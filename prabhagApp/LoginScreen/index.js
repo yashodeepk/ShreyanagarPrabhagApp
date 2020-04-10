@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TextInput,
 } from "react-native";
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import {
@@ -16,33 +17,53 @@ import injectReducer from '../utils/injectReducer';
 import Loader from '../utils/Loader';
 import reducer from './reducer';
 import saga from './saga';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import GradientButton from "../utils/GradientButton";
 import flagImage from "../assets/Flag_of_India.png";
+import { 
+  setMobileNumber
+} from "./actions";
+import { 
+  getMobileNumber,
+} from './selectors';
 
 
-function Login({ navigation }) {
+
+function Login({ 
+  navigation,
+  setMobileNumber,
+  mobileNumber,
+}) {
   return (
     <SafeAreaView style={styles.flex}>
       <View style={styles.container}>
         <View style={styles.centerView}>
-          <View style={styles.imgView}>
-              <Image 
-                source={flagImage}
-                resizeMode="center"
-                style={{
-                  width:20,
-                  height:20,
-                }}
-              />
-              <Text style={styles.textStyle}>+91</Text>
+            <View style={styles.imgView}>
+                <Image 
+                  source={flagImage}
+                  resizeMode="center"
+                  style={{
+                    width:20,
+                    height:20,
+                  }}
+                />
+                <Text style={styles.textStyle}>+91</Text>
             </View>
             <View style={styles.inputTextView}>
               <TextInput
-                  onChangeText={text => console.log('text is ', text)}
+                  onChangeText={text => setMobileNumber(text)}
                   keyboardType="numeric"
                   maxLength={10}
               />
             </View>
+           {
+             mobileNumber.length === 10 &&
+              <View style={styles.buttonStyle}>
+                  <GradientButton 
+                    title="Login" 
+                    // onPress={this.sendOTP} 
+                  />
+              </View>
+           }
         </View>
       </View>
     </SafeAreaView>
@@ -86,13 +107,19 @@ const styles = StyleSheet.create({
     flex: 1,
     padding:10,
     textAlign:'center'
+  },
+  buttonStyle:{
+      position:'relative',
+      top:150,
   }
 });
 
 const mapStateToProps = createStructuredSelectorCreator({
+  mobileNumber: getMobileNumber,
 });
 
 const mapDispatchToProps = {
+  setMobileNumber,
 };
 
 const withConnect = connect(
