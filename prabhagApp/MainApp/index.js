@@ -4,36 +4,52 @@ import { createStructuredSelector } from 'reselect';
 import connect from 'react-redux/es/connect/connect';
 import injectSaga from "../utils/injectSaga";
 import saga from './saga';
+import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Main from "../main/main";
 import Login from "../LoginScreen/index";
 import {
-  initAction,
-} from './actions';
+  fetchLoggedInUserData,
+} from './selectors';
 
 const MainStack = createStackNavigator();
 
-function MainApp(){
+const LoginStack = createStackNavigator();
+
+function MainApp({
+  userLoggedIn,
+}){
+  console.log(' userLoggedIn is ', userLoggedIn)
     return (
-            <MainStack.Navigator 
-                initialRouteName="Login"
-                headerMode="screen"
-            >
-                <MainStack.Screen 
-                    name="Login" 
-                    component={Login}
-                    options={{headerShown: false}}
-                />
-                <MainStack.Screen 
-                    name="Home" 
-                    component={Main} 
-                    options={{headerShown: false}}
-                />
-            </MainStack.Navigator>
+      <NavigationContainer>
+      {
+        userLoggedIn 
+        ? (
+          <MainStack.Navigator headerMode="screen">
+            <MainStack.Screen 
+                name="Home" 
+                component={Main} 
+                options={{headerShown: false}}
+            />
+          </MainStack.Navigator>
+        )
+        : (
+           <LoginStack.Navigator>
+              <LoginStack.Screen 
+                name="LoginApp"
+                component={Login}
+                options={{headerShown: false}}
+              />
+          </LoginStack.Navigator>
+        )
+      }
+      </NavigationContainer>
     )
 }
 
+
 const mapStateToProps = createStructuredSelector({
+  userLoggedIn : fetchLoggedInUserData()
 });
 
 const mapDispatchToProps = {

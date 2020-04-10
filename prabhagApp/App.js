@@ -10,9 +10,7 @@ const store = configureStore(initialState);
 function App() {
   return (
     <Provider store={store}>
-      <NavigationContainer>
         <MainApp />
-      </NavigationContainer>
     </Provider>
   );
 }

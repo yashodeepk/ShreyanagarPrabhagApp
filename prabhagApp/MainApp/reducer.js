@@ -1,18 +1,18 @@
 import { fromJS } from 'immutable';
 
 import {
-  INIT,
-} from './constants';
+  SET_USER_DETAILS,
+} from './actions';
 
 const initialState = fromJS({
-  data : []
+  loggedInUser: null,
 });
 
 export default function appReducer(state = initialState, action) {
   const immutableData = fromJS(action.data);
   switch (action.type) {
-    case INIT: 
-      return state
+    case SET_USER_DETAILS: 
+      return state.set('loggedInUser', immutableData)
     default:
       return state;
   }

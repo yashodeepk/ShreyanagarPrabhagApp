@@ -5,6 +5,9 @@ import {
 } from 'redux-saga/effects';
 import NetworkUtils from "../utils/NetworkUtils";
 import { 
+  setUserDetails,
+} from "../MainApp/actions";
+import { 
   LOGIN_ACTION,
   setMobileNumber,
   setLoginStatus,
@@ -20,9 +23,10 @@ export function* loginSaga({ data }) {
     yield put(setLoginStatus(true));
     const mobileNumber = yield select(getMobileNumber());
     const response = yield auth.get(`/${mobileNumber}`);
+    console.log('response.data is ', response.data)
     if (response.status === 200 || response.status === 201) {
         yield put(setMobileNumber(''))
-        data.navigate('Home')
+        yield put(setUserDetails(response.data))
     }
   } catch (error) {
     console.log('error in login ', error)
