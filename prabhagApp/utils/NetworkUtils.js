@@ -4,13 +4,13 @@ const baseURL = 'https://us-central1-todo-bca74.cloudfunctions.net/app'
 
 class NetworkUtils {
   static auth = axios.create({
-    baseURL: `${baseURL}/api/authphone/:phoneno`,
+    baseURL: `${baseURL}/api/authphone`,
   });
 }
 
-// NetworkUtils.auth.interceptors.request.use(
-//   request => (console.log({ request }), request),
-// );
+NetworkUtils.auth.interceptors.request.use(
+  request => (console.log({ request }), request),
+);
 
 export default NetworkUtils;
 

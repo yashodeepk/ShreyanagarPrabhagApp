@@ -1,4 +1,4 @@
-export const INIT = 'boilerplate/MainApp/INIT';
+export const INIT = 'boilerplate/LoginScreen/INIT';
 export function initAction(data) {
   return {
     type: INIT,
@@ -6,7 +6,7 @@ export function initAction(data) {
   };
 }
 
-export const SET_MOBILE_NUMBER = 'boilerplate/MainApp/SET_MOBILE_NUMBER';
+export const SET_MOBILE_NUMBER = 'boilerplate/LoginScreen/SET_MOBILE_NUMBER';
 export function setMobileNumber(data) {
   return {
     type: SET_MOBILE_NUMBER,
@@ -14,7 +14,7 @@ export function setMobileNumber(data) {
   };
 }
 
-export const LOGIN_ACTION = 'boilerplate/MainApp/LOGIN_ACTION';
+export const LOGIN_ACTION = 'boilerplate/LoginScreen/LOGIN_ACTION';
 export function loginAction(data) {
   return {
     type: LOGIN_ACTION,
@@ -22,7 +22,7 @@ export function loginAction(data) {
   };
 }
 
-export const LOGIN_STATUS_CALL_LOADER = 'boilerplate/MainApp/LOGIN_STATUS_CALL_LOADER';
+export const LOGIN_STATUS_CALL_LOADER = 'boilerplate/LoginScreen/LOGIN_STATUS_CALL_LOADER';
 export function setLoginStatus(data) {
   return {
     type: LOGIN_STATUS_CALL_LOADER,

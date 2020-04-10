@@ -36,7 +36,6 @@ function Login({
 }) {
 
   function sendLoginAction(){
-    console.log('hehhehe 12312312312 sendLoginAction')
     loginAction(navigation)
   }
   
