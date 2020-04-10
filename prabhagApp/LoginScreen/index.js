@@ -33,10 +33,15 @@ function Login({
   setMobileNumber,
   mobileNumber,
   loginAction,
+  loginStatusCallLoader,
 }) {
 
   function sendLoginAction(){
     loginAction(navigation)
+  }
+  
+  if (loginStatusCallLoader) {
+    return <Loader isLoading={loginStatusCallLoader} />;
   }
   
   return (
