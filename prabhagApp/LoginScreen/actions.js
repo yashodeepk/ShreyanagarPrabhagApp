@@ -14,4 +14,21 @@ export function setMobileNumber(data) {
   };
 }
 
+export const LOGIN_ACTION = 'boilerplate/MainApp/LOGIN_ACTION';
+export function loginAction(navigation) {
+  return {
+    type: LOGIN_ACTION,
+    navigation
+  };
+}
+
+export const LOGIN_STATUS_CALL_LOADER = 'boilerplate/MainApp/LOGIN_STATUS_CALL_LOADER';
+export function setLoginStatus(data) {
+  return {
+    type: LOGIN_STATUS_CALL_LOADER,
+    data,
+  };
+}
+
+
 

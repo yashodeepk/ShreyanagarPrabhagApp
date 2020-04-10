@@ -20,19 +20,31 @@ import saga from './saga';
 import GradientButton from "../utils/GradientButton";
 import flagImage from "../assets/Flag_of_India.png";
 import { 
-  setMobileNumber
+  setMobileNumber,
+  loginAction
 } from "./actions";
 import { 
   getMobileNumber,
+  loginStatusCallLoader,
 } from './selectors';
-
-
 
 function Login({ 
   navigation,
   setMobileNumber,
   mobileNumber,
+  loginAction,
+  loginStatusCallLoader,
 }) {
+
+  if (loginStatusCallLoader) {
+    return <Loader isLoading={loginStatusCallLoader} />;
+  }
+
+  function sendLoginAction(){
+    console.log('okya')
+    loginAction(navigation)
+  }
+  
   return (
     <SafeAreaView style={styles.flex}>
       <View style={styles.container}>
@@ -60,7 +72,7 @@ function Login({
               <View style={styles.buttonStyle}>
                   <GradientButton 
                     title="Login" 
-                    // onPress={this.sendOTP} 
+                    onPress={sendLoginAction} 
                   />
               </View>
            }
@@ -116,10 +128,12 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = createStructuredSelectorCreator({
   mobileNumber: getMobileNumber,
+  loginStatusCallLoader,
 });
 
 const mapDispatchToProps = {
   setMobileNumber,
+  loginAction,
 };
 
 const withConnect = connect(

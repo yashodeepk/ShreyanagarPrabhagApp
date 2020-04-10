@@ -27,6 +27,7 @@ function MainApp(){
                 <MainStack.Screen 
                     name="Home" 
                     component={Main} 
+                    options={{headerShown: false}}
                 />
             </MainStack.Navigator>
     )

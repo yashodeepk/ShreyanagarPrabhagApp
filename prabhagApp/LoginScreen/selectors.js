@@ -6,3 +6,8 @@ export const getMobileNumber = () =>
 createSelector(selectLoginDomain, subState => 
   subState.get('mobileNumber')  
 )
+
+export const loginStatusCallLoader = () => 
+  createSelector(selectLoginDomain, subState => 
+    subState.get('isLoginStatusLoading')  
+)
