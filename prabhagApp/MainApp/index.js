@@ -6,7 +6,7 @@ import injectSaga from "../utils/injectSaga";
 import saga from './saga';
 import { createStackNavigator } from '@react-navigation/stack';
 import Main from "../main/main";
-import Login from "../LoginScreen/Login";
+import Login from "../LoginScreen/index";
 import {
   initAction,
 } from './actions';

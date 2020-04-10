@@ -1,0 +1,1 @@
+export const INIT = 'boilerplate/MainApp/INIT';
