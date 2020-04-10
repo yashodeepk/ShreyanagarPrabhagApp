@@ -2,6 +2,7 @@ import {
   select,
   takeEvery,
 } from 'redux-saga/effects';
+import { Alert } from "react-native";
 import NetworkUtils from "../utils/NetworkUtils";
 import { 
   LOGIN_ACTION,
@@ -12,18 +13,18 @@ import {
 const { auth } = NetworkUtils
 
 
-export function* loginSaga({ navigation }) {
+export function* loginSaga({ data }) {
   try {
     const mobileNumber = yield select(getMobileNumber());
     // const response = yield auth.post('');
     console.log('mobile number in saga ', mobileNumber)
-    navigation.navigate('Home')
+    data.navigate('Home')
     // if (response.status === 200 || response.status === 201) {
     //     navigation.navigate('Home')
     // }
   } catch (error) {
     console.log('error in login ', error)
-    alert('something went wrong please try again')
+    Alert.alert('something went wrong please try again')
   }
 }
 

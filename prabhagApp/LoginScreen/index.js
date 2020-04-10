@@ -33,15 +33,10 @@ function Login({
   setMobileNumber,
   mobileNumber,
   loginAction,
-  loginStatusCallLoader,
 }) {
 
-  if (loginStatusCallLoader) {
-    return <Loader isLoading={loginStatusCallLoader} />;
-  }
-
   function sendLoginAction(){
-    console.log('okya')
+    console.log('hehhehe 12312312312 sendLoginAction')
     loginAction(navigation)
   }
   
@@ -67,16 +62,17 @@ function Login({
                   maxLength={10}
               />
             </View>
-           {
-             mobileNumber.length === 10 &&
-              <View style={styles.buttonStyle}>
+        </View>
+          {
+             mobileNumber.length === 10 && (
+                <View style={styles.buttonStyle}>
                   <GradientButton 
                     title="Login" 
                     onPress={sendLoginAction} 
                   />
-              </View>
+                </View>
+              )
            }
-        </View>
       </View>
     </SafeAreaView>
   )
@@ -121,8 +117,9 @@ const styles = StyleSheet.create({
     textAlign:'center'
   },
   buttonStyle:{
-      position:'relative',
-      top:150,
+      position:'absolute',
+      bottom:150,
+      right: 20,
   }
 });
 
