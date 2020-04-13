@@ -6,15 +6,23 @@ import injectSaga from "../utils/injectSaga";
 import saga from './saga';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { 
+  FontAwesome,
+  FontAwesome5
+} from 'react-native-vector-icons';
 import Main from "../main/main";
+import FeedScreen from "../FeedScreen";
+import SearchScreen from "../SearchScreen";
 import Login from "../LoginScreen/index";
 import {
   fetchLoggedInUserData,
 } from './selectors';
 
-const MainStack = createStackNavigator();
 
 const LoginStack = createStackNavigator();
+
+const MainStack = createBottomTabNavigator();
 
 function MainApp({
   userLoggedIn,
@@ -23,13 +31,36 @@ function MainApp({
     return (
       <NavigationContainer>
       {
-        userLoggedIn 
+        // userLoggedIn
+        true 
         ? (
-          <MainStack.Navigator headerMode="screen">
+          <MainStack.Navigator 
+            headerMode="screen"
+            tabBarOptions={{
+              activeTintColor: '#F7882F',
+            }}
+          >
             <MainStack.Screen 
-                name="Home" 
+                name="Search" 
                 component={Main} 
-                options={{headerShown: false}}
+                options={{
+                  // headerShown: false,
+                  tabBarLabel: 'Search',
+                  tabBarIcon: ({ color, size }) => (
+                    <FontAwesome name="search" color={color} size={size} />
+                  ),
+                }}
+            />
+            <MainStack.Screen 
+                name="Feed" 
+                component={SearchScreen} 
+                options={{
+                  headerShown: false,
+                  tabBarLabel: 'Fedd List',
+                  tabBarIcon: ({ color, size }) => (
+                    <FontAwesome5 name="list-alt" color={color} size={size} />
+                  ),
+                }}
             />
           </MainStack.Navigator>
         )

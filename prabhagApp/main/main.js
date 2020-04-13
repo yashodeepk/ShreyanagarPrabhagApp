@@ -6,9 +6,9 @@ import {
   TextInput,
   ScrollView,
   FlatList,
-  Keyboard
+  Keyboard,
   } from 'react-native';
-
+import { SafeAreaView } from 'react-native-safe-area-context';
 import * as Animatable from 'react-native-animatable';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -27,7 +27,7 @@ export default class Main extends React.Component {
 
 
   keyboardDidShow = () => {
-    this.setState({ searchBarFocused: true })
+    // this.setState({ searchBarFocused: true })
   } 
 
 
@@ -38,11 +38,9 @@ export default class Main extends React.Component {
   render() {
 
     return (
+      <SafeAreaView style={{flex:1,backgroundColor:'#F7882F'}}>
       <View style = {styles.container}>
-
-        <View style= {styles.statusBar}>
-        </View>
-
+        <View style= {styles.statusBar}></View>
         <View style = {styles.header}>
           <Text style = {styles.headerText}>Shreyanagar Prabhag</Text>
           <Animatable.View animation = "slideInRight" duration={500} style = {styles.searchBar}>
@@ -64,6 +62,7 @@ export default class Main extends React.Component {
         />
 
       </View>
+      </SafeAreaView>
     );
   }
 }
