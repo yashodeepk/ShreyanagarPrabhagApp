@@ -1,8 +1,11 @@
 import { createSelector } from 'reselect';
+import { initialState } from "./reducer";
 
-const selectFeedDomain = state => state.get('Feed');
+const selectSearchDomain = state =>
+  state.get('searchScreenKey', initialState);
 
-export const getMobileNumber = () => 
-createSelector(selectFeedDomain, subState => 
-  subState.get('data')  
-)
+export const getSearchTermData = () => 
+  createSelector(
+    selectSearchDomain, 
+    subState => subState.get('searchTermData')
+  )

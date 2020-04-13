@@ -4,27 +4,25 @@ import {
   put,
 } from 'redux-saga/effects';
 import NetworkUtils from "../utils/NetworkUtils";
-const { auth } = NetworkUtils
+const { searchUrl } = NetworkUtils
+import { 
+  SEARCH_TERM,
+  setSearchTermData,
+} from "./actions";
 
 
-export function* loginSaga({ data }) {
+export function* setSearchTermSaga({ data }) {
   try {
-    yield put(setLoginStatus(true));
-    const mobileNumber = yield select(getMobileNumber());
-    const response = yield auth.get(`/${mobileNumber}`);
-    console.log('response.data is ', response.data)
+    const response = yield searchUrl.get(`/${data}`);
     if (response.status === 200 || response.status === 201) {
-        yield put(setMobileNumber(''))
-        yield put(setUserDetails(response.data))
+        console.log('hehehe ', response.data)
+        yield put(setSearchTermData(response.data))
     }
   } catch (error) {
     console.log('error in login ', error)
-    alert('something went wrong please try again')
-  }finally{
-    yield put(setLoginStatus(false));
   }
 }
 
 export default function* fetchData() {
-  // yield takeEvery(LOGIN_ACTION, loginSaga);
+  yield takeEvery(SEARCH_TERM, setSearchTermSaga);
 }

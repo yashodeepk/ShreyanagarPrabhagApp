@@ -27,7 +27,6 @@ const MainStack = createBottomTabNavigator();
 function MainApp({
   userLoggedIn,
 }){
-  console.log(' userLoggedIn is ', userLoggedIn)
     return (
       <NavigationContainer>
       {
@@ -42,7 +41,7 @@ function MainApp({
           >
             <MainStack.Screen 
                 name="Search" 
-                component={Main} 
+                component={SearchScreen} 
                 options={{
                   // headerShown: false,
                   tabBarLabel: 'Search',
@@ -53,7 +52,7 @@ function MainApp({
             />
             <MainStack.Screen 
                 name="Feed" 
-                component={SearchScreen} 
+                component={FeedScreen} 
                 options={{
                   headerShown: false,
                   tabBarLabel: 'Fedd List',

@@ -22,8 +22,12 @@ import {
   FontAwesome,
   Entypo,
 } from 'react-native-vector-icons';
-import { searchData } from "../dummyData";
-import { FlatList } from "react-native-gesture-handler";
+import { 
+  searchTermAction,
+} from "./actions";
+import { 
+  getSearchTermData
+} from "./selectors";
 
 function logout() {
   Alert.alert(
@@ -42,7 +46,15 @@ function logout() {
 
 function SearchScreen({
   navigation,
+  searchTermAction,
+  searchTermDataFromSelector,
 }) {
+  function sendSearchTextToSaga(data){
+    if(data.length >= 3){
+      searchTermAction(data)
+    }
+  }
+  console.log('searchTermDataFromSelector is ', searchTermDataFromSelector)
   return (
     <SafeAreaView style={styles.safeAreaViewStyle}>
       <View style={styles.headerView}>
@@ -66,14 +78,13 @@ function SearchScreen({
             <TextInput
               style={styles.textInputStyle}
               placeholder="Search by name, occupation, blood-group"
+              onChangeText={sendSearchTextToSaga}
             />
           </View>
         </View>
       </View>
       <View style={styles.container}>
-        <FlatList 
-          
-        />
+        
       </View>
     </SafeAreaView>
   )
@@ -127,9 +138,11 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = createStructuredSelectorCreator({
+  searchTermDataFromSelector : getSearchTermData,
 });
 
 const mapDispatchToProps = {
+  searchTermAction,
 };
 
 const withConnect = connect(
@@ -137,8 +150,8 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const withReducer = injectReducer({ key: 'SearchScreen', reducer });
-const withSaga = injectSaga({ key: 'SearchScreen', saga });
+const withReducer = injectReducer({ key: 'searchScreenKey', reducer });
+const withSaga = injectSaga({ key: 'searchScreenKey', saga });
 
 export default compose(
   withReducer,

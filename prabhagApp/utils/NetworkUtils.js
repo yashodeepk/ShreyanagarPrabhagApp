@@ -6,6 +6,10 @@ class NetworkUtils {
   static auth = axios.create({
     baseURL: `${baseURL}/api/authphone`,
   });
+
+  static searchUrl = axios.create({
+    baseURL: `${baseURL}/api/readbyname`,
+  });
 }
 
 NetworkUtils.auth.interceptors.request.use(
