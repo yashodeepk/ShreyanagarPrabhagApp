@@ -22,12 +22,24 @@ import {
   FontAwesome,
   Entypo,
 } from 'react-native-vector-icons';
-import { 
+import {
   searchTermAction,
 } from "./actions";
-import { 
+import {
   getSearchTermData
 } from "./selectors";
+import searchNotFoundImg from "../assets/searchnotfound.png";
+
+
+// [
+//   Object {
+//     "bloodgroup": "B+",
+//     "id": "1",
+//     "mobileno": 8275861835,
+//     "name": "Yashodeep Ramesh Kacholiya",
+//     "occupation": "Software Engineer",
+//   },
+// ]
 
 function logout() {
   Alert.alert(
@@ -49,12 +61,22 @@ function SearchScreen({
   searchTermAction,
   searchTermDataFromSelector,
 }) {
-  function sendSearchTextToSaga(data){
-    if(data.length >= 3){
+  function sendSearchTextToSaga(data) {
+    if (data.length >= 3) {
       searchTermAction(data)
     }
   }
+
   console.log('searchTermDataFromSelector is ', searchTermDataFromSelector)
+
+  function renderItem() {
+    const list =  searchTermDataFromSelector.map(item => (
+        <Text>{item.name}</Text>
+    ))
+
+    return list
+  }
+  console.log('searchTermDataFromSelector ', searchTermDataFromSelector)
   return (
     <SafeAreaView style={styles.safeAreaViewStyle}>
       <View style={styles.headerView}>
@@ -84,17 +106,21 @@ function SearchScreen({
         </View>
       </View>
       <View style={styles.container}>
-        
+        {
+          searchTermDataFromSelector.length !== 0
+            ? searchTermDataFromSelector.map(item => <Text>{item.name}</Text>)
+            : <Text>Yo Man</Text>
+        }
       </View>
     </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
-  container: { 
-    flex: 1, 
-    justifyContent: 'center', 
-    alignItems: 'center', 
+  container: {
+    flex: 1,
+    // justifyContent: 'center',
+    // alignItems: 'center',
     backgroundColor: '#fff',
   },
   safeAreaViewStyle: {
@@ -135,10 +161,30 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     flex: 1,
   },
+  listContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    height: 40,
+    padding: 10,
+  },
+  listImgView: {
+    height: 40,
+    width: 40,
+    borderRadius: 40,
+    backgroundColor: 'rgb(204, 204, 204)',
+    marginRight: 10,
+  },
+  listDetails: {
+    flexDirection: 'column'
+  },
+  imageStyle: {
+    height: 40,
+    width: 40,
+  }
 });
 
 const mapStateToProps = createStructuredSelectorCreator({
-  searchTermDataFromSelector : getSearchTermData,
+  searchTermDataFromSelector: getSearchTermData,
 });
 
 const mapDispatchToProps = {
