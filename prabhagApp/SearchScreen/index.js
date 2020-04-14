@@ -1,4 +1,4 @@
-import React from "react";
+import React , { useState, useEffect }from "react";
 import {
   View,
   Text,
@@ -29,17 +29,8 @@ import {
   getSearchTermData
 } from "./selectors";
 import searchNotFoundImg from "../assets/searchnotfound.png";
-
-
-// [
-//   Object {
-//     "bloodgroup": "B+",
-//     "id": "1",
-//     "mobileno": 8275861835,
-//     "name": "Yashodeep Ramesh Kacholiya",
-//     "occupation": "Software Engineer",
-//   },
-// ]
+import womenImg from '../assets/womenImg.png'
+import menImg from '../assets/menImg.png'
 
 function logout() {
   Alert.alert(
@@ -56,27 +47,81 @@ function logout() {
   )
 }
 
+const dd = [
+    {
+      "bloodgroup": "B+",
+      "gender": "Male",
+      "id": "1",
+      "mobileno": 8275861835,
+      "name": "Yashodeep Ramesh Kacholiya",
+      "occupation": "Software Engineer",
+    }
+]
+
 function SearchScreen({
   navigation,
   searchTermAction,
   searchTermDataFromSelector,
 }) {
-  function sendSearchTextToSaga(data) {
+  const [searchData, setSearchData] = useState([])
+
+  useEffect(() => {
+    setSearchData(searchTermDataFromSelector.toJS())
+  },[searchTermDataFromSelector])
+
+  const sendSearchTextToSaga = (data) => {
     if (data.length >= 3) {
       searchTermAction(data)
     }
   }
 
-  console.log('searchTermDataFromSelector is ', searchTermDataFromSelector)
-
-  function renderItem() {
-    const list =  searchTermDataFromSelector.map(item => (
-        <Text>{item.name}</Text>
+  const renderItem = () => {
+    return dd.map(item => (
+      <View  
+      key={item.id}
+      style={{
+          flexDirection:'row',
+          height:70,
+          backgroundColor:'#fff',
+          elevation:5,
+          margin:10,
+          padding:10,
+        }}>
+        <Image 
+          style={{height:50,width:50,borderRadius:50}} 
+          source={
+            item.gender === "Male"
+            ? menImg
+            : womenImg
+          } 
+        />
+        <View style={{
+            flexDirection:'column',
+            justifyContent:'space-evenly',
+            marginLeft:10,
+            }}>
+          <Text>Name:- {item.name}</Text>
+          <Text>Occupation:- {item.occupation}</Text>
+        </View>
+        <View 
+          style={{
+            flex:1,
+            flexDirection:'row',
+            justifyContent:'flex-end',
+            alignItems:'center',
+          }}
+        >
+          <FontAwesome
+            style={styles.iconStyle}
+            name="chevron-right"
+            color={"#000"}
+            size={16}
+          />
+        </View>
+      </View>
     ))
-
-    return list
   }
-  console.log('searchTermDataFromSelector ', searchTermDataFromSelector)
+
   return (
     <SafeAreaView style={styles.safeAreaViewStyle}>
       <View style={styles.headerView}>
@@ -107,9 +152,16 @@ function SearchScreen({
       </View>
       <View style={styles.container}>
         {
-          searchTermDataFromSelector.length !== 0
-            ? searchTermDataFromSelector.map(item => <Text>{item.name}</Text>)
-            : <Text>Yo Man</Text>
+          // searchData.length
+          true
+            ? renderItem()
+            : <View style={styles.imgView}>
+                <Image 
+                  style={styles.imgStyle} 
+                  resizeMode="contain" 
+                  source={searchNotFoundImg} 
+                />
+              </View>
         }
       </View>
     </SafeAreaView>
@@ -117,10 +169,17 @@ function SearchScreen({
 }
 
 const styles = StyleSheet.create({
+  imgView:{
+    flex: 1,
+    justifyContent:'center',
+    alignItems: 'center',
+  },
+  imgStyle:{
+    width:300,
+    height:300,
+  },
   container: {
     flex: 1,
-    // justifyContent: 'center',
-    // alignItems: 'center',
     backgroundColor: '#fff',
   },
   safeAreaViewStyle: {
@@ -180,6 +239,9 @@ const styles = StyleSheet.create({
   imageStyle: {
     height: 40,
     width: 40,
+  },
+  textStyle:{
+    
   }
 });
 

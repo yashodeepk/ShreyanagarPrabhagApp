@@ -15,7 +15,6 @@ export function* setSearchTermSaga({ data }) {
   try {
     const response = yield searchUrl.get(`/${data}`);
     if (response.status === 200 || response.status === 201) {
-        console.log('hehehe ', response.data)
         yield put(setSearchTermData(response.data))
     }
   } catch (error) {
