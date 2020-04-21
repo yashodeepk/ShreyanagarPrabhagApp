@@ -30,8 +30,7 @@ function MainApp({
     return (
       <NavigationContainer>
       {
-        // userLoggedIn
-        true 
+        userLoggedIn
         ? (
           <MainStack.Navigator 
             initialRouteName="Feed"
