@@ -142,6 +142,7 @@ const styles = StyleSheet.create({
     position:'absolute',
     top:Dimensions.get('window').height * 0.1,
     left: Dimensions.get('window').width * 0.23,
+    margin:10,
   }
 });
 
