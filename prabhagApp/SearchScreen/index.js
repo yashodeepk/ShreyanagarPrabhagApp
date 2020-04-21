@@ -101,9 +101,7 @@ function SearchScreen({
   }, [searchTermDataFromSelector])
 
   const sendSearchTextToSaga = (data) => {
-    if (data.length >= 3) {
       searchTermAction(data)
-    }
   }
 
   const callNumber = phone => {

@@ -19,12 +19,15 @@ import {
 
 export function* setSearchTermSaga({ data }) {
   try {
+    yield put(setLoader(true))
     const response = yield searchUrl.get(`/${data}`);
     if (response.status === 200 || response.status === 201) {
         yield put(setSearchTermData(response.data))
     }
   } catch (error) {
     console.log('error in login ', error)
+  }finally {
+    yield put(setLoader(false))
   }
 }
 
