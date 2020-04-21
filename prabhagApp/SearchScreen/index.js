@@ -1,4 +1,4 @@
-import React , { useState, useEffect }from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -7,7 +7,7 @@ import {
   Alert,
   TextInput,
   TouchableOpacity,
-  Linking, 
+  Linking,
   Platform,
 } from "react-native";
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -34,6 +34,7 @@ import {
 import {
   getSearchTermData,
   getModalData,
+  getLoaderValue,
 } from "./selectors";
 import searchNotFoundImg from "../assets/searchnotfound.png";
 import womenImg from '../assets/womenImg.png'
@@ -55,14 +56,14 @@ function logout() {
 }
 
 const dd = [
-    {
-      "bloodgroup": "B+",
-      "gender": "Male",
-      "id": "1",
-      "mobileno": 8275861835,
-      "name": "Yashodeep Ramesh Kacholiya",
-      "occupation": "Software Engineer",
-    }
+  {
+    "bloodgroup": "B+",
+    "gender": "Male",
+    "id": "1",
+    "mobileno": 8275861835,
+    "name": "Yashodeep Ramesh Kacholiya",
+    "occupation": "Software Engineer",
+  }
 ]
 
 function SearchScreen({
@@ -72,20 +73,32 @@ function SearchScreen({
   modalData,
   getSingleUserData,
   setSingleUserDataNull,
+  loaderDataFromSaga,
 }) {
   const [searchData, setSearchData] = useState([])
   const [modalStatus, setModalStatus] = useState(false)
   const [singleUserData, setSingleUserData] = useState(null)
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
-    if(modalData){
+      setIsLoading(loaderDataFromSaga)
+  }, [loaderDataFromSaga])
+
+  useEffect(() => {
+    if (modalData) {
       setSingleUserData(modalData.toJS())
     }
-  },[modalData])
+  }, [modalData])
+
+  useEffect(() => {
+    if (modalData) {
+      setSingleUserData(modalData.toJS())
+    }
+  }, [modalData])
 
   useEffect(() => {
     setSearchData(searchTermDataFromSelector.toJS())
-  },[searchTermDataFromSelector])
+  }, [searchTermDataFromSelector])
 
   const sendSearchTextToSaga = (data) => {
     if (data.length >= 3) {
@@ -98,31 +111,31 @@ function SearchScreen({
     if (Platform.OS !== 'android') {
       phoneNumber = `telprompt:${phone}`;
     }
-    else  {
+    else {
       phoneNumber = `tel:${phone}`;
     }
     Linking.canOpenURL(phoneNumber)
-    .then(supported => {
-    if (!supported) {
-        Alert.alert('Phone number is not available');
-      } else {
-        return Linking.openURL(phoneNumber);
-    }
-    })
+      .then(supported => {
+        if (!supported) {
+          Alert.alert('Phone number is not available');
+        } else {
+          return Linking.openURL(phoneNumber);
+        }
+      })
       .catch(err => console.log(err));
-    };
+  };
 
   const renderModalData = (modalData) => {
     return (
       <View style={styles.flexOne}>
         <View style={styles.renderModalDataImage}>
-          <Image 
-            style={{height:50,width:50,borderRadius:50}} 
+          <Image
+            style={{ height: 50, width: 50, borderRadius: 50 }}
             source={
               modalData.Gender === "Male"
-              ? menImg
-              : womenImg
-            } 
+                ? menImg
+                : womenImg
+            }
           />
         </View>
         <View style={styles.renderModalTextView}>
@@ -131,8 +144,8 @@ function SearchScreen({
           <Text style={styles.renderModalText}>{`Occupation:- ${modalData.occupation} `}</Text>
           <Text style={styles.renderModalText}>{`Blood group:- ${modalData.bloodgroup}`} </Text>
           <Text style={styles.renderModalText}>{`Gender:- ${modalData.Gender}`}</Text>
-          <Text style={styles.renderModalText}>Mobile No:- 
-            <Text onPress={() => callNumber(modalData.mobileno)} style={{color: '#0198E1'}}>{` ${modalData.mobileno}`}</Text>
+          <Text style={styles.renderModalText}>Mobile No:-
+            <Text onPress={() => callNumber(modalData.mobileno)} style={{ color: '#0198E1' }}>{` ${modalData.mobileno}`}</Text>
           </Text>
         </View>
       </View>
@@ -141,42 +154,42 @@ function SearchScreen({
 
   const renderItem = () => {
     return searchData.map(item => (
-      <TouchableOpacity  
-      onPress={() => {
-        setModalStatus(true)
-        getSingleUserData(item.id)
-      }}
-      key={item.id}
-      style={{
-          flexDirection:'row',
-          height:70,
-          backgroundColor:'#fff',
-          elevation:5,
-          margin:10,
-          padding:10,
+      <TouchableOpacity
+        onPress={() => {
+          setModalStatus(true)
+          getSingleUserData(item.id)
+        }}
+        key={item.id}
+        style={{
+          flexDirection: 'row',
+          height: 70,
+          backgroundColor: '#fff',
+          elevation: 5,
+          margin: 10,
+          padding: 10,
         }}>
-        <Image 
-          style={{height:50,width:50,borderRadius:50}} 
+        <Image
+          style={{ height: 50, width: 50, borderRadius: 50 }}
           source={
             item.gender === "Male"
-            ? menImg
-            : womenImg
-          } 
+              ? menImg
+              : womenImg
+          }
         />
         <View style={{
-            flexDirection:'column',
-            justifyContent:'space-evenly',
-            marginLeft:10,
-            }}>
+          flexDirection: 'column',
+          justifyContent: 'space-evenly',
+          marginLeft: 10,
+        }}>
           <Text>Name:- {item.name}</Text>
           <Text>Occupation:- {item.occupation}</Text>
         </View>
-        <View 
+        <View
           style={{
-            flex:1,
-            flexDirection:'row',
-            justifyContent:'flex-end',
-            alignItems:'center',
+            flex: 1,
+            flexDirection: 'row',
+            justifyContent: 'flex-end',
+            alignItems: 'center',
           }}
         >
           <FontAwesome
@@ -219,38 +232,44 @@ function SearchScreen({
         </View>
       </View>
       <View style={styles.container}>
-          <Modal
-            visible={modalStatus}
-            onBackButtonPress={() => {
-              setSingleUserDataNull()
-              setModalStatus(false)
-            }}
-            onBackdropPress={() => {
-              setSingleUserDataNull()
-              setModalStatus(false)
-            }}
-            style={styles.modalContainer}
-          >
-            <View style={styles.modalInnerView}>
-              <View style={styles.modalStyle}>
-                {
-                  singleUserData 
-                  ? renderModalData(singleUserData)
-                  : <View style={{justifyContent:"center",flex:1,alignItems:'center'}}><Text>Something went wrong</Text></View>
-                }
-              </View>
-            </View>
-          </Modal>
         {
-          searchData.length
-            ? renderItem()
-            : <View style={styles.imgView}>
-                <Image 
-                  style={styles.imgStyle} 
-                  resizeMode="contain" 
-                  source={searchNotFoundImg} 
-                />
-              </View>
+          isLoading
+            ? <Loader isLoading={isLoading} />
+            : <>
+                <Modal
+                  visible={modalStatus}
+                  onBackButtonPress={() => {
+                    setSingleUserDataNull()
+                    setModalStatus(false)
+                  }}
+                  onBackdropPress={() => {
+                    setSingleUserDataNull()
+                    setModalStatus(false)
+                  }}
+                  style={styles.modalContainer}
+                >
+                  <View style={styles.modalInnerView}>
+                    <View style={styles.modalStyle}>
+                      {
+                        singleUserData
+                          ? renderModalData(singleUserData)
+                          : <View style={styles.errorText}><Text>Something went wrong</Text></View>
+                      }
+                    </View>
+                  </View>
+                </Modal>
+                {
+                  searchData.length
+                    ? renderItem()
+                    : <View style={styles.imgView}>
+                      <Image
+                        style={styles.imgStyle}
+                        resizeMode="contain"
+                        source={searchNotFoundImg}
+                      />
+                    </View>
+                }
+              </>
         }
       </View>
     </SafeAreaView>
@@ -258,15 +277,15 @@ function SearchScreen({
 }
 
 const styles = StyleSheet.create({
-  flexOne:{flex:1},
-  imgView:{
+  flexOne: { flex: 1 },
+  imgView: {
     flex: 1,
-    justifyContent:'center',
+    justifyContent: 'center',
     alignItems: 'center',
   },
-  imgStyle:{
-    width:300,
-    height:300,
+  imgStyle: {
+    width: 300,
+    height: 300,
   },
   container: {
     flex: 1,
@@ -330,43 +349,51 @@ const styles = StyleSheet.create({
     height: 40,
     width: 40,
   },
-  modalStyle:{
+  modalStyle: {
     backgroundColor: 'white',
     paddingHorizontal: 12,
     paddingBottom: 20,
     height: 350,
-    elevation:10,
-    borderRadius:5,
-    margin:20,
+    elevation: 10,
+    borderRadius: 5,
+    margin: 20,
   },
-  modalInnerView:{ 
-    justifyContent: 'center', 
+  modalInnerView: {
+    justifyContent: 'center',
     flex: 1,
   },
-  modalContainer:{ 
-    flex: 1, 
+  modalContainer: {
+    flex: 1,
     margin: 0,
-    backgroundColor:"rgba(0,0,0,0.1)",
+    backgroundColor: "rgba(0,0,0,0.1)",
   },
-  renderModalDataImage:{
-    alignItems:'center',
-    flex:0,
-    margin:10,
+  renderModalDataImage: {
+    alignItems: 'center',
+    flex: 0,
+    margin: 10,
   },
-  renderModalTextView:{
-    flex:0,
-    justifyContent:"center",
-    alignItems:'center',
-    margin:10,
+  renderModalTextView: {
+    flex: 0,
+    justifyContent: "center",
+    alignItems: 'center',
+    margin: 10,
   },
-  renderModalText:{
-    lineHeight:40,
+  renderModalText: {
+    lineHeight: 40,
   },
+  errorText:{ 
+    justifyContent: "center", 
+    flex: 1, 
+    alignItems: 'center',
+    fontWeight:"bold",
+    fontSize: 20,
+ }
 });
 
 const mapStateToProps = createStructuredSelectorCreator({
   searchTermDataFromSelector: getSearchTermData,
-  modalData : getModalData,
+  modalData: getModalData,
+  loaderDataFromSaga: getLoaderValue,
 });
 
 const mapDispatchToProps = {

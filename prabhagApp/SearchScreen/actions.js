@@ -1,7 +1,7 @@
-export const INIT = 'boilerplate/LoginScreen/INIT';
-export function initAction(data) {
+export const SET_LOADER = 'boilerplate/LoginScreen/SET_LOADER';
+export function setLoader(data) {
   return {
-    type: INIT,
+    type: SET_LOADER,
     data,
   };
 }

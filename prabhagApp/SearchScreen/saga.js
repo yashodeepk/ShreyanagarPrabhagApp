@@ -13,6 +13,7 @@ import {
   setSearchTermData,
   GET_SINGLE_USER_DATA,
   setSingleUserData,
+  setLoader,
 } from "./actions";
 
 
@@ -29,12 +30,15 @@ export function* setSearchTermSaga({ data }) {
 
 export function* getSingleUserDataSaga({ data }) {
   try {
+    yield put(setLoader(true))
     const response = yield userUrl.get(`/${data}`);
     if (response.status === 200 || response.status === 201) {
       yield put(setSingleUserData(response.data))
     }
   } catch (error) {
       console.log('error in getSingleUserDataSaga ', error)
+  } finally {
+    yield put(setLoader(false))
   }
 }
 

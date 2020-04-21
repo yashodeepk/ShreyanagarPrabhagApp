@@ -15,3 +15,9 @@ export const getModalData = () =>
     selectSearchDomain, 
     subState => subState.get('modalData')
   )
+
+  export const getLoaderValue = () => 
+  createSelector(
+    selectSearchDomain, 
+    subState => subState.get('loader')
+  )
