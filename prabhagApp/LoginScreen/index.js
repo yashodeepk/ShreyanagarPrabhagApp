@@ -5,6 +5,7 @@ import {
   Image,
   StyleSheet,
   TextInput,
+  Dimensions,
 } from "react-native";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { connect } from 'react-redux';
@@ -19,6 +20,7 @@ import reducer from './reducer';
 import saga from './saga';
 import GradientButton from "../utils/GradientButton";
 import flagImage from "../assets/Flag_of_India.png";
+import iconImage from "../assets/icon.png";
 import { 
   setMobileNumber,
   loginAction
@@ -46,6 +48,16 @@ function Login({
   
   return (
     <SafeAreaView style={styles.flex}>
+       <View style={styles.iconStyle}>
+          <Image 
+            source={iconImage}
+            resizeMode="center"
+            style={{
+              width:250,
+              height:250,
+            }}
+          />
+        </View>
       <View style={styles.container}>
         <View style={styles.centerView}>
             <View style={styles.imgView}>
@@ -90,6 +102,7 @@ const styles = StyleSheet.create({
   },
   flex:{
     flex:1,
+    backgroundColor:"#fff"
   },
   centerView:{
     width: '90%',
@@ -124,6 +137,11 @@ const styles = StyleSheet.create({
       position:'absolute',
       bottom:150,
       right: 20,
+  },
+  iconStyle: {
+    position:'absolute',
+    top:Dimensions.get('window').height * 0.1,
+    left: Dimensions.get('window').width * 0.23,
   }
 });
 
