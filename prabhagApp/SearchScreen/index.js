@@ -6,10 +6,14 @@ import {
   StyleSheet,
   Alert,
   TextInput,
+  TouchableOpacity,
+  Linking, 
+  Platform,
 } from "react-native";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import Modal from 'react-native-modal';
 import {
   createStructuredSelectorCreator,
 } from '../utils/commonFunctions';
@@ -24,9 +28,12 @@ import {
 } from 'react-native-vector-icons';
 import {
   searchTermAction,
+  getSingleUserData,
+  setSingleUserDataNull,
 } from "./actions";
 import {
-  getSearchTermData
+  getSearchTermData,
+  getModalData,
 } from "./selectors";
 import searchNotFoundImg from "../assets/searchnotfound.png";
 import womenImg from '../assets/womenImg.png'
@@ -62,8 +69,19 @@ function SearchScreen({
   navigation,
   searchTermAction,
   searchTermDataFromSelector,
+  modalData,
+  getSingleUserData,
+  setSingleUserDataNull,
 }) {
   const [searchData, setSearchData] = useState([])
+  const [modalStatus, setModalStatus] = useState(false)
+  const [singleUserData, setSingleUserData] = useState(null)
+
+  useEffect(() => {
+    if(modalData){
+      setSingleUserData(modalData.toJS())
+    }
+  },[modalData])
 
   useEffect(() => {
     setSearchData(searchTermDataFromSelector.toJS())
@@ -75,9 +93,59 @@ function SearchScreen({
     }
   }
 
+  const callNumber = phone => {
+    let phoneNumber = phone;
+    if (Platform.OS !== 'android') {
+      phoneNumber = `telprompt:${phone}`;
+    }
+    else  {
+      phoneNumber = `tel:${phone}`;
+    }
+    Linking.canOpenURL(phoneNumber)
+    .then(supported => {
+    if (!supported) {
+        Alert.alert('Phone number is not available');
+      } else {
+        return Linking.openURL(phoneNumber);
+    }
+    })
+      .catch(err => console.log(err));
+    };
+
+  const renderModalData = (modalData) => {
+    return (
+      <View style={styles.flexOne}>
+        <View style={styles.renderModalDataImage}>
+          <Image 
+            style={{height:50,width:50,borderRadius:50}} 
+            source={
+              modalData.Gender === "Male"
+              ? menImg
+              : womenImg
+            } 
+          />
+        </View>
+        <View style={styles.renderModalTextView}>
+          <Text style={styles.renderModalText}>{`Name:- ${modalData.name} `}</Text>
+          <Text style={styles.renderModalText}>{`Address:- ${modalData.Address}`} </Text>
+          <Text style={styles.renderModalText}>{`Occupation:- ${modalData.occupation} `}</Text>
+          <Text style={styles.renderModalText}>{`Blood group:- ${modalData.bloodgroup}`} </Text>
+          <Text style={styles.renderModalText}>{`Gender:- ${modalData.Gender}`}</Text>
+          <Text style={styles.renderModalText}>Mobile No:- 
+            <Text onPress={() => callNumber(modalData.mobileno)} style={{color: '#0198E1'}}>{` ${modalData.mobileno}`}</Text>
+          </Text>
+        </View>
+      </View>
+    )
+  }
+
   const renderItem = () => {
-    return dd.map(item => (
-      <View  
+    return searchData.map(item => (
+      <TouchableOpacity  
+      onPress={() => {
+        setModalStatus(true)
+        getSingleUserData(item.id)
+      }}
       key={item.id}
       style={{
           flexDirection:'row',
@@ -118,7 +186,7 @@ function SearchScreen({
             size={16}
           />
         </View>
-      </View>
+      </TouchableOpacity>
     ))
   }
 
@@ -151,9 +219,30 @@ function SearchScreen({
         </View>
       </View>
       <View style={styles.container}>
+          <Modal
+            visible={modalStatus}
+            onBackButtonPress={() => {
+              setSingleUserDataNull()
+              setModalStatus(false)
+            }}
+            onBackdropPress={() => {
+              setSingleUserDataNull()
+              setModalStatus(false)
+            }}
+            style={styles.modalContainer}
+          >
+            <View style={styles.modalInnerView}>
+              <View style={styles.modalStyle}>
+                {
+                  singleUserData 
+                  ? renderModalData(singleUserData)
+                  : <View style={{justifyContent:"center",flex:1,alignItems:'center'}}><Text>Something went wrong</Text></View>
+                }
+              </View>
+            </View>
+          </Modal>
         {
-          // searchData.length
-          true
+          searchData.length
             ? renderItem()
             : <View style={styles.imgView}>
                 <Image 
@@ -169,6 +258,7 @@ function SearchScreen({
 }
 
 const styles = StyleSheet.create({
+  flexOne:{flex:1},
   imgView:{
     flex: 1,
     justifyContent:'center',
@@ -240,17 +330,49 @@ const styles = StyleSheet.create({
     height: 40,
     width: 40,
   },
-  textStyle:{
-    
-  }
+  modalStyle:{
+    backgroundColor: 'white',
+    paddingHorizontal: 12,
+    paddingBottom: 20,
+    height: 350,
+    elevation:10,
+    borderRadius:5,
+    margin:20,
+  },
+  modalInnerView:{ 
+    justifyContent: 'center', 
+    flex: 1,
+  },
+  modalContainer:{ 
+    flex: 1, 
+    margin: 0,
+    backgroundColor:"rgba(0,0,0,0.1)",
+  },
+  renderModalDataImage:{
+    alignItems:'center',
+    flex:0,
+    margin:10,
+  },
+  renderModalTextView:{
+    flex:0,
+    justifyContent:"center",
+    alignItems:'center',
+    margin:10,
+  },
+  renderModalText:{
+    lineHeight:40,
+  },
 });
 
 const mapStateToProps = createStructuredSelectorCreator({
   searchTermDataFromSelector: getSearchTermData,
+  modalData : getModalData,
 });
 
 const mapDispatchToProps = {
   searchTermAction,
+  getSingleUserData,
+  setSingleUserDataNull,
 };
 
 const withConnect = connect(

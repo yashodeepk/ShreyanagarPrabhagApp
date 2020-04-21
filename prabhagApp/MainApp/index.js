@@ -34,32 +34,33 @@ function MainApp({
         true 
         ? (
           <MainStack.Navigator 
+            initialRouteName="Feed"
             headerMode="screen"
             tabBarOptions={{
               activeTintColor: '#F7882F',
             }}
           >
             <MainStack.Screen 
-                name="Search" 
-                component={SearchScreen} 
-                options={{
-                  // headerShown: false,
-                  tabBarLabel: 'Search',
-                  tabBarIcon: ({ color, size }) => (
-                    <FontAwesome name="search" color={color} size={size} />
-                  ),
-                }}
-            />
-            <MainStack.Screen 
                 name="Feed" 
                 component={FeedScreen} 
                 options={{
                   headerShown: false,
-                  tabBarLabel: 'Fedd List',
+                  tabBarLabel: 'Feed List',
                   tabBarIcon: ({ color, size }) => (
                     <FontAwesome5 name="list-alt" color={color} size={size} />
                   ),
                 }}
+            />
+            <MainStack.Screen 
+              name="Search" 
+              component={SearchScreen} 
+              options={{
+                // headerShown: false,
+                tabBarLabel: 'Search',
+                tabBarIcon: ({ color, size }) => (
+                  <FontAwesome name="search" color={color} size={size} />
+                ),
+              }}
             />
           </MainStack.Navigator>
         )

@@ -9,3 +9,9 @@ export const getSearchTermData = () =>
     selectSearchDomain, 
     subState => subState.get('searchTermData')
   )
+
+export const getModalData = () => 
+  createSelector(
+    selectSearchDomain, 
+    subState => subState.get('modalData')
+  )
