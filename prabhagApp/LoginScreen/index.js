@@ -1,4 +1,4 @@
-import React from "react";
+import React , { useState, useRef } from "react";
 import {
   View,
   Text,
@@ -29,6 +29,8 @@ import {
   getMobileNumber,
   loginStatusCallLoader,
 } from './selectors';
+import firebase from "../utils/firebase";
+import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
 
 function Login({ 
   navigation,
@@ -37,9 +39,25 @@ function Login({
   loginAction,
   loginStatusCallLoader,
 }) {
+  const recaptchaVerifier = useRef(null);
+  const [verificationId, setVerificationId] = useState(null);
+
+  const sendVerification = async() => {
+    try {
+      const phoneProvider = new firebase.auth.PhoneAuthProvider();
+      const verificationId = await phoneProvider.verifyPhoneNumber(`+91${mobileNumber}`,recaptchaVerifier.current);
+      setVerificationId(verificationId)
+    } catch (error) {
+      console.log('error in sendVerification', error)
+    }
+  };
+
+
+
 
   function sendLoginAction(){
-    loginAction(navigation)
+    // loginAction(navigation)
+    sendVerification()
   }
   
   if (loginStatusCallLoader) {
@@ -48,6 +66,10 @@ function Login({
   
   return (
     <SafeAreaView style={styles.flex}>
+       <FirebaseRecaptchaVerifierModal
+        ref={recaptchaVerifier}
+        firebaseConfig={firebase.app().options}
+      />
        <View style={styles.iconStyle}>
           <Image 
             source={iconImage}

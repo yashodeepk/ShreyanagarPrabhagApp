@@ -23,9 +23,9 @@ export function* loginSaga({ data }) {
     yield put(setLoginStatus(true));
     const mobileNumber = yield select(getMobileNumber());
     const response = yield auth.get(`/${mobileNumber}`);
-    console.log('response.data is ', response.data)
     if (response.status === 200 || response.status === 201) {
         yield put(setMobileNumber(''))
+        data.navigate("Home")
         yield put(setUserDetails(response.data))
     }
   } catch (error) {

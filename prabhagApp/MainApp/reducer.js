@@ -9,7 +9,7 @@ const initialState = fromJS({
 });
 
 export default function appReducer(state = initialState, action) {
-  const immutableData = fromJS(action.data);
+  const immutableData = action.data
   switch (action.type) {
     case SET_USER_DETAILS: 
       return state.set('loggedInUser', immutableData)
