@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   Linking,
   Platform,
+  FlatList,
 } from "react-native";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { connect } from 'react-redux';
@@ -160,8 +161,8 @@ function SearchScreen({
     logout(setLoginDetails,setUserDetails,setMobileNumber)
   }
 
-  const renderItem = () => {
-    return searchData.map(item => (
+  const renderItem = ({ item }) => {
+    return (
       <TouchableOpacity
         onPress={() => {
           setModalStatus(true)
@@ -175,6 +176,9 @@ function SearchScreen({
           elevation: 5,
           margin: 10,
           padding: 10,
+          borderColor: '#F7882F',
+          borderWidth: 1,
+          borderRadius: 10,
         }}>
         <Image
           style={{ height: 50, width: 50, borderRadius: 50 }}
@@ -203,12 +207,24 @@ function SearchScreen({
           <FontAwesome
             style={styles.iconStyle}
             name="chevron-right"
-            color={"#000"}
+            color={"#F7882F"}
             size={16}
           />
         </View>
       </TouchableOpacity>
-    ))
+    )
+  }
+
+  const renderEmptyListComponent = () => {
+    return (
+      <View style={styles.imgView}>
+        <Image
+          style={styles.imgStyle}
+          resizeMode="contain"
+          source={searchNotFoundImg}
+        />
+      </View>
+    )
   }
 
   return (
@@ -266,7 +282,7 @@ function SearchScreen({
                     </View>
                   </View>
                 </Modal>
-                {
+                {/* {
                   searchData.length
                     ? renderItem()
                     : <View style={styles.imgView}>
@@ -276,7 +292,13 @@ function SearchScreen({
                         source={searchNotFoundImg}
                       />
                     </View>
-                }
+                } */}
+                <FlatList 
+                  data={searchData}
+                  renderItem={renderItem}
+                  ListEmptyComponent={renderEmptyListComponent}
+                  extraData={[searchData]}
+                />
               </>
         }
       </View>
