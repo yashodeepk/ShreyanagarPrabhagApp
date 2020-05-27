@@ -282,17 +282,6 @@ function SearchScreen({
                     </View>
                   </View>
                 </Modal>
-                {/* {
-                  searchData.length
-                    ? renderItem()
-                    : <View style={styles.imgView}>
-                      <Image
-                        style={styles.imgStyle}
-                        resizeMode="contain"
-                        source={searchNotFoundImg}
-                      />
-                    </View>
-                } */}
                 <FlatList 
                   data={searchData}
                   renderItem={renderItem}
@@ -387,6 +376,9 @@ const styles = StyleSheet.create({
     elevation: 10,
     borderRadius: 5,
     margin: 20,
+    borderColor: '#F7882F',
+    borderWidth: 1,
+    borderRadius: 10,
   },
   modalInnerView: {
     justifyContent: 'center',
