@@ -25,6 +25,7 @@ import {
   setMobileNumber,
   loginAction
 } from "./actions";
+import { setVerificationId } from "../MainApp/actions";
 import { 
   getMobileNumber,
   loginStatusCallLoader,
@@ -40,24 +41,23 @@ function Login({
   loginStatusCallLoader,
 }) {
   const recaptchaVerifier = useRef(null);
-  const [verificationId, setVerificationId] = useState(null);
 
   const sendVerification = async() => {
     try {
+      const { navigate } = navigation
       const phoneProvider = new firebase.auth.PhoneAuthProvider();
       const verificationId = await phoneProvider.verifyPhoneNumber(`+91${mobileNumber}`,recaptchaVerifier.current);
       setVerificationId(verificationId)
+      console.log(' i am navigating to home screen')
+      // navigate("Home")
     } catch (error) {
       console.log('error in sendVerification', error)
     }
   };
 
-
-
-
   function sendLoginAction(){
-    // loginAction(navigation)
-    sendVerification()
+    loginAction({})
+    // sendVerification()
   }
   
   if (loginStatusCallLoader) {

@@ -25,7 +25,7 @@ export function* setSearchTermSaga({ data }) {
         yield put(setSearchTermData(response.data))
     }
   } catch (error) {
-    console.log('error in login ', error)
+    console.log('error in setSearchTermSaga ', error)
   }finally {
     yield put(setLoader(false))
   }

@@ -13,3 +13,11 @@ export function setUserDetails(data) {
     data,
   };
 }
+
+export const SET_USER_VERIFICATION_ID = 'boilerplate/MainApp/SET_USER_VERIFICATION_ID';
+export function setVerificationId(data) {
+  return {
+    type: SET_USER_VERIFICATION_ID,
+    data,
+  };
+}

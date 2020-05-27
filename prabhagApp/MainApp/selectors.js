@@ -7,3 +7,9 @@ export const fetchLoggedInUserData = () =>
     selectGlobal,
     globalState => globalState.get('loggedInUser'),
   );
+
+export const fetchVerificationId = () => 
+  createSelector(
+    selectGlobal,
+    globalState => globalState.get('verificationId')
+  );

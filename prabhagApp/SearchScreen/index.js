@@ -39,32 +39,26 @@ import {
 import searchNotFoundImg from "../assets/searchnotfound.png";
 import womenImg from '../assets/womenImg.png'
 import menImg from '../assets/menImg.png'
+import { setLoginDetails } from "../utils/asyncStorage";
+import { setUserDetails } from "../MainApp/actions";
 
-function logout() {
+function logout(setLoginDetails,setUserDetails,navigation) {
   Alert.alert(
     'Logout',
     'Are you sure that you want to logout?',
     [
       {
         text: 'Yes',
-        onPress: () => null,
+        onPress: () => {
+          setLoginDetails(null)
+          setUserDetails(null)
+        },
       },
       { text: 'No', onPress: () => null },
     ],
     { cancelable: false },
   )
 }
-
-const dd = [
-  {
-    "bloodgroup": "B+",
-    "gender": "Male",
-    "id": "1",
-    "mobileno": 8275861835,
-    "name": "Yashodeep Ramesh Kacholiya",
-    "occupation": "Software Engineer",
-  }
-]
 
 function SearchScreen({
   navigation,
@@ -74,6 +68,7 @@ function SearchScreen({
   getSingleUserData,
   setSingleUserDataNull,
   loaderDataFromSaga,
+  setUserDetails,
 }) {
   const [searchData, setSearchData] = useState([])
   const [modalStatus, setModalStatus] = useState(false)
@@ -150,6 +145,10 @@ function SearchScreen({
     )
   }
 
+  const onPressOfLogoutButton = () => {
+    logout(setLoginDetails,setUserDetails,navigation)
+  }
+
   const renderItem = () => {
     return searchData.map(item => (
       <TouchableOpacity
@@ -210,7 +209,7 @@ function SearchScreen({
             name="log-out"
             color={"#fff"}
             size={20}
-            onPress={logout}
+            onPress={onPressOfLogoutButton}
           />
         </View>
         <View style={styles.searchView}>
@@ -398,6 +397,7 @@ const mapDispatchToProps = {
   searchTermAction,
   getSingleUserData,
   setSingleUserDataNull,
+  setUserDetails,
 };
 
 const withConnect = connect(
