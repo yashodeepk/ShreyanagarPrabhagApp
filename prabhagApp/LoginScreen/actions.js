@@ -15,10 +15,9 @@ export function setMobileNumber(data) {
 }
 
 export const LOGIN_ACTION = 'boilerplate/LoginScreen/LOGIN_ACTION';
-export function loginAction(data) {
+export function loginAction() {
   return {
     type: LOGIN_ACTION,
-    data,
   };
 }
 

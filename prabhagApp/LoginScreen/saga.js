@@ -20,14 +20,12 @@ const { auth } = NetworkUtils
 import { setLoginDetails } from "../utils/asyncStorage";
 
 
-export function* loginSaga({ data }) {
+export function* loginSaga() {
   try {
     yield put(setLoginStatus(true));
     const mobileNumber = yield select(getMobileNumber());
     const response = yield auth.get(`/${mobileNumber}`);
     if (response.status === 200 || response.status === 201) {
-        // yield put(setMobileNumber(''))
-        // data.navigate("Home")
         const stringifyData = JSON.stringify(response.data)
         yield call(setLoginDetails,stringifyData)
         yield put(setUserDetails(response.data))

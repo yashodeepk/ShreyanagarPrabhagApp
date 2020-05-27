@@ -44,20 +44,18 @@ function Login({
 
   const sendVerification = async() => {
     try {
-      const { navigate } = navigation
       const phoneProvider = new firebase.auth.PhoneAuthProvider();
       const verificationId = await phoneProvider.verifyPhoneNumber(`+91${mobileNumber}`,recaptchaVerifier.current);
       setVerificationId(verificationId)
-      console.log(' i am navigating to home screen')
-      // navigate("Home")
+      loginAction()
     } catch (error) {
+      alert("Something went wrong please try again!!")
       console.log('error in sendVerification', error)
     }
   };
 
   function sendLoginAction(){
-    loginAction({})
-    // sendVerification()
+    sendVerification()
   }
   
   if (loginStatusCallLoader) {
