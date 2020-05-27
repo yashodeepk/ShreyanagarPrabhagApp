@@ -98,9 +98,17 @@ function SearchScreen({
     setSearchData(searchTermDataFromSelector.toJS())
   }, [searchTermDataFromSelector])
 
-  const sendSearchTextToSaga = (data) => {
-      searchTermAction(data)
+  const deBouncing = (callback,delay) => {
+    let timer
+    return function(searchTerm){
+      clearTimeout(timer)
+      timer = setTimeout(() => {
+        callback(searchTerm)
+      }, delay);
+    }
   }
+
+  const sendSearchTextToSaga = deBouncing(searchTermAction,500)
 
   const callNumber = phone => {
     let phoneNumber = phone;
