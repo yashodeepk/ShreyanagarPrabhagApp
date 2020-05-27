@@ -1,4 +1,4 @@
-import React , { useEffect } from 'react';
+import React , { useEffect, useState } from 'react';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import connect from 'react-redux/es/connect/connect';
@@ -11,8 +11,6 @@ import {
   FontAwesome,
   FontAwesome5
 } from 'react-native-vector-icons';
-import * as firebase from 'firebase';
-import Main from "../main/main";
 import FeedScreen from "../FeedScreen";
 import SearchScreen from "../SearchScreen";
 import Login from "../LoginScreen/index";
@@ -25,6 +23,8 @@ import {
 import { 
   setUserDetails,
 } from "./actions";
+import Loader from '../utils/Loader';
+
 
 const LoginStack = createStackNavigator();
 
@@ -34,17 +34,25 @@ function MainApp({
   userLoggedIn,
   setUserDetails,
 }){
+  const [loading,setLoading] = useState(true)
   useEffect(() => {
     async function getUserDetailFromAsyncStore() {
       try {
         const response = await getLoginDetails();
-        setUserDetails(response) 
+        setUserDetails(JSON.parse(response)) 
       } catch (error) {
-        setUserDetails(null) 
+        setUserDetails(null)
+      } finally{
+        setLoading(false)
       }
     }
     getUserDetailFromAsyncStore();
   },[])
+
+  if(loading){
+    return <Loader isLoading={loading} />;
+  }
+
     return (
       <NavigationContainer>
       {

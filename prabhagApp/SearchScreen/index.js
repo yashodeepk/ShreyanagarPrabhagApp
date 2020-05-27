@@ -41,8 +41,9 @@ import womenImg from '../assets/womenImg.png'
 import menImg from '../assets/menImg.png'
 import { setLoginDetails } from "../utils/asyncStorage";
 import { setUserDetails } from "../MainApp/actions";
+import { setMobileNumber } from '../LoginScreen/actions'
 
-function logout(setLoginDetails,setUserDetails,navigation) {
+function logout(setLoginDetails,setUserDetails,setMobileNumber) {
   Alert.alert(
     'Logout',
     'Are you sure that you want to logout?',
@@ -52,6 +53,7 @@ function logout(setLoginDetails,setUserDetails,navigation) {
         onPress: () => {
           setLoginDetails(null)
           setUserDetails(null)
+          setMobileNumber('')
         },
       },
       { text: 'No', onPress: () => null },
@@ -69,6 +71,7 @@ function SearchScreen({
   setSingleUserDataNull,
   loaderDataFromSaga,
   setUserDetails,
+  setMobileNumber,
 }) {
   const [searchData, setSearchData] = useState([])
   const [modalStatus, setModalStatus] = useState(false)
@@ -146,7 +149,7 @@ function SearchScreen({
   }
 
   const onPressOfLogoutButton = () => {
-    logout(setLoginDetails,setUserDetails,navigation)
+    logout(setLoginDetails,setUserDetails,setMobileNumber)
   }
 
   const renderItem = () => {
@@ -398,6 +401,7 @@ const mapDispatchToProps = {
   getSingleUserData,
   setSingleUserDataNull,
   setUserDetails,
+  setMobileNumber,
 };
 
 const withConnect = connect(

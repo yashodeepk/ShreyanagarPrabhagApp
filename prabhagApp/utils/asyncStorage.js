@@ -2,7 +2,7 @@ import { AsyncStorage } from "react-native";
 
 const { setItem, getItem } = AsyncStorage
 
-export async function setLoginDetails(value = null){
+export async function setLoginDetails(value){
     try {
         await setItem('loginDetail',value)
     } catch (error) {

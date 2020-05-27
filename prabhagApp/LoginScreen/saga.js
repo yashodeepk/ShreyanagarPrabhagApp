@@ -28,9 +28,9 @@ export function* loginSaga({ data }) {
     if (response.status === 200 || response.status === 201) {
         // yield put(setMobileNumber(''))
         // data.navigate("Home")
+        const stringifyData = JSON.stringify(response.data)
+        yield call(setLoginDetails,stringifyData)
         yield put(setUserDetails(response.data))
-        yield call(setLoginDetails(response.data))
-        // yield call(callback())
     }
   } catch (error) {
     console.log('error in login screen ', error)
