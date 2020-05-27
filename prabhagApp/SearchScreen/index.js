@@ -52,9 +52,10 @@ function logout(setLoginDetails,setUserDetails,setMobileNumber) {
       {
         text: 'Yes',
         onPress: () => {
-          setLoginDetails(null)
-          setUserDetails(null)
-          setMobileNumber('')
+          const emptyString = ''
+          setLoginDetails(emptyString)
+          setUserDetails(emptyString)
+          setMobileNumber(emptyString)
         },
       },
       { text: 'No', onPress: () => null },

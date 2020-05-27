@@ -6,8 +6,8 @@ import {
 } from './actions';
 
 const initialState = fromJS({
-  loggedInUser: null,
-  verificationId: null,
+  loggedInUser: "",
+  verificationId: "",
 });
 
 export default function appReducer(state = initialState, action) {
