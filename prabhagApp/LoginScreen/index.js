@@ -55,7 +55,8 @@ function Login({
   };
 
   function sendLoginAction(){
-    sendVerification()
+    // sendVerification()
+    navigation.navigate('Otp')
   }
   
   if (loginStatusCallLoader) {

@@ -24,6 +24,7 @@ import {
   setUserDetails,
 } from "./actions";
 import Loader from '../utils/Loader';
+import OtpScreen from "../OtpScreen/index";
 
 
 const LoginStack = createStackNavigator();
@@ -91,9 +92,14 @@ function MainApp({
         )
         : (
            <LoginStack.Navigator>
-              <LoginStack.Screen 
+              {/* <LoginStack.Screen 
                 name="LoginApp"
                 component={Login}
+                options={{headerShown: false}}
+              /> */}
+               <LoginStack.Screen 
+                name="Otp"
+                component={OtpScreen}
                 options={{headerShown: false}}
               />
           </LoginStack.Navigator>
