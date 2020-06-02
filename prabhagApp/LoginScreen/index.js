@@ -39,6 +39,7 @@ function Login({
   mobileNumber,
   loginAction,
   loginStatusCallLoader,
+  setVerificationId,
 }) {
   const recaptchaVerifier = useRef(null);
 
@@ -47,7 +48,7 @@ function Login({
       const phoneProvider = new firebase.auth.PhoneAuthProvider();
       const verificationId = await phoneProvider.verifyPhoneNumber(`+91${mobileNumber}`,recaptchaVerifier.current);
       setVerificationId(verificationId)
-      loginAction()
+      navigation.navigate('Otp')
     } catch (error) {
       alert("Something went wrong please try again!!")
       console.log('error in sendVerification', error)
@@ -55,8 +56,7 @@ function Login({
   };
 
   function sendLoginAction(){
-    // sendVerification()
-    navigation.navigate('Otp')
+    sendVerification()
   }
   
   if (loginStatusCallLoader) {
@@ -175,6 +175,7 @@ const mapStateToProps = createStructuredSelectorCreator({
 const mapDispatchToProps = {
   setMobileNumber,
   loginAction,
+  setVerificationId,
 };
 
 const withConnect = connect(

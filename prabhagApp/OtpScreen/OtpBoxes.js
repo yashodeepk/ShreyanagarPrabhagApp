@@ -132,10 +132,10 @@ export default class OtpBoxes extends Component {
           {/* <Bold14Brown>{sentOn}</Bold14Brown> */}
           <Text>{sentOn}</Text>
         </Text>
-        <TouchableOpacity onPress={resendOtp}>
-          {/* <Bold12Skyblue>Resend Code</Bold12Skyblue> */}
+        {/* <TouchableOpacity onPress={resendOtp}>
+          <Bold12Skyblue>Resend Code</Bold12Skyblue>
           <Text>Resend</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     );
   }

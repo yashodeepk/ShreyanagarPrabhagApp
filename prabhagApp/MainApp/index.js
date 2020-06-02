@@ -92,11 +92,11 @@ function MainApp({
         )
         : (
            <LoginStack.Navigator>
-              {/* <LoginStack.Screen 
+              <LoginStack.Screen 
                 name="LoginApp"
                 component={Login}
                 options={{headerShown: false}}
-              /> */}
+              />
                <LoginStack.Screen 
                 name="Otp"
                 component={OtpScreen}
