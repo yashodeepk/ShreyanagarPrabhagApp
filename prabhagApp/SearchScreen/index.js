@@ -79,16 +79,11 @@ function SearchScreen({
   const [modalStatus, setModalStatus] = useState(false)
   const [singleUserData, setSingleUserData] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
+  const [page , setPageNo] = useState(1)
 
   useEffect(() => {
       setIsLoading(loaderDataFromSaga)
   }, [loaderDataFromSaga])
-
-  useEffect(() => {
-    if (modalData) {
-      setSingleUserData(modalData.toJS())
-    }
-  }, [modalData])
 
   useEffect(() => {
     if (modalData) {
@@ -133,7 +128,7 @@ function SearchScreen({
 
   const renderModalData = (modalData) => {
     return (
-      <View style={styles.flexOne}>
+      <View style={[styles.flexOne,]}>
         <View style={styles.renderModalDataImage}>
           <Image
             style={{ height: 50, width: 50, borderRadius: 50 }}
@@ -172,30 +167,32 @@ function SearchScreen({
         key={item.id}
         style={{
           flexDirection: 'row',
-          height: 70,
+          height: 90,
           backgroundColor: '#fff',
           elevation: 5,
           margin: 10,
           padding: 10,
           borderColor: '#F7882F',
-          borderWidth: 1,
+          borderWidth: 0.5,
           borderRadius: 10,
         }}>
-        <Image
-          style={{ height: 50, width: 50, borderRadius: 50 }}
-          source={
-            item.gender === "Male"
-              ? menImg
-              : womenImg
-          }
-        />
+        <View style={{alignItems: 'center',justifyContent:'center'}}>
+          <Image
+            style={{ height: 50, width: 50, borderRadius: 50 }}
+            source={
+              item.Gender === "Male"
+                ? menImg
+                : womenImg
+            }
+          />
+        </View>
         <View style={{
           flexDirection: 'column',
           justifyContent: 'space-evenly',
           marginLeft: 10,
         }}>
-          <Text>Name:- {item.name}</Text>
-          <Text>Occupation:- {item.occupation}</Text>
+          <Text style={{fontSize:16,fontWeight:"500"}}>{item.name}</Text>
+          <Text style={{fontSize:14,fontWeight:"300"}}>{item.occupation}</Text>
         </View>
         <View
           style={{
@@ -278,7 +275,9 @@ function SearchScreen({
                       {
                         singleUserData
                           ? renderModalData(singleUserData)
-                          : <View style={styles.errorText}><Text>Something went wrong</Text></View>
+                          : <View style={styles.errorText}>
+                              <Text>Something went wrong</Text>
+                            </View>
                       }
                     </View>
                   </View>
@@ -288,6 +287,10 @@ function SearchScreen({
                   renderItem={renderItem}
                   ListEmptyComponent={renderEmptyListComponent}
                   extraData={[searchData]}
+                  // onEndReachedThreshold={0.5}
+                  // onEndReached={() => {
+                  //   searchTermAction()
+                  // }}
                 />
               </>
         }
@@ -297,7 +300,9 @@ function SearchScreen({
 }
 
 const styles = StyleSheet.create({
-  flexOne: { flex: 1 },
+  flexOne: { 
+    flex: 1 
+  },
   imgView: {
     flex: 1,
     justifyContent: 'center',
@@ -371,14 +376,13 @@ const styles = StyleSheet.create({
   },
   modalStyle: {
     backgroundColor: 'white',
-    paddingHorizontal: 12,
-    paddingBottom: 20,
+    padding:20,
     height: 350,
     elevation: 10,
     borderRadius: 5,
     margin: 20,
     borderColor: '#F7882F',
-    borderWidth: 1,
+    borderWidth: 0.5,
     borderRadius: 10,
   },
   modalInnerView: {
@@ -399,7 +403,6 @@ const styles = StyleSheet.create({
     flex: 0,
     justifyContent: "center",
     alignItems: 'center',
-    margin: 10,
   },
   renderModalText: {
     lineHeight: 40,
