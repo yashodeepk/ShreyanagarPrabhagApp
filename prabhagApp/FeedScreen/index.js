@@ -23,7 +23,8 @@ function FeedScreen({
   navigation,
 }) {
   return (
-    <SafeAreaView style={styles.flex}>
+    <SafeAreaView style={styles.safeAreaView}>
+      <View style={styles.headerView} />
       <View style={styles.container}>
         <Text>In Feed Screens</Text>
       </View>
@@ -36,9 +37,17 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#fff'
   },
-  flex:{
-    flex:1,
+  safeAreaView:{
+    flex: 1,
+    backgroundColor: '#F7882F',
+  },
+  headerView:{
+    height: 90,
+    backgroundColor: '#F7882F',
+    flex: 0,
+    justifyContent: 'flex-end',
   },
 });
 

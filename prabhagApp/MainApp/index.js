@@ -71,7 +71,7 @@ function MainApp({
                 name="Feed" 
                 component={FeedScreen} 
                 options={{
-                  headerShown: false,
+                  // headerShown: false,
                   tabBarLabel: 'Feed List',
                   tabBarIcon: ({ color, size }) => (
                     <FontAwesome5 name="list-alt" color={color} size={size} />

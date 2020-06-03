@@ -291,6 +291,7 @@ function SearchScreen({
                   // onEndReached={() => {
                   //   searchTermAction()
                   // }}
+                  contentContainerStyle={{ flexGrow: 1 }}
                 />
               </>
         }
