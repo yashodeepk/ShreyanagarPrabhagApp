@@ -9,7 +9,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { 
   FontAwesome,
-  FontAwesome5
+  FontAwesome5,
+  SimpleLineIcons,
 } from 'react-native-vector-icons';
 import FeedScreen from "../FeedScreen";
 import SearchScreen from "../SearchScreen";
@@ -25,6 +26,7 @@ import {
 } from "./actions";
 import Loader from '../utils/Loader';
 import OtpScreen from "../OtpScreen/index";
+import Profile from "../Profile/index";
 
 
 const LoginStack = createStackNavigator();
@@ -71,7 +73,7 @@ function MainApp({
                 name="Feed" 
                 component={FeedScreen} 
                 options={{
-                  // headerShown: false,
+                  headerShown: true,
                   tabBarLabel: 'Feed List',
                   tabBarIcon: ({ color, size }) => (
                     <FontAwesome5 name="list-alt" color={color} size={size} />
@@ -82,10 +84,19 @@ function MainApp({
               name="Search" 
               component={SearchScreen} 
               options={{
-                // headerShown: false,
                 tabBarLabel: 'Search',
                 tabBarIcon: ({ color, size }) => (
                   <FontAwesome name="search" color={color} size={size} />
+                ),
+              }}
+            />
+            <MainStack.Screen 
+              name="User" 
+              component={Profile} 
+              options={{
+                tabBarLabel: 'Profile',
+                tabBarIcon: ({ color, size }) => (
+                  <FontAwesome name="user" color={color} size={size} />
                 ),
               }}
             />
