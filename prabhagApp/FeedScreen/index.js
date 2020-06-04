@@ -5,6 +5,7 @@ import {
   Image,
   StyleSheet,
   TextInput,
+  TouchableOpacity,
 } from "react-native";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { connect } from 'react-redux';
@@ -19,6 +20,9 @@ import reducer from './reducer';
 import saga from './saga';
 import { FlatList } from "react-native-gesture-handler";
 import { DATA } from "./actions";
+import {
+  Entypo,
+} from 'react-native-vector-icons';
 
 function FeedScreen({ 
   navigation,
@@ -42,6 +46,28 @@ function FeedScreen({
           renderItem={renderItem}
         />
       </View>
+      <TouchableOpacity 
+      style={{
+          position:'absolute',
+          right:20,
+          bottom:20,
+          height:75,
+          width:75,
+          borderRadius:75,
+          elevation:5,
+          backgroundColor:'#000',
+          flex:1,
+          justifyContent:"center",
+          alignItems:'center',
+          }}
+        >
+          <Entypo
+            name="plus"
+            color={"#fff"}
+            size={35}
+            onPress={() => {}}
+          />
+      </TouchableOpacity>
     </SafeAreaView>
   )
 }
