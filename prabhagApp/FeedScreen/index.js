@@ -55,7 +55,7 @@ function FeedScreen({
           width:75,
           borderRadius:75,
           elevation:5,
-          backgroundColor:'#000',
+          backgroundColor:'#F7882F',
           flex:1,
           justifyContent:"center",
           alignItems:'center',
