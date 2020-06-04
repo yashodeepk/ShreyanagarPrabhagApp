@@ -15,6 +15,7 @@ import {
   setSingleUserData,
   setLoader,
   setTotalPageNo,
+  GET_DATA_FROM_SEARCH_TERM,
 } from "./actions";
 import { getSearchTermData } from "./selectors";
 
@@ -35,6 +36,22 @@ export function* setSearchTermSaga({ data }) {
   }
 }
 
+export function* getResultFromSearchTermSaga({ data }) {
+  try {
+    yield put(setLoader(true))
+    const response = yield searchUrl.get(`/${data.searchTerm}&${data.page}&${data.limit}`);
+    if (response.status === 200 || response.status === 201) {
+        yield put(setSearchTermData(response.data.response))
+        yield put(setTotalPageNo(response.data.pagedata.totalpages))
+    }
+  } catch (error) {
+    console.log('error in setSearchTermSaga ', error)
+  }finally {
+    yield put(setLoader(false))
+  }
+}
+
+
 export function* getSingleUserDataSaga({ data }) {
   try {
     yield put(setLoader(true))
@@ -53,4 +70,5 @@ export function* getSingleUserDataSaga({ data }) {
 export default function* fetchData() {
   yield takeEvery(SEARCH_TERM, setSearchTermSaga);
   yield takeEvery(GET_SINGLE_USER_DATA, getSingleUserDataSaga);
+  yield takeEvery(GET_DATA_FROM_SEARCH_TERM,getResultFromSearchTermSaga)
 }

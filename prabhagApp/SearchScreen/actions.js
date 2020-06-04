@@ -53,3 +53,11 @@ export function setTotalPageNo(data) {
     data,
   };
 }
+
+export const GET_DATA_FROM_SEARCH_TERM = 'boilerplate/LoginScreen/GET_DATA_FROM_SEARCH_TERM';
+export function getDataFromSearchTerm(data) {
+  return {
+    type: GET_DATA_FROM_SEARCH_TERM,
+    data,
+  };
+}

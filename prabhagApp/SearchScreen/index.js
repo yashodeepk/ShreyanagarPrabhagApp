@@ -31,6 +31,7 @@ import {
   searchTermAction,
   getSingleUserData,
   setSingleUserDataNull,
+  getDataFromSearchTerm,
 } from "./actions";
 import {
   getSearchTermData,
@@ -76,6 +77,7 @@ function SearchScreen({
   setUserDetails,
   setMobileNumber,
   totalPageNo,
+  getDataFromSearchTerm,
 }) {
   const [searchData, setSearchData] = useState([])
   const [modalStatus, setModalStatus] = useState(false)
@@ -116,7 +118,7 @@ function SearchScreen({
     }
   }
 
-  const sendSearchTextToSaga = deBouncing(searchTermAction,500)
+  const sendSearchTextToSaga = deBouncing(getDataFromSearchTerm,500)
 
   const callNumber = phone => {
     let phoneNumber = phone;
@@ -449,6 +451,7 @@ const mapDispatchToProps = {
   setSingleUserDataNull,
   setUserDetails,
   setMobileNumber,
+  getDataFromSearchTerm,
 };
 
 const withConnect = connect(
