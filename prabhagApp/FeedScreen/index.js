@@ -17,16 +17,30 @@ import injectReducer from '../utils/injectReducer';
 import Loader from '../utils/Loader';
 import reducer from './reducer';
 import saga from './saga';
-
+import { FlatList } from "react-native-gesture-handler";
+import { DATA } from "./actions";
 
 function FeedScreen({ 
   navigation,
 }) {
+  const renderItem = ({ item }) => {
+    return (
+      <View style={{margin:10}}>
+        <Image style={{height:250,width:'100%'}} source={{uri: item.imgUrl}} />
+        <Text style={{fontWeight:'bold',fontSize:18,marginTop:10}}>{item.title}</Text>
+      </View>
+    )
+  }
   return (
     <SafeAreaView style={styles.safeAreaView}>
-      <View style={styles.headerView} />
+      <View style={styles.headerView}>
+        <Text style={{fontSize: 30, color:"#fff"}}>I am Header</Text>
+      </View>
       <View style={styles.container}>
-        <Text>In Feed Screens</Text>
+        <FlatList 
+          data={DATA}
+          renderItem={renderItem}
+        />
       </View>
     </SafeAreaView>
   )
@@ -35,8 +49,6 @@ function FeedScreen({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: '#fff'
   },
   safeAreaView:{
@@ -46,8 +58,8 @@ const styles = StyleSheet.create({
   headerView:{
     height: 90,
     backgroundColor: '#F7882F',
-    flex: 0,
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
+    padding:20,
   },
 });
 
