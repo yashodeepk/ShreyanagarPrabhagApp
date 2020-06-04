@@ -16,8 +16,14 @@ export const getModalData = () =>
     subState => subState.get('modalData')
   )
 
-  export const getLoaderValue = () => 
+export const getLoaderValue = () => 
   createSelector(
     selectSearchDomain, 
     subState => subState.get('loader')
+  )
+
+export const getTotalPageNo = () => 
+  createSelector(
+    selectSearchDomain, 
+    subState => subState.get('totalPageNo')
   )

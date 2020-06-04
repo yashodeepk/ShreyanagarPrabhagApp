@@ -14,15 +14,19 @@ import {
   GET_SINGLE_USER_DATA,
   setSingleUserData,
   setLoader,
+  setTotalPageNo,
 } from "./actions";
+import { getSearchTermData } from "./selectors";
 
 
 export function* setSearchTermSaga({ data }) {
   try {
     yield put(setLoader(true))
-    const response = yield searchUrl.get(`/${data}`);
+    const response = yield searchUrl.get(`/${data.searchTerm}&${data.page}&${data.limit}`);
     if (response.status === 200 || response.status === 201) {
-        yield put(setSearchTermData(response.data))
+        const savedData = yield select(getSearchTermData())
+        yield put(setSearchTermData([...savedData,...response.data.response]))
+        yield put(setTotalPageNo(response.data.pagedata.totalpages))
     }
   } catch (error) {
     console.log('error in setSearchTermSaga ', error)

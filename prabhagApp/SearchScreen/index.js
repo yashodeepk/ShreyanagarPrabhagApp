@@ -36,6 +36,7 @@ import {
   getSearchTermData,
   getModalData,
   getLoaderValue,
+  getTotalPageNo,
 } from "./selectors";
 import searchNotFoundImg from "../assets/searchnotfound.png";
 import womenImg from '../assets/womenImg.png'
@@ -74,12 +75,19 @@ function SearchScreen({
   loaderDataFromSaga,
   setUserDetails,
   setMobileNumber,
+  totalPageNo,
 }) {
   const [searchData, setSearchData] = useState([])
   const [modalStatus, setModalStatus] = useState(false)
   const [singleUserData, setSingleUserData] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
   const [page , setPageNo] = useState(1)
+  const [savedSearchTerm, setSavedSearchTerm] = useState('null') // backend requirement null as string 
+
+  useEffect(() => {
+    const limit = 10
+    searchTermAction({searchTerm: savedSearchTerm,page,limit})
+  },[])
 
   useEffect(() => {
       setIsLoading(loaderDataFromSaga)
@@ -100,7 +108,10 @@ function SearchScreen({
     return function(searchTerm){
       clearTimeout(timer)
       timer = setTimeout(() => {
-        callback(searchTerm)
+        const page = 1
+        const limit = 10
+        callback({searchTerm,page,limit})
+        setSavedSearchTerm(searchTerm)
       }, delay);
     }
   }
@@ -225,6 +236,14 @@ function SearchScreen({
     )
   }
 
+  const onEndReached = () => {
+    if(totalPageNo !== page){
+      const limit = 10
+      searchTermAction({searchTerm: savedSearchTerm,page,limit})
+      setPageNo(page+1)   
+    }
+  }
+
   return (
     <SafeAreaView style={styles.safeAreaViewStyle}>
       <View style={styles.headerView}>
@@ -287,10 +306,8 @@ function SearchScreen({
                   renderItem={renderItem}
                   ListEmptyComponent={renderEmptyListComponent}
                   extraData={[searchData]}
-                  // onEndReachedThreshold={0.5}
-                  // onEndReached={() => {
-                  //   searchTermAction()
-                  // }}
+                  onEndReachedThreshold={0.1}
+                  onEndReached={onEndReached}
                   contentContainerStyle={{ flexGrow: 1 }}
                 />
               </>
@@ -407,6 +424,8 @@ const styles = StyleSheet.create({
   },
   renderModalText: {
     lineHeight: 40,
+    fontSize: 16,
+    fontWeight:'500',
   },
   errorText:{ 
     justifyContent: "center", 
@@ -421,6 +440,7 @@ const mapStateToProps = createStructuredSelectorCreator({
   searchTermDataFromSelector: getSearchTermData,
   modalData: getModalData,
   loaderDataFromSaga: getLoaderValue,
+  totalPageNo : getTotalPageNo,
 });
 
 const mapDispatchToProps = {

@@ -4,12 +4,14 @@ import {
   SET_SINGLE_USER_DATA,
   SET_SINGLE_USER_DATA_NULL,
   SET_LOADER,
+  SET_TOTAL_PAGE_NO,
 } from "./actions";
 
 export const initialState = fromJS({
   searchTermData : [],
   modalData : null,
   loader: false,
+  totalPageNo: null,
 });
 
 export default function appReducer(state = initialState, action) {
@@ -23,6 +25,8 @@ export default function appReducer(state = initialState, action) {
       return state.set('modalData',null)
     case SET_LOADER:
       return state.set('loader',immutableData)
+    case SET_TOTAL_PAGE_NO:
+      return state.set('totalPageNo',immutableData)
     default:
       return state;
   }

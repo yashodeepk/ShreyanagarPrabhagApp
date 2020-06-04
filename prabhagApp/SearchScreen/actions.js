@@ -45,3 +45,11 @@ export function setSingleUserDataNull(data) {
     data,
   };
 }
+
+export const SET_TOTAL_PAGE_NO = 'boilerplate/LoginScreen/SET_TOTAL_PAGE_NO';
+export function setTotalPageNo(data) {
+  return {
+    type: SET_TOTAL_PAGE_NO,
+    data,
+  };
+}
