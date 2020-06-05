@@ -38,8 +38,7 @@ function FeedScreen({
   return (
     <SafeAreaView style={styles.safeAreaView}>
       <View style={styles.headerView}>
-        <Text style={{fontSize: 30, color:"#fff"}}>I am Header</Text>
-        <Text style={{justifyContent:"flex-end"}}>V.No:- 0.0.1</Text>
+        <Text style={{fontSize: 30, color:"#fff"}}>V.No. 0.0.1</Text>
       </View>
       <View style={styles.container}>
         <FlatList 

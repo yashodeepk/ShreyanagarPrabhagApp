@@ -153,12 +153,12 @@ function SearchScreen({
           />
         </View>
         <View style={styles.renderModalTextView}>
-          <Text style={styles.renderModalText}>{`Name:- ${modalData.name} `}</Text>
-          <Text style={styles.renderModalText}>{`Address:- ${modalData.Address}`} </Text>
-          <Text style={styles.renderModalText}>{`Occupation:- ${modalData.occupation} `}</Text>
-          <Text style={styles.renderModalText}>{`Blood group:- ${modalData.bloodgroup}`} </Text>
-          <Text style={styles.renderModalText}>{`Gender:- ${modalData.Gender}`}</Text>
-          <Text style={styles.renderModalText}>Mobile No:-
+          <Text style={styles.renderModalText}>{`Name- ${modalData.name} `}</Text>
+          <Text style={styles.renderModalText}>{`Address- ${modalData.Address}`} </Text>
+          <Text style={styles.renderModalText}>{`Occupation- ${modalData.occupation} `}</Text>
+          <Text style={styles.renderModalText}>{`Blood group- ${modalData.bloodgroup}`} </Text>
+          <Text style={styles.renderModalText}>{`Gender- ${modalData.Gender}`}</Text>
+          <Text style={styles.renderModalText}>Mobile No-
             <Text onPress={() => callNumber(modalData.mobileno)} style={{ color: '#0198E1' }}>{` ${modalData.mobileno}`}</Text>
           </Text>
         </View>
@@ -426,7 +426,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   renderModalText: {
-    lineHeight: 40,
+    lineHeight: 20,
     fontSize: 16,
     fontWeight:'500',
   },
