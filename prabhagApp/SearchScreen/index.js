@@ -398,6 +398,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     padding:20,
     // height: 350,
+    minHeight: 350,
     elevation: 10,
     borderRadius: 5,
     margin: 20,
