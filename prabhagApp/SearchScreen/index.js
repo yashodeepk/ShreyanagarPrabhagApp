@@ -158,9 +158,11 @@ function SearchScreen({
           <Text style={styles.renderModalText}>{`Occupation - ${modalData.occupation} `}</Text>
           <Text style={styles.renderModalText}>{`Blood group - ${modalData.bloodgroup}`} </Text>
           <Text style={styles.renderModalText}>{`Gender- ${modalData.Gender}`}</Text>
-          <Text style={[styles.renderModalText,{marginBottom:10}]}>Mobile No -
-            <Text onPress={() => callNumber(modalData.mobileno)} style={{ color: '#0198E1' }}>{` ${modalData.mobileno}`}</Text>
-          </Text>
+          <View style={{marginBottom:20}}>
+            <Text style={[styles.renderModalText]}>Mobile No -
+              <Text onPress={() => callNumber(modalData.mobileno)} style={{ color: '#0198E1' }}>{` ${modalData.mobileno}`}</Text>
+            </Text>
+          </View>
         </View>
       </View>
     )
