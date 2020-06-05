@@ -425,7 +425,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   renderModalText: {
-    lineHeight: 40,
+    // lineHeight: 40,
     fontSize: 16,
     fontWeight:'500',
   },
