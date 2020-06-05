@@ -55,7 +55,6 @@ function MainApp({
   if(loading){
     return <Loader isLoading={loading} />;
   }
-
     return (
       <NavigationContainer>
       {

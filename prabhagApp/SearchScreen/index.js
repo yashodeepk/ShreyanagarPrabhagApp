@@ -397,7 +397,7 @@ const styles = StyleSheet.create({
   modalStyle: {
     backgroundColor: 'white',
     padding:20,
-    height: 350,
+    // height: 350,
     elevation: 10,
     borderRadius: 5,
     margin: 20,
@@ -426,10 +426,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   renderModalText: {
+    lineHeight: 40,
     fontSize: 14,
     fontWeight:'500',
-    marginTop:10,
-    marginBottom:10,
+    // marginTop:10,
+    // marginBottom:10,
   },
   errorText:{ 
     justifyContent: "center", 
