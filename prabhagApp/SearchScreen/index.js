@@ -399,7 +399,7 @@ const styles = StyleSheet.create({
   modalStyle: {
     backgroundColor: 'white',
     padding:20,
-    minHeight: 350,
+    minHeight: 375,
     elevation: 10,
     borderRadius: 5,
     margin: 20,
