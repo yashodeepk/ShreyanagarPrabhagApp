@@ -404,6 +404,7 @@ const styles = StyleSheet.create({
     borderColor: '#F7882F',
     borderWidth: 0.5,
     borderRadius: 10,
+    overflow:'scroll',
   },
   modalInnerView: {
     justifyContent: 'center',
@@ -425,7 +426,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   renderModalText: {
-    // lineHeight: 40,
+    lineHeight: 40,
     fontSize: 16,
     fontWeight:'500',
   },
