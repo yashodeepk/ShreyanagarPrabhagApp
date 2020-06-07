@@ -23,7 +23,12 @@ import { getSearchTermData } from "./selectors";
 export function* setSearchTermSaga({ data }) {
   try {
     yield put(setLoader(true))
-    const response = yield searchUrl.get(`/${data.searchTerm}&${data.page}&${data.limit}`);
+    const payload = {
+      pageNo: data.page,
+      limit: data.limit,
+      searchtext: data.searchTerm,
+    }
+    const response = yield searchUrl.post('',payload);
     if (response.status === 200 || response.status === 201) {
         const savedData = yield select(getSearchTermData())
         yield put(setSearchTermData([...savedData,...response.data.response]))
@@ -39,7 +44,12 @@ export function* setSearchTermSaga({ data }) {
 export function* getResultFromSearchTermSaga({ data }) {
   try {
     yield put(setLoader(true))
-    const response = yield searchUrl.get(`/${data.searchTerm}&${data.page}&${data.limit}`);
+    const payload = {
+      pageNo: data.page,
+      limit: data.limit,
+      searchtext: data.searchTerm,
+    }
+    const response = yield searchUrl.post('',payload);
     if (response.status === 200 || response.status === 201) {
         yield put(setSearchTermData(response.data.response))
         yield put(setTotalPageNo(response.data.pagedata.totalpages))

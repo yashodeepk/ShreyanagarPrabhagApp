@@ -84,7 +84,7 @@ function SearchScreen({
   const [singleUserData, setSingleUserData] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
   const [page , setPageNo] = useState(1)
-  const [savedSearchTerm, setSavedSearchTerm] = useState('null') // backend requirement null as string 
+  const [savedSearchTerm, setSavedSearchTerm] = useState('')
 
   useEffect(() => {
     const limit = 10
