@@ -6,6 +6,7 @@ import {
  Image,
  TextInput,
  ScrollView,
+ TouchableOpacity,
 } from "react-native";
 import { getLoginDetails } from "../utils/asyncStorage";
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -13,15 +14,27 @@ import { Entypo } from 'react-native-vector-icons';
 import womenImg from '../assets/womenImg.png'
 import menImg from '../assets/menImg.png'
 
-// edit
-// cross
+const EDITABLE_FIELDS_STRUCTURE = {
+    "Gender":false,
+    "address":false,
+    "bloodgroup":false,
+    "mobileno":false,
+    "name":false,
+    "occupation":false,
+}
+
 function Profile(){
     const [userData , setUserData] = useState(null)
+    const [editableFields, setEditableFields] = useState({...EDITABLE_FIELDS_STRUCTURE})
+    const [copyOfUserData, setCopyOfUserData] = useState({})
 
     useEffect(() => {
         async function fetchData() {
             const data = await getLoginDetails()
-            setUserData(JSON.parse(data))
+            const parsedData = JSON.parse(data)
+            parsedData.address = "KEY_NOT_AVAILABLE Please add address key"
+            setUserData(parsedData)
+            setCopyOfUserData(parsedData)
         }
         fetchData();
       }, []);
@@ -32,6 +45,37 @@ function Profile(){
                 <Text>Loading</Text>    
             </View>
         )
+    }
+
+    const onEdit = (key) => {
+        const copy = {...editableFields}
+        const copyForSettingOldValue = {...copyOfUserData}
+        const copyValueIntoUserData = {...userData}
+        copy[key] = !copy[key]
+        copyValueIntoUserData[key] = copyForSettingOldValue[key]
+        setEditableFields(copy)
+        setUserData(copyValueIntoUserData)
+    }
+
+    const onTextInputChange = (value,key) => { 
+        const copy = {...userData}
+        copy[key] = value
+        setUserData(copy)
+    }
+
+    const showButton = () => {
+        const {
+            Gender, 
+            address, 
+            bloodgroup,
+            mobileno,
+            name,
+            occupation
+        }  = editableFields 
+        if(Gender || address || bloodgroup || mobileno || name || occupation){
+            return true
+        }
+        return false
     }
 
     return (
@@ -48,33 +92,49 @@ function Profile(){
             </View>
            <ScrollView>
                 <View style={styles.flexDirRow}>
-                    <View style={styles.detailBox}>
+                    <View 
+                        style={ 
+                            editableFields.name 
+                                    ? styles.detailBoxEditable 
+                                    : styles.detailBoxNotEditable
+                              }
+                    >
                         <Text style={styles.textStyle}>
                             Name - 
                         </Text>
                         <TextInput 
                             style={styles.textInputStyle}
-                            editable={true}
-                            defaultValue={userData.name}
+                            editable={editableFields.name}
+                            value={userData.name}
+                            onChangeText={(value) => onTextInputChange(value,'name')}
                         />
                     </View>
-                    <View style={styles.editIcon}>
+                    <TouchableOpacity 
+                        style={styles.editIcon}
+                        onPress={() => onEdit('name')}
+                    >
                         <Entypo 
-                            name="edit"
+                            name={editableFields.name ? 'cross' : "edit"}
                             color={"#000"}
                             size={30}
                         />
-                    </View>
+                    </TouchableOpacity>
                 </View>
                 <View style={styles.flexDirRow}>
-                    <View style={styles.detailBox}>
+                    <View  
+                        style={ 
+                                editableFields.mobileno 
+                                        ? styles.detailBoxEditable 
+                                        : styles.detailBoxNotEditable
+                              }
+                    >
                         <Text style={styles.textStyle}>
                             Mobile No - 
                         </Text>
                         <TextInput 
                             style={styles.textInputStyle}
-                            editable={false}
-                            defaultValue={userData.name}
+                            editable={editableFields.mobileno}
+                            value={userData.mobileno}
                         />
                     </View>
                     <View style={styles.editIcon}>
@@ -86,14 +146,20 @@ function Profile(){
                     </View>
                 </View>
                 <View style={styles.flexDirRow}>
-                    <View style={styles.detailBox}>
+                    <View 
+                        style={ 
+                                editableFields.bloodgroup 
+                                        ? styles.detailBoxEditable 
+                                        : styles.detailBoxNotEditable
+                              }
+                    >
                         <Text style={styles.textStyle}>
                             BloodGroup - 
                         </Text>
                         <TextInput 
                             style={styles.textInputStyle}
-                            editable={false}
-                            defaultValue={userData.name}
+                            editable={editableFields.bloodgroup}
+                            value={userData.bloodgroup}
                         />
                     </View>
                     <View style={styles.editIcon}>
@@ -105,14 +171,20 @@ function Profile(){
                     </View>
                 </View>
                 <View style={styles.flexDirRow}>
-                    <View style={styles.detailBox}>
+                    <View 
+                        style={ 
+                                editableFields.occupation 
+                                        ? styles.detailBoxEditable 
+                                        : styles.detailBoxNotEditable
+                              }
+                    >
                         <Text style={styles.textStyle}>
                             Occupation - 
                         </Text>
                         <TextInput 
                             style={styles.textInputStyle}
-                            editable={false}
-                            defaultValue={userData.name}
+                            editable={editableFields.occupation}
+                            value={userData.occupation}
                         />
                     </View>
                     <View style={styles.editIcon}>
@@ -124,7 +196,38 @@ function Profile(){
                     </View>
                 </View>
                 <View style={styles.flexDirRow}>
-                    <View style={styles.detailAddBox}>
+                    <View 
+                        style={ 
+                                editableFields.Gender 
+                                        ? styles.detailBoxEditable 
+                                        : styles.detailBoxNotEditable
+                              }
+                    >
+                        <Text style={styles.textStyle}>
+                            Gender - 
+                        </Text>
+                        <TextInput 
+                            style={styles.textInputStyle}
+                            editable={editableFields.Gender}
+                            value={userData.Gender}
+                        />
+                    </View>
+                    <View style={styles.editIcon}>
+                        <Entypo 
+                            name="edit"
+                            color={"#000"}
+                            size={30}
+                        />
+                    </View>
+                </View>
+                <View style={styles.flexDirRow}>
+                    <View 
+                        style={ 
+                            editableFields.address
+                            ? styles.detailAddBoxEditable 
+                            :  styles.detailAddBoxNotEditable
+                        }
+                    >
                         <Text style={styles.textStyle}>
                             Address - 
                         </Text>
@@ -132,7 +235,8 @@ function Profile(){
                             style={styles.textInputForAddress}
                             multiline={true}
                             numberOfLines={4}
-                            editable={true}
+                            editable={editableFields.address}
+                            value={userData.address}
                         />
                     </View>
                     <View style={styles.editAddIcon}>
@@ -143,6 +247,12 @@ function Profile(){
                         />
                     </View>
                 </View>
+                {
+                    showButton() &&
+                    <TouchableOpacity style={{borderWidth:1,borderColor:'red',flex:1,justifyContent:'center',alignItems:'center',}}>
+                        <Text>I am button</Text>
+                    </TouchableOpacity>
+                }
            </ScrollView>
         </SafeAreaView>
     )
@@ -166,11 +276,22 @@ const styles = StyleSheet.create({
         borderWidth: 0.5,
         borderColor:'black',
     },
-    detailAddBox: {
+    detailAddBoxNotEditable: {
         height:100,
         borderWidth:1,
         borderColor:'black',
         backgroundColor:'#eee',
+        margin:10,
+        borderRadius:5,
+        flex: 0.9,
+        flexDirection:'row',
+        padding:10,
+    },
+    detailAddBoxEditable: {
+        height:100,
+        borderWidth:1,
+        borderColor:'black',
+        backgroundColor:'#fff',
         margin:10,
         borderRadius:5,
         flex: 0.9,
@@ -184,11 +305,23 @@ const styles = StyleSheet.create({
         alignItems:'center',
         flex:0.1,
     },
-    detailBox : {
+    detailBoxNotEditable : {
         height:55,
         borderWidth:1,
         borderColor:'black',
         backgroundColor:'#eee',
+        margin:10,
+        borderRadius:5,
+        alignItems:'center',
+        flex: 0.9,
+        flexDirection:'row',
+        padding:10,
+    },
+    detailBoxEditable : {
+        height:55,
+        borderWidth:1,
+        borderColor:'black',
+        backgroundColor:'#fff',
         margin:10,
         borderRadius:5,
         alignItems:'center',
