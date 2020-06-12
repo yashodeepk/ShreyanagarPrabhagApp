@@ -249,9 +249,13 @@ function Profile(){
                 </View>
                 {
                     showButton() &&
-                    <TouchableOpacity style={{borderWidth:1,borderColor:'red',flex:1,justifyContent:'center',alignItems:'center',}}>
-                        <Text>I am button</Text>
-                    </TouchableOpacity>
+                    <View style={styles.buttonView}>
+                        <TouchableOpacity 
+                            style={styles.buttonTouchableOpacity}
+                        >
+                            <Text style={styles.buttonText}>UPDATE</Text>
+                        </TouchableOpacity>
+                    </View>
                 }
            </ScrollView>
         </SafeAreaView>
@@ -259,6 +263,26 @@ function Profile(){
 }
 
 const styles = StyleSheet.create({
+    buttonText: {
+        color:'#fff',
+        fontWeight:'bold',
+        fontSize:16,
+    },
+    buttonTouchableOpacity: {
+        height: 65, 
+        width : 150, 
+        borderRadius: 10,
+        elevation:1,
+        backgroundColor:"#F7882F",
+        justifyContent:'center',
+        alignItems:'center',
+    },
+    buttonView: {
+        flex:1,
+        justifyContent:'center',
+        alignItems:'center',
+        marginTop: 25,
+    },
     flexOne:{
         flex:1,
         backgroundColor:'#fff'
