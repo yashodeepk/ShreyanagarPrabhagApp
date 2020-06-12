@@ -135,15 +135,17 @@ function Profile(){
                             style={styles.textInputStyle}
                             editable={editableFields.mobileno}
                             value={userData.mobileno}
+                            onChangeText={(value) => onTextInputChange(value,'mobileno')}
                         />
                     </View>
-                    <View style={styles.editIcon}>
+                    <TouchableOpacity style={styles.editIcon}>
                         <Entypo 
-                            name="edit"
+                            name={editableFields.mobileno ? 'cross' : "edit"}
                             color={"#000"}
                             size={30}
+                            onPress={() => onEdit('mobileno')}
                         />
-                    </View>
+                    </TouchableOpacity>
                 </View>
                 <View style={styles.flexDirRow}>
                     <View 
@@ -160,15 +162,17 @@ function Profile(){
                             style={styles.textInputStyle}
                             editable={editableFields.bloodgroup}
                             value={userData.bloodgroup}
+                            onChangeText={(value) => onTextInputChange(value,'bloodgroup')}
                         />
                     </View>
-                    <View style={styles.editIcon}>
+                    <TouchableOpacity style={styles.editIcon}>
                         <Entypo 
-                            name="edit"
+                             name={editableFields.bloodgroup ? 'cross' : "edit"}
                             color={"#000"}
                             size={30}
+                            onPress={() => onEdit('bloodgroup')}
                         />
-                    </View>
+                    </TouchableOpacity>
                 </View>
                 <View style={styles.flexDirRow}>
                     <View 
@@ -185,15 +189,17 @@ function Profile(){
                             style={styles.textInputStyle}
                             editable={editableFields.occupation}
                             value={userData.occupation}
+                            onChangeText={(value) => onTextInputChange(value,'occupation')}
                         />
                     </View>
-                    <View style={styles.editIcon}>
+                    <TouchableOpacity style={styles.editIcon}>
                         <Entypo 
-                            name="edit"
+                             name={editableFields.occupation ? 'cross' : "edit"}
                             color={"#000"}
                             size={30}
+                            onPress={() => onEdit('occupation')}
                         />
-                    </View>
+                    </TouchableOpacity>
                 </View>
                 <View style={styles.flexDirRow}>
                     <View 
@@ -210,15 +216,17 @@ function Profile(){
                             style={styles.textInputStyle}
                             editable={editableFields.Gender}
                             value={userData.Gender}
+                            onChangeText={(value) => onTextInputChange(value,'Gender')}
                         />
                     </View>
-                    <View style={styles.editIcon}>
+                    <TouchableOpacity style={styles.editIcon}>
                         <Entypo 
-                            name="edit"
+                             name={editableFields.Gender ? 'cross' : "edit"}
                             color={"#000"}
                             size={30}
+                            onPress={() => onEdit('Gender')}
                         />
-                    </View>
+                    </TouchableOpacity>
                 </View>
                 <View style={styles.flexDirRow}>
                     <View 
@@ -237,15 +245,17 @@ function Profile(){
                             numberOfLines={4}
                             editable={editableFields.address}
                             value={userData.address}
+                            onChangeText={(value) => onTextInputChange(value,'address')}
                         />
                     </View>
-                    <View style={styles.editAddIcon}>
+                    <TouchableOpacity style={styles.editAddIcon}>
                         <Entypo 
-                            name="edit"
+                            name={editableFields.address ? 'cross' : "edit"}
                             color={"#000"}
                             size={30}
+                            onPress={() => onEdit('address')}
                         />
-                    </View>
+                    </TouchableOpacity>
                 </View>
                 {
                     showButton() &&
