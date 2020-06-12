@@ -62,7 +62,7 @@ function MainApp({
         // true
         ? (
           <MainStack.Navigator 
-            initialRouteName="Feed"
+            initialRouteName="User"
             headerMode="screen"
             tabBarOptions={{
               activeTintColor: '#F7882F',
