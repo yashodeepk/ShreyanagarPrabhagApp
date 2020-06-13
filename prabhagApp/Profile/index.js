@@ -11,6 +11,20 @@ import {
 import { getLoginDetails } from "../utils/asyncStorage";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Entypo } from 'react-native-vector-icons';
+
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import injectSaga from '../utils/injectSaga';
+import injectReducer from '../utils/injectReducer';
+import reducer from './reducer';
+import saga from './saga';
+
+import { createStructuredSelectorCreator } from '../utils/commonFunctions';
+import { getLoaderValue } from "./selectors";
+import { updateUserProfile } from "./actions";
+import Loader from '../utils/Loader';
+import { styles } from './style';
+
 import womenImg from '../assets/womenImg.png'
 import menImg from '../assets/menImg.png'
 
@@ -23,7 +37,10 @@ const EDITABLE_FIELDS_STRUCTURE = {
     "occupation":false,
 }
 
-function Profile(){
+function Profile({
+    getLoaderValue,
+    updateUserProfile,
+}){
     const [userData , setUserData] = useState(null)
     const [editableFields, setEditableFields] = useState({...EDITABLE_FIELDS_STRUCTURE})
     const [copyOfUserData, setCopyOfUserData] = useState({})
@@ -39,11 +56,9 @@ function Profile(){
         fetchData();
       }, []);
 
-    if(!userData){
+    if(getLoaderValue || !userData){
         return (
-            <View style={styles.center}>
-                <Text>Loading</Text>    
-            </View>
+            <Loader isLoading={getLoaderValue} />
         )
     }
 
@@ -76,6 +91,11 @@ function Profile(){
             return true
         }
         return false
+    }
+
+    function onUpdateButtonPressed(){
+        console.log('userData is ', userData)
+        updateUserProfile(userData)
     }
 
     return (
@@ -136,6 +156,8 @@ function Profile(){
                             editable={editableFields.mobileno}
                             value={userData.mobileno}
                             onChangeText={(value) => onTextInputChange(value,'mobileno')}
+                            maxLength={10}
+                            keyboardType={'phone-pad'}
                         />
                     </View>
                     <TouchableOpacity style={styles.editIcon}>
@@ -262,6 +284,7 @@ function Profile(){
                     <View style={styles.buttonView}>
                         <TouchableOpacity 
                             style={styles.buttonTouchableOpacity}
+                            onPress={onUpdateButtonPressed}
                         >
                             <Text style={styles.buttonText}>UPDATE</Text>
                         </TouchableOpacity>
@@ -272,133 +295,26 @@ function Profile(){
     )
 }
 
-const styles = StyleSheet.create({
-    buttonText: {
-        color:'#fff',
-        fontWeight:'bold',
-        fontSize:16,
-    },
-    buttonTouchableOpacity: {
-        height: 65, 
-        width : 150, 
-        borderRadius: 10,
-        elevation:1,
-        backgroundColor:"#F7882F",
-        justifyContent:'center',
-        alignItems:'center',
-    },
-    buttonView: {
-        flex:1,
-        justifyContent:'center',
-        alignItems:'center',
-        marginTop: 25,
-    },
-    flexOne:{
-        flex:1,
-        backgroundColor:'#fff'
-    },
-    center:{
-        flex:1,
-        justifyContent:'center',
-        alignItems: 'center',
-    },
-    userImage : {
-        margin:10,
-        height: 100, 
-        width: 100, 
-        borderRadius: 100,
-        borderWidth: 0.5,
-        borderColor:'black',
-    },
-    detailAddBoxNotEditable: {
-        height:100,
-        borderWidth:1,
-        borderColor:'black',
-        backgroundColor:'#eee',
-        margin:10,
-        borderRadius:5,
-        flex: 0.9,
-        flexDirection:'row',
-        padding:10,
-    },
-    detailAddBoxEditable: {
-        height:100,
-        borderWidth:1,
-        borderColor:'black',
-        backgroundColor:'#fff',
-        margin:10,
-        borderRadius:5,
-        flex: 0.9,
-        flexDirection:'row',
-        padding:10,
-    },
-    editAddIcon: {
-        height:100,
-        margin:10,
-        justifyContent:'center',
-        alignItems:'center',
-        flex:0.1,
-    },
-    detailBoxNotEditable : {
-        height:55,
-        borderWidth:1,
-        borderColor:'black',
-        backgroundColor:'#eee',
-        margin:10,
-        borderRadius:5,
-        alignItems:'center',
-        flex: 0.9,
-        flexDirection:'row',
-        padding:10,
-    },
-    detailBoxEditable : {
-        height:55,
-        borderWidth:1,
-        borderColor:'black',
-        backgroundColor:'#fff',
-        margin:10,
-        borderRadius:5,
-        alignItems:'center',
-        flex: 0.9,
-        flexDirection:'row',
-        padding:10,
-    },
-    editIcon: {
-        height:55,
-        margin:10,
-        justifyContent:'center',
-        alignItems:'center',
-        flex:0.1,
-    },
-    textStyle : {
-        fontWeight:'bold',
-        fontSize:16,
-    },
-    alignItemsCenter: {
-        alignItems:'center'
-    },
-    flexDirColumn :{ 
-        flexDirection:'column',
-    },
-    flexDirRow:{
-        flexDirection:'row',
-    },
-    textInputStyle:{
-        fontSize:16,
-        flex:1,
-        height:50,
-        justifyContent:'center',
-        alignItems:'center',
-        paddingLeft:2,
-    },
-    textInputForAddress:{
-        fontSize:16,
-        paddingLeft:5,
-        flex:1,
-        textAlignVertical:'top',
-        paddingLeft:5,
-        paddingTop:2,
-    },
-})
 
-export default Profile
+const mapStateToProps = createStructuredSelectorCreator({
+    getLoaderValue
+});
+  
+const mapDispatchToProps = {
+    updateUserProfile,
+};
+
+const withConnect = connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  );
+  
+const withReducer = injectReducer({ key: 'profileScreenKey', reducer });
+const withSaga = injectSaga({ key: 'profileScreenKey', saga });
+
+export default compose(
+    withReducer,
+    withSaga,
+    withConnect,
+)(Profile)  
+

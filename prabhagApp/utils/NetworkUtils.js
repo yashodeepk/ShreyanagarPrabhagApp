@@ -14,6 +14,10 @@ class NetworkUtils {
   static userUrl = axios.create({
     baseURL: `${baseURL}/api/read`,
   })
+
+  static updateUrl = axios.create({
+    baseURL: `${baseURL}/api`
+  })
 }
 
 // NetworkUtils.auth.interceptors.request.use(
