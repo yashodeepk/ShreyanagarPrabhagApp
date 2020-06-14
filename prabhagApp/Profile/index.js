@@ -30,7 +30,7 @@ import menImg from '../assets/menImg.png'
 
 const EDITABLE_FIELDS_STRUCTURE = {
     "Gender":false,
-    "address":false,
+    "Address":false,
     "bloodgroup":false,
     "mobileno":false,
     "name":false,
@@ -49,7 +49,7 @@ function Profile({
         async function fetchData() {
             const data = await getLoginDetails()
             const parsedData = JSON.parse(data)
-            parsedData.address = "KEY_NOT_AVAILABLE Please add address key"
+            parsedData.Address = "KEY_NOT_AVAILABLE Please add Address key"
             setUserData(parsedData)
             setCopyOfUserData(parsedData)
         }
@@ -81,13 +81,13 @@ function Profile({
     const showButton = () => {
         const {
             Gender, 
-            address, 
+            Address, 
             bloodgroup,
             mobileno,
             name,
             occupation
         }  = editableFields 
-        if(Gender || address || bloodgroup || mobileno || name || occupation){
+        if(Gender || Address || bloodgroup || mobileno || name || occupation){
             return true
         }
         return false
@@ -253,7 +253,7 @@ function Profile({
                 <View style={styles.flexDirRow}>
                     <View 
                         style={ 
-                            editableFields.address
+                            editableFields.Address
                             ? styles.detailAddBoxEditable 
                             :  styles.detailAddBoxNotEditable
                         }
@@ -265,17 +265,17 @@ function Profile({
                             style={styles.textInputForAddress}
                             multiline={true}
                             numberOfLines={4}
-                            editable={editableFields.address}
-                            value={userData.address}
-                            onChangeText={(value) => onTextInputChange(value,'address')}
+                            editable={editableFields.Address}
+                            value={userData.Address}
+                            onChangeText={(value) => onTextInputChange(value,'Address')}
                         />
                     </View>
                     <TouchableOpacity style={styles.editAddIcon}>
                         <Entypo 
-                            name={editableFields.address ? 'cross' : "edit"}
+                            name={editableFields.Address ? 'cross' : "edit"}
                             color={"#000"}
                             size={30}
-                            onPress={() => onEdit('address')}
+                            onPress={() => onEdit('Address')}
                         />
                     </TouchableOpacity>
                 </View>
