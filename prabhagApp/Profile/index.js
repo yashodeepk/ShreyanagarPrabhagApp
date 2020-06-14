@@ -94,7 +94,6 @@ function Profile({
     }
 
     function onUpdateButtonPressed(){
-        console.log('userData is ', userData)
         updateUserProfile(userData)
     }
 
@@ -154,7 +153,7 @@ function Profile({
                         <TextInput 
                             style={styles.textInputStyle}
                             editable={editableFields.mobileno}
-                            value={userData.mobileno}
+                            value={String(userData.mobileno)}
                             onChangeText={(value) => onTextInputChange(value,'mobileno')}
                             maxLength={10}
                             keyboardType={'phone-pad'}
