@@ -1,5 +1,10 @@
 import React from "react";
-import { View } from "react-native";
+import { 
+    View,
+    Image,
+    StyleSheet,
+    Text,
+} from "react-native";
 import OtpBoxes from './OtpBoxes'
 import { connect } from 'react-redux';
 import { createStructuredSelectorCreator } from '../utils/commonFunctions';
@@ -12,6 +17,7 @@ import { fetchVerificationId } from "../MainApp/selectors";
 import { loginAction } from "../LoginScreen/actions";
 import Loader from '../utils/Loader';
 import firebase from "../utils/firebase";
+import iconImage from "../assets/icon.png";
 
 function OtpScreen({
     navigation,
@@ -42,15 +48,54 @@ function OtpScreen({
     }
 
     return (
-        <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
-            <OtpBoxes 
-                sentOn={mobileNumber}
-                resendOtp={() => console.log('hehehe')}
-                checkOtp={onOtpCheck}
-            />
+        <View style={styles.mainContainer}>
+            <View style={styles.imgView}>
+                <Image 
+                    source={iconImage}
+                    resizeMode="contain"
+                    style={styles.imgStyle}
+                />
+            </View>
+            <View>
+                <OtpBoxes 
+                    sentOn={mobileNumber}
+                    resendOtp={() => console.log('hehehe')}
+                    checkOtp={onOtpCheck}
+                />
+            </View>
+            <View style={styles.textView}>
+                <Text style={styles.textStyle}>{`Please Enter the OTP `}</Text>
+                <Text style={styles.textStyle}>{`Sent on ${mobileNumber}`}</Text>
+            </View>
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    mainContainer: {
+        flex: 1,
+        backgroundColor:'#fff',
+        alignItems:'center',
+        justifyContent:"center",
+    },
+    imgStyle : {
+        width: '100%',
+        height: '100%',
+    },
+    textView: {
+        margin: 40,
+    },
+    textStyle : {
+        fontSize: 15,
+        fontFamily:'Rubik-Bold',
+        textAlign:"center",
+    },
+    imgView: {
+        height:150,
+        width:150,
+    },
+
+})
 
 const mapStateToProps = createStructuredSelectorCreator({
     mobileNumber: getMobileNumber,

@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 
-const WHITE234_COLOR = '#fff'
+const WHITE234_COLOR = '#E0E0E0'
 
 export default class OtpBoxes extends Component {
   constructor(props) {
@@ -121,21 +121,11 @@ export default class OtpBoxes extends Component {
   };
 
   render() {
-    let { type, heading, sentOn, resendOtp, checkOtp } = this.props;
+    let { heading } = this.props;
     return (
       <View>
         <Text style={{ marginBottom: 10 }}>{heading}</Text>
         <View style={{ flexDirection: 'row' }}>{this.renderOtpBoxes()}</View>
-        <Text style={{ marginTop: 10, marginBottom: 6 }}>
-          {/* <Regular14Brown>Sent on </Regular14Brown> */}
-          <Text>Sent on</Text>
-          {/* <Bold14Brown>{sentOn}</Bold14Brown> */}
-          <Text>{sentOn}</Text>
-        </Text>
-        {/* <TouchableOpacity onPress={resendOtp}>
-          <Bold12Skyblue>Resend Code</Bold12Skyblue>
-          <Text>Resend</Text>
-        </TouchableOpacity> */}
       </View>
     );
   }
@@ -143,8 +133,6 @@ export default class OtpBoxes extends Component {
 
 const styles = StyleSheet.create({
   OtpBox: {
-    // fontSize:30,
-    // color:"rgb(20,20,20)",
     width: 55,
     height: 55,
     borderRadius: 6,
@@ -154,7 +142,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   OtpBoxDefault: {
-    backgroundColor: 'white',
+    backgroundColor: '#F5F5F5',
   },
   OtpBoxEmpty: {
     backgroundColor: 'red',
