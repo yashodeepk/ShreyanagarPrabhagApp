@@ -5,6 +5,8 @@ import {
   SET_SINGLE_USER_DATA_NULL,
   SET_LOADER,
   SET_TOTAL_PAGE_NO,
+  SET_MODAL_STATUS,
+  SET_MODAL_INDICATOR,
 } from "./actions";
 
 export const initialState = fromJS({
@@ -12,6 +14,8 @@ export const initialState = fromJS({
   modalData : null,
   loader: false,
   totalPageNo: null,
+  modalStatus: false,
+  setModalIndicator : false,
 });
 
 export default function appReducer(state = initialState, action) {
@@ -27,6 +31,10 @@ export default function appReducer(state = initialState, action) {
       return state.set('loader',immutableData)
     case SET_TOTAL_PAGE_NO:
       return state.set('totalPageNo',immutableData)
+    case SET_MODAL_STATUS:
+      return state.set('modalStatus',immutableData)
+    case SET_MODAL_INDICATOR: 
+      return state.set('setModalIndicator',immutableData)
     default:
       return state;
   }

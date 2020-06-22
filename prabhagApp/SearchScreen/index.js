@@ -32,12 +32,15 @@ import {
   getSingleUserData,
   setSingleUserDataNull,
   getDataFromSearchTerm,
+  setModalStatus,
 } from "./actions";
 import {
   getSearchTermData,
   getModalData,
   getLoaderValue,
   getTotalPageNo,
+  getModalStatus,
+  getModalIndicatorStatus,
 } from "./selectors";
 import searchNotFoundImg from "../assets/searchnotfound.png";
 import womenImg from '../assets/womenImg.png'
@@ -78,32 +81,27 @@ function SearchScreen({
   setMobileNumber,
   totalPageNo,
   getDataFromSearchTerm,
+  modalStatus,
+  setModalStatus,
+  modalIndicator,
 }) {
-  const [searchData, setSearchData] = useState([])
-  const [modalStatus, setModalStatus] = useState(false)
-  const [singleUserData, setSingleUserData] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
   const [page , setPageNo] = useState(1)
   const [savedSearchTerm, setSavedSearchTerm] = useState('')
 
+  //load data default
   useEffect(() => {
-    const limit = 10
-    searchTermAction({searchTerm: savedSearchTerm,page,limit})
+    const data = {
+      limit : 10,
+      page : 1, 
+      searchTerm: "",
+    }
+    getDataFromSearchTerm(data)
   },[])
 
   useEffect(() => {
       setIsLoading(loaderDataFromSaga)
   }, [loaderDataFromSaga])
-
-  useEffect(() => {
-    if (modalData) {
-      setSingleUserData(modalData.toJS())
-    }
-  }, [modalData])
-
-  useEffect(() => {
-    setSearchData(searchTermDataFromSelector.toJS())
-  }, [searchTermDataFromSelector])
 
   const deBouncing = (callback,delay) => {
     let timer
@@ -112,6 +110,7 @@ function SearchScreen({
       timer = setTimeout(() => {
         const page = 1
         const limit = 10
+        setPageNo(page)
         callback({searchTerm,page,limit})
         setSavedSearchTerm(searchTerm)
       }, delay);
@@ -153,16 +152,33 @@ function SearchScreen({
           />
         </View>
         <View style={styles.renderModalTextView}>
-          <Text style={styles.renderModalText}>{`Name - ${modalData.name} `}</Text>
-          <Text style={styles.renderModalText}>{`Address - ${modalData.Address}`} </Text>
-          <Text style={styles.renderModalText}>{`Occupation - ${modalData.occupation} `}</Text>
-          <Text style={styles.renderModalText}>{`Blood group - ${modalData.bloodgroup}`} </Text>
-          <Text style={styles.renderModalText}>{`Gender- ${modalData.Gender}`}</Text>
-          <View style={{marginBottom:20}}>
-            <Text style={[styles.renderModalText]}>Mobile No -
-              <Text onPress={() => callNumber(modalData.mobileno)} style={{ color: '#0198E1' }}>{` ${modalData.mobileno}`}</Text>
-            </Text>
+          <View style={styles.flexRow}>
+            <Text style={[styles.renderModalTextBold]}>Name:</Text>
+            <Text style={styles.renderModalTextNormal}>{`${modalData.name} `}</Text>          
           </View>
+          <View style={[styles.flexRow]}>
+            <Text style={[styles.renderModalTextBold]}>Address:</Text>
+            <Text style={[styles.renderModalTextNormal]}>{`${modalData.address} `}</Text>          
+          </View>
+          <View style={styles.flexRow}>
+            <Text style={[styles.renderModalTextBold]}>Education:</Text>
+            <Text style={styles.renderModalTextNormal}>{`${modalData.education} `}</Text>          
+          </View>
+          <View style={styles.flexRow}>
+            <Text style={[styles.renderModalTextBold]}>Blood group:</Text>
+            <Text style={styles.renderModalTextNormal}>{`${modalData.bloodgroup} `}</Text>          
+          </View>
+          <View style={styles.flexRow}>
+            <Text style={[styles.renderModalTextBold]}>Family Code:</Text>
+            <Text style={styles.renderModalTextNormal}>{`${modalData.familycode} `}</Text>          
+          </View>
+          <TouchableOpacity 
+            style={[styles.flexRow]} 
+            onPress={() => callNumber(modalData.mobileno)}
+          >
+            <Text style={[styles.renderModalTextBold]}>Mobile No:</Text>
+            <Text style={[styles.renderModalTextNormal,{ color: '#0198E1' }]}>{`${modalData.mobileno} `}</Text>          
+          </TouchableOpacity>         
         </View>
       </View>
     )
@@ -171,6 +187,7 @@ function SearchScreen({
   const onPressOfLogoutButton = () => {
     logout(setLoginDetails,setUserDetails,setMobileNumber)
   }
+
 
   const renderItem = ({ item }) => {
     return (
@@ -206,8 +223,15 @@ function SearchScreen({
           justifyContent: 'space-evenly',
           marginLeft: 10,
         }}>
-          <Text style={{fontSize:16,fontWeight:"500"}}>{item.name}</Text>
-          <Text style={{fontSize:14,fontWeight:"300"}}>{item.occupation}</Text>
+          <Text style={[styles.textBoldFont,styles.fontSize16]}>
+            {item.name}
+          </Text>
+          <Text style={[styles.textBoldFont,styles.fontSize14]}>
+            {item.education}
+          </Text>
+          <Text style={[styles.textBoldFont,styles.fontSize14,styles.highLightedColor]}>
+            {item.familycode}
+          </Text>
         </View>
         <View
           style={{
@@ -269,7 +293,7 @@ function SearchScreen({
               size={16}
             />
             <TextInput
-              style={styles.textInputStyle}
+              style={[styles.textInputStyle,styles.textNormalFont]}
               placeholder="Search by name, occupation, blood-group"
               onChangeText={sendSearchTextToSaga}
             />
@@ -278,9 +302,11 @@ function SearchScreen({
       </View>
       <View style={styles.container}>
         {
-          isLoading
-            ? <Loader isLoading={isLoading} />
-            : <>
+             <>
+                {
+                  isLoading &&
+                    <Loader isLoading={isLoading} />
+                }
                 <Modal
                   visible={modalStatus}
                   onBackButtonPress={() => {
@@ -296,20 +322,22 @@ function SearchScreen({
                   <View style={styles.modalInnerView}>
                     <View style={styles.modalStyle}>
                       {
-                        singleUserData
-                          ? renderModalData(singleUserData)
-                          : <View style={styles.errorText}>
-                              <Text>Something went wrong</Text>
-                            </View>
+                        modalIndicator 
+                        ? <Loader isLoading={modalIndicator}/>
+                        :  modalData
+                            ? renderModalData(modalData.toJS())
+                            : <View style={styles.errorText}>
+                                <Text>Something went wrong</Text>
+                              </View>
                       }
                     </View>
                   </View>
                 </Modal>
                 <FlatList 
-                  data={searchData}
+                  data={searchTermDataFromSelector.toJS()}
                   renderItem={renderItem}
                   ListEmptyComponent={renderEmptyListComponent}
-                  extraData={[searchData]}
+                  extraData={[searchTermDataFromSelector.toJS()]}
                   onEndReachedThreshold={0.1}
                   onEndReached={onEndReached}
                   contentContainerStyle={{ flexGrow: 1 }}
@@ -423,16 +451,24 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   renderModalTextView: {
-    flex: 0,
-    justifyContent: "center",
-    alignItems: 'center',
+    flex: 1,
+    // justifyContent: "center",
+    // alignItems: 'center',
+    justifyContent:"space-between",
+
   },
-  renderModalText: {
-    lineHeight: 40,
+  renderModalTextBold: {
     fontSize: 14,
-    fontWeight:'500',
-    // marginTop:10,
-    // marginBottom:10,
+    fontFamily: 'Rubik-Bold'
+  },
+  renderModalTextNormal: {
+    fontSize: 14,
+    fontFamily:'Rubik-Medium',
+    marginLeft: 20
+  },
+  flexRow: {
+    flexDirection: 'row',
+    width: '80%',
   },
   errorText:{ 
     justifyContent: "center", 
@@ -440,7 +476,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     fontWeight:"bold",
     fontSize: 20,
- }
+ },
+ textNormalFont : {
+   fontFamily: 'Rubik-Bold'
+ },
+ textBoldFont : {
+  fontFamily: 'Rubik-Medium'
+},
+fontSize16 : {
+  fontSize: 16,
+},
+fontSize14 : {
+  fontSize: 14,
+},
+highLightedColor: {
+  color: '#F7882F'
+}
 });
 
 const mapStateToProps = createStructuredSelectorCreator({
@@ -448,6 +499,8 @@ const mapStateToProps = createStructuredSelectorCreator({
   modalData: getModalData,
   loaderDataFromSaga: getLoaderValue,
   totalPageNo : getTotalPageNo,
+  modalStatus : getModalStatus,
+  modalIndicator :getModalIndicatorStatus,
 });
 
 const mapDispatchToProps = {
@@ -457,6 +510,7 @@ const mapDispatchToProps = {
   setUserDetails,
   setMobileNumber,
   getDataFromSearchTerm,
+  setModalStatus,
 };
 
 const withConnect = connect(

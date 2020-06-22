@@ -61,3 +61,19 @@ export function getDataFromSearchTerm(data) {
     data,
   };
 }
+
+export const SET_MODAL_STATUS = 'boilerplate/LoginScreen/SET_MODAL_STATUS';
+export function setModalStatus(data){
+  return {
+    type : SET_MODAL_STATUS,
+    data,
+  }
+}
+
+export const SET_MODAL_INDICATOR = 'boilerplate/LoginScreen/SET_MODAL_INDICATOR';
+export function setModalIndicator(data){
+  return {
+    type : SET_MODAL_INDICATOR,
+    data,
+  }
+}

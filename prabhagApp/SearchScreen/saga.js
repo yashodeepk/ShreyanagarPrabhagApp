@@ -16,6 +16,7 @@ import {
   setLoader,
   setTotalPageNo,
   GET_DATA_FROM_SEARCH_TERM,
+  setModalIndicator,
 } from "./actions";
 import { getSearchTermData } from "./selectors";
 
@@ -64,7 +65,7 @@ export function* getResultFromSearchTermSaga({ data }) {
 
 export function* getSingleUserDataSaga({ data }) {
   try {
-    yield put(setLoader(true))
+    yield put(setModalIndicator(true))
     const response = yield userUrl.get(`/${data}`);
     if (response.status === 200 || response.status === 201) {
       yield put(setSingleUserData(response.data))
@@ -72,7 +73,7 @@ export function* getSingleUserDataSaga({ data }) {
   } catch (error) {
       console.log('error in getSingleUserDataSaga ', error)
   } finally {
-    yield put(setLoader(false))
+    yield put(setModalIndicator(false))
   }
 }
 

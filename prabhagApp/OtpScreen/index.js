@@ -64,8 +64,9 @@ function OtpScreen({
                 />
             </View>
             <View style={styles.textView}>
-                <Text style={styles.textStyle}>{`Please Enter the OTP `}</Text>
-                <Text style={styles.textStyle}>{`Sent on ${mobileNumber}`}</Text>
+                <Text style={styles.textStyle}>
+                    {`Please Enter the OTP Sent on ${mobileNumber}`}
+                </Text>
             </View>
         </View>
     )

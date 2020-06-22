@@ -27,3 +27,16 @@ export const getTotalPageNo = () =>
     selectSearchDomain, 
     subState => subState.get('totalPageNo')
   )
+
+export const getModalStatus = () => 
+  createSelector(
+    selectSearchDomain, 
+    subState => subState.get('modalStatus')
+  )
+
+export const getModalIndicatorStatus = () => 
+    createSelector(
+      selectSearchDomain,
+      subState => subState.get('setModalIndicator')
+    )
+
