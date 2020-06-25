@@ -18,6 +18,10 @@ class NetworkUtils {
   static updateUrl = axios.create({
     baseURL: `${baseURL}/api`
   })
+  
+  static familyMemberUrl = axios.create({
+    baseURL : `${baseURL}/api/familymember`
+  })
 }
 
 // NetworkUtils.auth.interceptors.request.use(
