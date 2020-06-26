@@ -126,4 +126,10 @@ export const styles = StyleSheet.create({
         paddingLeft:5,
         paddingTop:2,
     },
+    marginVertical10 : {
+        marginVertical:10
+    },
+    textCenter : {
+        textAlign:'center',
+    },
 })

@@ -16,3 +16,15 @@ export const fetchFamilyData = () =>
     selectSearchDomain, 
     subState => subState.get('familyMemberData')
   )
+
+export const fetchCopyFamilyData = () => 
+  createSelector(
+    selectSearchDomain, 
+    subState => subState.get('copyOfFamilyData')
+  )
+
+export const fetchEditedArrayStructure = () => 
+  createSelector(
+    selectSearchDomain, 
+    subState => subState.get('editedArrayStructure')
+  )

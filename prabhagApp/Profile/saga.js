@@ -9,6 +9,8 @@ import {
     PROFILE_USER_UPDATE,
     GET_FAMILY_DATA,
     setFamilyData,
+    setCopyFamilyData,
+    setEditedFamilyData,
   } from "./actions";
 
   const { 
@@ -29,6 +31,28 @@ import {
     } finally {
       yield put(setLoader(false)) 
     }
+  }
+
+  function createStructureForEditableData(arr){
+    const structureForEditedArray = []
+    for(let i = 0 ; i < arr.length; i++){
+        const obj = {
+            "address": false,
+            "bloodgroup": false,
+            "businessaddress": false,
+            "businessbrief": false,
+            "businessjob": false,
+            "dob": false,
+            "dom": false,
+            "education": false,
+            "email": false,
+            "mobileno": false,
+            "name": false,
+            "typeofbusiness": false,
+        }
+      structureForEditedArray.push(obj)
+    }
+    return structureForEditedArray
   }
   
   export function* getFamilyDataSaga({ data }) {
@@ -106,7 +130,12 @@ import {
         // },
       ]      
       // yield put(setFamilyData(response.data))
+      // yield put(setCopyFamilyData(response.data))
+      // const editedArr = createStructureForEditableData(response.data)
+      const editedArr = createStructureForEditableData(response)
+      yield put(setEditedFamilyData(editedArr))
       yield put(setFamilyData(response))
+      yield put(setCopyFamilyData(response))
     } catch (error) {
       console.log('error in update saga ', error)
     } finally {

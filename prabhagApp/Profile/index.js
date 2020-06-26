@@ -24,10 +24,14 @@ import { createStructuredSelectorCreator } from '../utils/commonFunctions';
 import { 
     getLoaderValue,
     fetchFamilyData,
+    fetchCopyFamilyData,
+    fetchEditedArrayStructure,
 } from "./selectors";
 import { 
     updateUserProfile,
     getFamilyData,
+    setFamilyData,
+    setEditedFamilyData,
 } from "./actions";
 import Loader from '../utils/Loader';
 import { styles } from './style';
@@ -49,6 +53,10 @@ function Profile({
     updateUserProfile,
     fetchFamilyData,
     getFamilyData,
+    fetchCopyFamilyData,
+    editableArray,
+    setFamilyData,
+    setEditedFamilyData,
 }){
 
     useEffect(() => {
@@ -56,9 +64,6 @@ function Profile({
             const data = await getLoginDetails()
             const parsedData = JSON.parse(data)
             getFamilyData(parsedData.familycode)
-            // parsedData.Address = "KEY_NOT_AVAILABLE Please add Address key"
-            // setUserData(parsedData)
-            // setCopyOfUserData(parsedData)
         }
         fetchData();
       }, []);
@@ -69,102 +74,109 @@ function Profile({
         )
     }
 
-    const onEdit = (key) => {
-        // const copy = {...editableFields}
-        // const copyForSettingOldValue = {...copyOfUserData}
-        // const copyValueIntoUserData = {...userData}
-        // copy[key] = !copy[key]
-        // copyValueIntoUserData[key] = copyForSettingOldValue[key]
-        // setEditableFields(copy)
-        // setUserData(copyValueIntoUserData)
+    const onEdit = ({index,key}) => {
+        const copy = deepCopy(editableArray)
+        const copyFamilyData = deepCopy(fetchCopyFamilyData)
+        const userData = deepCopy(fetchFamilyData)
+        if(copy[index][key]){
+            userData[index][key] = copyFamilyData[index][key]
+            setFamilyData(userData)
+        }
+        copy[index][key] = !copy[index][key]
+        setEditedFamilyData(copy)
     }
 
-    const onTextInputChange = (value,key) => { 
-        // const copy = {...userData}
-        // copy[key] = value
-        // setUserData(copy)
+    const deepCopy = (data) => {
+        return JSON.parse(JSON.stringify(data))
+    }
+
+    const onTextInputChange = ({value,key,index}) => { 
+        const copyData = deepCopy(fetchFamilyData)
+        copyData[index][`${key}`] = value
+        setFamilyData(copyData)
     }
 
     const showButton = () => {
-        // const {
-        //     Gender, 
-        //     Address, 
-        //     bloodgroup,
-        //     mobileno,
-        //     name,
-        //     occupation
-        // }  = editableFields 
-        // if(Gender || Address || bloodgroup || mobileno || name || occupation){
-        //     return true
-        // }
-        // return false
     }
 
     function onUpdateButtonPressed(){
         // updateUserProfile(userData)
     }
 
-    const renderItem = ({ item }) => {
+    const renderItem = ({ item , index}) => {
         return (
             <>
-            <Text style={{textAlign:'center'}}>{`Profile Details ${item.name}`}</Text>
+            <View style={styles.marginVertical10}>
+                <Text style={styles.textCenter}>
+                    {`Profile Details of ${item.name}`}
+                </Text>
+            </View>
             <View style={styles.flexDirRow}>
                 <View 
                     style={ 
-                        item.name 
+                        editableArray.toJS()[index][`name`] 
                                 ? styles.detailBoxEditable 
                                 : styles.detailBoxNotEditable
-                            }
+                        }
                 >
                     <Text style={styles.textStyle}>
                         Name - 
                     </Text>
                     <TextInput 
                         style={styles.textInputStyle}
-                        editable={!!item.name}
+                        editable={editableArray.toJS()[index][`name`]}
                         value={item.name}
-                        onChangeText={(value) => onTextInputChange(value,'name')}
+                        onChangeText={(value) => onTextInputChange({
+                                value,
+                                key : 'name',
+                                index,
+                            }
+                        )}
                     />
                 </View>
                 <TouchableOpacity 
                     style={styles.editIcon}
-                    onPress={() => onEdit('name')}
+                    onPress={() => onEdit({index,key:'name'})}
                 >
                     <Entypo 
-                        name={item.name ? 'cross' : "edit"}
+                        name={  
+                            editableArray.toJS()[index][`name`] 
+                                ? 'cross' 
+                                : "edit"
+                            }
                         color={"#000"}
                         size={30}
                     />
                 </TouchableOpacity>
             </View>
             <View style={styles.flexDirRow}>
-                    <View  
-                        style={ 
-                                item.mobileno 
-                                        ? styles.detailBoxEditable 
-                                        : styles.detailBoxNotEditable
-                              }
-                    >
-                        <Text style={styles.textStyle}>
-                            Mobile No - 
-                        </Text>
-                        <TextInput 
-                            style={styles.textInputStyle}
-                            editable={!!item.mobileno}
-                            value={String(item.mobileno)}
-                            onChangeText={(value) => onTextInputChange(value,'mobileno')}
-                            maxLength={10}
-                            keyboardType={'phone-pad'}
-                        />
-                    </View>
-                    <TouchableOpacity style={styles.editIcon}>
-                        <Entypo 
-                            name={item.mobileno ? 'cross' : "edit"}
-                            color={"#000"}
-                            size={30}
-                            onPress={() => onEdit('mobileno')}
-                        />
-                    </TouchableOpacity>
+                <View  
+                    style={ 
+                            item.mobileno 
+                                    ? styles.detailBoxEditable 
+                                    : styles.detailBoxNotEditable
+                            }
+                >
+                    <Text style={styles.textStyle}>
+                        Mobile No - 
+                    </Text>
+                    <TextInput 
+                        style={styles.textInputStyle}
+                        editable={!!item.mobileno}
+                        value={String(item.mobileno)}
+                        onChangeText={(value) => onTextInputChange(value,'mobileno')}
+                        maxLength={10}
+                        keyboardType={'phone-pad'}
+                    />
+                </View>
+                <TouchableOpacity style={styles.editIcon}>
+                    <Entypo 
+                        name={item.mobileno ? 'cross' : "edit"}
+                        color={"#000"}
+                        size={30}
+                        onPress={() => onEdit('mobileno')}
+                    />
+                </TouchableOpacity>
                 </View>
                 <View style={styles.flexDirRow}>
                     <View 
@@ -434,6 +446,7 @@ function Profile({
             <FlatList 
                 data={fetchFamilyData.toJS()}
                 renderItem={renderItem}
+                extraData={editableArray.toJS()}
             />
             {/* {
                 showButton() &&
@@ -454,11 +467,15 @@ function Profile({
 const mapStateToProps = createStructuredSelectorCreator({
     getLoaderValue,
     fetchFamilyData,
+    fetchCopyFamilyData,
+    editableArray : fetchEditedArrayStructure,
 });
   
 const mapDispatchToProps = {
     updateUserProfile,
     getFamilyData,
+    setFamilyData,
+    setEditedFamilyData,
 };
 
 const withConnect = connect(

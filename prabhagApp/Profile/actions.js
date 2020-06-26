@@ -17,7 +17,6 @@ export function updateUserProfile(data){
 
 export const GET_FAMILY_DATA = 'boilerplate/LoginScreen/GET_FAMILY_DATA'
 export function getFamilyData(data){
-  console.log(' in the action getFamilyData ', data)
   return {
     type : GET_FAMILY_DATA,
     data,
@@ -28,6 +27,22 @@ export const SET_FAMILY_DATA = 'boilerplate/LoginScreen/SET_FAMILY_DATA'
 export function setFamilyData(data){
   return {
     type : SET_FAMILY_DATA,
+    data,
+  }
+}
+
+export const SET_COPY_FAMILY_DATA = 'boilerplate/LoginScreen/SET_COPY_FAMILY_DATA'
+export function setCopyFamilyData(data){
+  return {
+    type : SET_COPY_FAMILY_DATA,
+    data,
+  }
+}
+
+export const SET_EDITED_FAMILY_DATA = 'boilerplate/LoginScreen/SET_EDITED_FAMILY_DATA'
+export function setEditedFamilyData(data){
+  return {
+    type : SET_EDITED_FAMILY_DATA,
     data,
   }
 }
