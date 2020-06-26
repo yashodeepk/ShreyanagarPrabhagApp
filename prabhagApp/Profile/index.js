@@ -152,9 +152,9 @@ function Profile({
             <View style={styles.flexDirRow}>
                 <View  
                     style={ 
-                            item.mobileno 
-                                    ? styles.detailBoxEditable 
-                                    : styles.detailBoxNotEditable
+                            editableArray.toJS()[index][`mobileno`]
+                                ? styles.detailBoxEditable 
+                                : styles.detailBoxNotEditable
                             }
                 >
                     <Text style={styles.textStyle}>
@@ -162,26 +162,26 @@ function Profile({
                     </Text>
                     <TextInput 
                         style={styles.textInputStyle}
-                        editable={!!item.mobileno}
+                        editable={editableArray.toJS()[index][`mobileno`]}
                         value={String(item.mobileno)}
-                        onChangeText={(value) => onTextInputChange(value,'mobileno')}
+                        onChangeText={(value) => onTextInputChange({ value,key :'mobileno',index})}
                         maxLength={10}
                         keyboardType={'phone-pad'}
                     />
                 </View>
                 <TouchableOpacity style={styles.editIcon}>
                     <Entypo 
-                        name={item.mobileno ? 'cross' : "edit"}
+                        name={ editableArray.toJS()[index][`mobileno`] ? 'cross' : "edit"}
                         color={"#000"}
                         size={30}
-                        onPress={() => onEdit('mobileno')}
+                        onPress={() => onEdit({index,key:'mobileno'})}
                     />
                 </TouchableOpacity>
                 </View>
                 <View style={styles.flexDirRow}>
                     <View 
                         style={ 
-                                item.bloodgroup 
+                                editableArray.toJS()[index][`bloodgroup`]
                                         ? styles.detailBoxEditable 
                                         : styles.detailBoxNotEditable
                               }
@@ -191,24 +191,24 @@ function Profile({
                         </Text>
                         <TextInput 
                             style={styles.textInputStyle}
-                            editable={!!item.bloodgroup}
+                            editable={editableArray.toJS()[index][`bloodgroup`]}
                             value={item.bloodgroup}
-                            onChangeText={(value) => onTextInputChange(value,'bloodgroup')}
+                            onChangeText={(value) => onTextInputChange({ value,key :'bloodgroup',index})}
                         />
                     </View>
                     <TouchableOpacity style={styles.editIcon}>
                         <Entypo 
-                             name={item.bloodgroup ? 'cross' : "edit"}
+                             name={editableArray.toJS()[index][`bloodgroup`] ? 'cross' : "edit"}
                             color={"#000"}
                             size={30}
-                            onPress={() => onEdit('bloodgroup')}
+                            onPress={() => onEdit({index,key:'bloodgroup'})}
                         />
                     </TouchableOpacity>
                 </View>
                 <View style={styles.flexDirRow}>
                     <View 
                         style={ 
-                                item.bloodgroup 
+                                editableArray.toJS()[index][`email`] 
                                         ? styles.detailBoxEditable 
                                         : styles.detailBoxNotEditable
                               }
@@ -218,26 +218,26 @@ function Profile({
                         </Text>
                         <TextInput 
                             style={styles.textInputStyle}
-                            editable={!!item.bloodgroup}
-                            value={fetchFamilyData.bloodgroup}
-                            onChangeText={(value) => onTextInputChange(value,'bloodgroup')}
+                            editable={editableArray.toJS()[index][`email`]}
+                            value={item.email}
+                            onChangeText={(value) => onTextInputChange({value,key:'email',index})}
                         />
                     </View>
                     <TouchableOpacity style={styles.editIcon}>
                         <Entypo 
-                             name={item.bloodgroup ? 'cross' : "edit"}
+                            name={editableArray.toJS()[index][`email`] ? 'cross' : "edit"}
                             color={"#000"}
                             size={30}
-                            onPress={() => onEdit('bloodgroup')}
+                            onPress={() => onEdit({index,key:'email'})}
                         />
                     </TouchableOpacity>
                 </View>
                 <View style={styles.flexDirRow}>
                     <View 
-                        style={ 
-                                item.education 
-                                        ? styles.detailBoxEditable 
-                                        : styles.detailBoxNotEditable
+                        style={
+                                editableArray.toJS()[index][`education`] 
+                                    ? styles.detailBoxEditable 
+                                    : styles.detailBoxNotEditable
                               }
                     >
                         <Text style={styles.textStyle}>
@@ -245,26 +245,26 @@ function Profile({
                         </Text>
                         <TextInput 
                             style={styles.textInputStyle}
-                            editable={!!item.education}
+                            editable={editableArray.toJS()[index][`education`]}
                             value={item.education}
-                            onChangeText={(value) => onTextInputChange(value,'education')}
+                            onChangeText={(value) => onTextInputChange({value,key:'education',index})}
                         />
                     </View>
                     <TouchableOpacity style={styles.editIcon}>
                         <Entypo 
-                             name={item.education ? 'cross' : "edit"}
+                            name={editableArray.toJS()[index][`education`] ? 'cross' : "edit"}
                             color={"#000"}
                             size={30}
-                            onPress={() => onEdit('education')}
+                            onPress={() => onEdit({index,key:'education'})}
                         />
                     </TouchableOpacity>
                 </View>
                 <View style={styles.flexDirRow}>
                     <View 
-                        style={ 
-                                item.businessjob 
-                                        ? styles.detailBoxEditable 
-                                        : styles.detailBoxNotEditable
+                        style={
+                                editableArray.toJS()[index][`businessjob`] 
+                                    ? styles.detailBoxEditable 
+                                    : styles.detailBoxNotEditable
                             }
                     >
                         <Text style={styles.textStyle}>
@@ -272,26 +272,26 @@ function Profile({
                         </Text>
                         <TextInput 
                             style={styles.textInputStyle}
-                            editable={!!item.businessjob}
+                            editable={editableArray.toJS()[index][`businessjob`]}
                             value={item.businessjob}
-                            onChangeText={(value) => onTextInputChange(value,'businessjob')}
+                            onChangeText={(value) => onTextInputChange({value,key:'businessjob',index})}
                         />
                     </View>
                     <TouchableOpacity style={styles.editIcon}>
                         <Entypo 
-                            name={item.businessjob ? 'cross' : "edit"}
+                            name={editableArray.toJS()[index][`businessjob`] ? 'cross' : "edit"}
                             color={"#000"}
                             size={30}
-                            onPress={() => onEdit('businessjob')}
+                            onPress={() => onEdit({index,key:'businessjob'})}
                         />
                     </TouchableOpacity>
                 </View>
                 <View style={styles.flexDirRow}>
                     <View 
                         style={ 
-                                item.dob 
-                                        ? styles.detailBoxEditable 
-                                        : styles.detailBoxNotEditable
+                                editableArray.toJS()[index][`dob`]
+                                    ? styles.detailBoxEditable 
+                                    : styles.detailBoxNotEditable
                               }
                     >
                         <Text style={styles.textStyle}>
@@ -299,26 +299,26 @@ function Profile({
                         </Text>
                         <TextInput 
                             style={styles.textInputStyle}
-                            editable={!!item.dob}
+                            editable={editableArray.toJS()[index][`dob`]}
                             value={item.dob}
-                            onChangeText={(value) => onTextInputChange(value,'dob')}
+                            onChangeText={(value) => onTextInputChange({value,key:'dob',index})}
                         />
                     </View>
                     <TouchableOpacity style={styles.editIcon}>
                         <Entypo 
-                             name={item.dob ? 'cross' : "edit"}
+                             name={editableArray.toJS()[index][`dob`] ? 'cross' : "edit"}
                             color={"#000"}
                             size={30}
-                            onPress={() => onEdit('dob')}
+                            onPress={() => onEdit({key:'dob',index})}
                         />
                     </TouchableOpacity>
                 </View>
                     <View style={styles.flexDirRow}>
                         <View 
-                            style={ 
-                                    item.dom 
-                                            ? styles.detailBoxEditable 
-                                            : styles.detailBoxNotEditable
+                            style={
+                                    editableArray.toJS()[index][`dom`]
+                                        ? styles.detailBoxEditable 
+                                        : styles.detailBoxNotEditable
                                 }
                         >
                             <Text style={styles.textStyle}>
@@ -326,24 +326,24 @@ function Profile({
                             </Text>
                             <TextInput 
                                 style={styles.textInputStyle}
-                                editable={!!item.dob}
+                                editable={editableArray.toJS()[index][`dom`]}
                                 value={item.dob}
-                                onChangeText={(value) => onTextInputChange(value,'dob')}
+                                onChangeText={(value) => onTextInputChange({value,key:'dob',index})}
                             />
                         </View>
                         <TouchableOpacity style={styles.editIcon}>
                             <Entypo 
-                                name={item.dob ? 'cross' : "edit"}
+                                name={editableArray.toJS()[index][`dom`] ? 'cross' : "edit"}
                                 color={"#000"}
                                 size={30}
-                                onPress={() => onEdit('dob')}
+                                onPress={() => onEdit({index,key:'dob'})}
                             />
                         </TouchableOpacity>
                     </View>
                     <View style={styles.flexDirRow}>
                         <View 
-                            style={ 
-                                item.Address
+                            style={
+                                editableArray.toJS()[index][`address`]
                                 ? styles.detailAddBoxEditable 
                                 :  styles.detailAddBoxNotEditable
                             }
@@ -355,24 +355,24 @@ function Profile({
                                 style={styles.textInputForAddress}
                                 multiline={true}
                                 numberOfLines={4}
-                                editable={!!item.address}
+                                editable={editableArray.toJS()[index][`address`]}
                                 value={item.address}
-                                onChangeText={(value) => onTextInputChange(value,'Address')}
+                                onChangeText={(value) => onTextInputChange({value,key:'address',index})}
                             />
                         </View>
                         <TouchableOpacity style={styles.editAddIcon}>
                             <Entypo 
-                                name={item.Address ? 'cross' : "edit"}
+                                name={editableArray.toJS()[index][`address`] ? 'cross' : "edit"}
                                 color={"#000"}
                                 size={30}
-                                onPress={() => onEdit('Address')}
+                                onPress={() => onEdit({key:'address',index})}
                             />
                         </TouchableOpacity>
                     </View>
                     <View style={styles.flexDirRow}>
                         <View 
-                            style={ 
-                                item.businessaddress
+                            style={
+                                editableArray.toJS()[index][`businessaddress`] 
                                 ? styles.detailAddBoxEditable 
                                 :  styles.detailAddBoxNotEditable
                             }
@@ -384,24 +384,24 @@ function Profile({
                                 style={styles.textInputForAddress}
                                 multiline={true}
                                 numberOfLines={4}
-                                editable={!!item.address}
+                                editable={editableArray.toJS()[index][`businessaddress`]}
                                 value={item.address}
-                                onChangeText={(value) => onTextInputChange(value,'businessaddress')}
+                                onChangeText={(value) => onTextInputChange({value,key:'businessaddress',index})}
                             />
                         </View>
                         <TouchableOpacity style={styles.editAddIcon}>
                             <Entypo 
-                                name={item.businessaddress ? 'cross' : "edit"}
+                                name={editableArray.toJS()[index][`businessaddress`] ? 'cross' : "edit"}
                                 color={"#000"}
                                 size={30}
-                                onPress={() => onEdit('Address')}
+                                onPress={() => onEdit({index,key:'businessaddress'})}
                             />
                         </TouchableOpacity>
                     </View>
                     <View style={styles.flexDirRow}>
                         <View 
                             style={ 
-                                item.businessbrief
+                                editableArray.toJS()[index][`businessbrief`]
                                 ? styles.detailAddBoxEditable 
                                 :  styles.detailAddBoxNotEditable
                             }
@@ -413,17 +413,17 @@ function Profile({
                                 style={styles.textInputForAddress}
                                 multiline={true}
                                 numberOfLines={4}
-                                editable={!!item.businessbrief}
+                                editable={editableArray.toJS()[index][`businessbrief`]}
                                 value={item.businessbrief}
-                                onChangeText={(value) => onTextInputChange(value,'businessbrief')}
+                                onChangeText={(value) => onTextInputChange({value,key:'businessbrief',index})}
                             />
                         </View>
                         <TouchableOpacity style={styles.editAddIcon}>
                             <Entypo 
-                                name={item.businessbrief ? 'cross' : "edit"}
+                                name={editableArray.toJS()[index][`businessbrief`] ? 'cross' : "edit"}
                                 color={"#000"}
                                 size={30}
-                                onPress={() => onEdit('Address')}
+                                onPress={() => onEdit({index,key:'businessbrief'})}
                             />
                         </TouchableOpacity>
                     </View>
