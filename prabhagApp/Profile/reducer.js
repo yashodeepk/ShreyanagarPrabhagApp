@@ -4,6 +4,7 @@ import {
     SET_FAMILY_DATA,
     SET_COPY_FAMILY_DATA,
     SET_EDITED_FAMILY_DATA,
+    SHOW_UPDATE_BUTTON,
 } from "./actions";
 
 export const initialState = fromJS({
@@ -11,6 +12,7 @@ export const initialState = fromJS({
   familyMemberData : [],
   copyOfFamilyData : [],
   editedArrayStructure : [],
+  showUpdateButton : false,
 });
 
 export default function appReducer(state = initialState, action) {
@@ -24,6 +26,8 @@ export default function appReducer(state = initialState, action) {
       return state.set('copyOfFamilyData',immutableData)
     case SET_EDITED_FAMILY_DATA: 
       return state.set('editedArrayStructure',immutableData)
+    case SHOW_UPDATE_BUTTON:
+      return state.set('showUpdateButton',immutableData) 
     default:
       return state;
   }

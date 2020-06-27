@@ -26,27 +26,19 @@ import {
     fetchFamilyData,
     fetchCopyFamilyData,
     fetchEditedArrayStructure,
+    fetchUpdateButtonStatus,
 } from "./selectors";
 import { 
     updateUserProfile,
     getFamilyData,
     setFamilyData,
     setEditedFamilyData,
+    showUpdateButton,
 } from "./actions";
 import Loader from '../utils/Loader';
 import { styles } from './style';
+import profileImg from "../assets/propic.png";
 
-import womenImg from '../assets/womenImg.png'
-import menImg from '../assets/menImg.png'
-
-const EDITABLE_FIELDS_STRUCTURE = {
-    "Gender":false,
-    "Address":false,
-    "bloodgroup":false,
-    "mobileno":false,
-    "name":false,
-    "occupation":false,
-}
 
 function Profile({
     getLoaderValue,
@@ -96,19 +88,19 @@ function Profile({
         setFamilyData(copyData)
     }
 
-    const showButton = () => {
-    }
-
     function onUpdateButtonPressed(){
-        // updateUserProfile(userData)
+        updateUserProfile(fetchFamilyData)
     }
 
     const renderItem = ({ item , index}) => {
         return (
             <>
-            <View style={styles.marginVertical10}>
+            <View style={[styles.marginVertical10,styles.flexDirRow,styles.flexOne,styles.center]}>
                 <Text style={styles.textCenter}>
-                    {`Profile Details of ${item.name}`}
+                    {`Profile Details of `}
+                </Text>
+                <Text style={[styles.textCenter,styles.profileHeadingName]}>
+                    {item.name}
                 </Text>
             </View>
             <View style={styles.flexDirRow}>
@@ -306,7 +298,7 @@ function Profile({
                     </View>
                     <TouchableOpacity style={styles.editIcon}>
                         <Entypo 
-                             name={editableArray.toJS()[index][`dob`] ? 'cross' : "edit"}
+                            name={editableArray.toJS()[index][`dob`] ? 'cross' : "edit"}
                             color={"#000"}
                             size={30}
                             onPress={() => onEdit({key:'dob',index})}
@@ -327,8 +319,8 @@ function Profile({
                             <TextInput 
                                 style={styles.textInputStyle}
                                 editable={editableArray.toJS()[index][`dom`]}
-                                value={item.dob}
-                                onChangeText={(value) => onTextInputChange({value,key:'dob',index})}
+                                value={item.dom}
+                                onChangeText={(value) => onTextInputChange({value,key:'dom',index})}
                             />
                         </View>
                         <TouchableOpacity style={styles.editIcon}>
@@ -336,7 +328,7 @@ function Profile({
                                 name={editableArray.toJS()[index][`dom`] ? 'cross' : "edit"}
                                 color={"#000"}
                                 size={30}
-                                onPress={() => onEdit({index,key:'dob'})}
+                                onPress={() => onEdit({index,key:'dom'})}
                             />
                         </TouchableOpacity>
                     </View>
@@ -385,7 +377,7 @@ function Profile({
                                 multiline={true}
                                 numberOfLines={4}
                                 editable={editableArray.toJS()[index][`businessaddress`]}
-                                value={item.address}
+                                value={item.businessaddress}
                                 onChangeText={(value) => onTextInputChange({value,key:'businessaddress',index})}
                             />
                         </View>
@@ -431,34 +423,31 @@ function Profile({
         )
     }
 
+    const renderFooterComponent = () =>  (
+            <View style={styles.buttonView}>
+                <TouchableOpacity 
+                    style={styles.buttonTouchableOpacityActive}
+                    onPress={onUpdateButtonPressed}
+                >
+                    <Text style={styles.buttonText}>UPDATE</Text>
+                </TouchableOpacity>
+            </View>
+    )
+
     return (
         <SafeAreaView style={styles.flexOne}>
             <View style={styles.alignItemsCenter}>
                 <Image
                     style={styles.userImage}
-                    source={
-                        {}.Gender === "Male"
-                        ? menImg
-                        : womenImg
-                    }
+                    source={profileImg}
                 />
             </View>
             <FlatList 
                 data={fetchFamilyData.toJS()}
                 renderItem={renderItem}
-                extraData={editableArray.toJS()}
+                extraData={[editableArray.toJS(),buttonStatus]}
+                ListFooterComponent={renderFooterComponent}
             />
-            {/* {
-                showButton() &&
-                <View style={styles.buttonView}>
-                    <TouchableOpacity 
-                        style={styles.buttonTouchableOpacity}
-                        onPress={onUpdateButtonPressed}
-                    >
-                        <Text style={styles.buttonText}>UPDATE</Text>
-                    </TouchableOpacity>
-                </View>
-            } */}
         </SafeAreaView>
     )
 }
@@ -469,6 +458,7 @@ const mapStateToProps = createStructuredSelectorCreator({
     fetchFamilyData,
     fetchCopyFamilyData,
     editableArray : fetchEditedArrayStructure,
+    buttonStatus : fetchUpdateButtonStatus,
 });
   
 const mapDispatchToProps = {
@@ -476,6 +466,7 @@ const mapDispatchToProps = {
     getFamilyData,
     setFamilyData,
     setEditedFamilyData,
+    showUpdateButton,
 };
 
 const withConnect = connect(

@@ -1,16 +1,28 @@
 import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
+    bottomBorderStyle: {
+        borderBottomColor: '#fff',
+        borderBottomWidth: 1,
+    },
     buttonText: {
         color:'#fff',
         fontWeight:'bold',
         fontSize:16,
+        fontFamily: 'Rubik-Bold',
     },
-    buttonTouchableOpacity: {
+    buttonTouchableOpacityActive: {
         height: 65, 
-        width : 150, 
-        borderRadius: 10,
+        width : '100%',
         elevation:1,
         backgroundColor:"#F7882F",
+        justifyContent:'center',
+        alignItems:'center',
+    },
+    buttonTouchableOpacityInActive: {
+        height: 65, 
+        width : '100%',
+        elevation:1,
+        backgroundColor:"#eee",
         justifyContent:'center',
         alignItems:'center',
     },
@@ -34,8 +46,6 @@ export const styles = StyleSheet.create({
         height: 100, 
         width: 100, 
         borderRadius: 100,
-        borderWidth: 0.5,
-        borderColor:'black',
     },
     detailAddBoxNotEditable: {
         height:100,
@@ -100,6 +110,7 @@ export const styles = StyleSheet.create({
     textStyle : {
         fontWeight:'bold',
         fontSize:16,
+        fontFamily: 'Rubik-Bold',
     },
     alignItemsCenter: {
         alignItems:'center'
@@ -117,6 +128,7 @@ export const styles = StyleSheet.create({
         justifyContent:'center',
         alignItems:'center',
         paddingLeft:2,
+        fontFamily:'Rubik-Medium',
     },
     textInputForAddress:{
         fontSize:16,
@@ -125,11 +137,19 @@ export const styles = StyleSheet.create({
         textAlignVertical:'top',
         paddingLeft:5,
         paddingTop:2,
+        fontFamily:'Rubik-Medium',
     },
     marginVertical10 : {
         marginVertical:10
     },
     textCenter : {
         textAlign:'center',
+        fontFamily:'Rubik-Medium',
     },
+    profileHeadingName : {
+        borderBottomWidth:1,
+        borderBottomColor:'#F7882F',
+        fontFamily:'Rubik-Bold',
+        color : '#F7882F',
+    }
 })

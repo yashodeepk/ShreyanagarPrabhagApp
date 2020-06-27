@@ -46,3 +46,11 @@ export function setEditedFamilyData(data){
     data,
   }
 }
+
+export const SHOW_UPDATE_BUTTON = 'boilerplate/LoginScreen/SHOW_UPDATE_BUTTON'
+export function showUpdateButton(data){
+  return {
+    type : SHOW_UPDATE_BUTTON,
+    data,
+  }
+}

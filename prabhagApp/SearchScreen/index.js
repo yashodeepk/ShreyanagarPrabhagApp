@@ -43,8 +43,7 @@ import {
   getModalIndicatorStatus,
 } from "./selectors";
 import searchNotFoundImg from "../assets/searchnotfound.png";
-import womenImg from '../assets/womenImg.png'
-import menImg from '../assets/menImg.png'
+import profileImg from "../assets/propic.png";
 import { setLoginDetails } from "../utils/asyncStorage";
 import { setUserDetails } from "../MainApp/actions";
 import { setMobileNumber } from '../LoginScreen/actions'
@@ -144,11 +143,7 @@ function SearchScreen({
         <View style={styles.renderModalDataImage}>
           <Image
             style={{ height: 50, width: 50, borderRadius: 50 }}
-            source={
-              modalData.Gender === "Male"
-                ? menImg
-                : womenImg
-            }
+            source={profileImg}
           />
         </View>
         <View style={styles.renderModalTextView}>
@@ -211,11 +206,7 @@ function SearchScreen({
         <View style={{alignItems: 'center',justifyContent:'center'}}>
           <Image
             style={{ height: 50, width: 50, borderRadius: 50 }}
-            source={
-              item.Gender === "Male"
-                ? menImg
-                : womenImg
-            }
+            source={profileImg}
           />
         </View>
         <View style={{

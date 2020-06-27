@@ -22,9 +22,16 @@ export const fetchCopyFamilyData = () =>
     selectSearchDomain, 
     subState => subState.get('copyOfFamilyData')
   )
-
+  
 export const fetchEditedArrayStructure = () => 
   createSelector(
     selectSearchDomain, 
     subState => subState.get('editedArrayStructure')
   )
+
+export const fetchUpdateButtonStatus = () => 
+  createSelector(
+    selectSearchDomain, 
+    subState => subState.get('showUpdateButton')
+  )
+
