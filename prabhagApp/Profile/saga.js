@@ -15,7 +15,7 @@ import {
 import { setLoginDetails } from "../utils/asyncStorage";
 import { setUserDetails } from "../MainApp/actions";
 import { setMobileNumber } from '../LoginScreen/actions'
-
+import { Alert } from "react-native";
   const { 
     updateUrl,
     familyMemberUrl,
@@ -40,6 +40,7 @@ import { setMobileNumber } from '../LoginScreen/actions'
       }
     } catch (error) {
       console.log('error in update saga ', error)
+      Alert.alert('SomeThing went wrong ', error)
     } finally {
       yield put(setLoader(false)) 
     }

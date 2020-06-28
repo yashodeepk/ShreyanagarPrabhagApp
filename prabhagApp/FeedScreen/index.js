@@ -26,6 +26,7 @@ import {
 } from 'react-native-vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import Modal from 'react-native-modal';
+import { getLoginDetails } from "../utils/asyncStorage";
 
 
 function FeedScreen({ 
