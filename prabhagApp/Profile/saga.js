@@ -29,10 +29,9 @@ import { Alert } from "react-native";
       const payload = { "person" : fetchFamilyData}
       const response = yield updateUrl.post('/update',payload)
       if(response.status === 200 || response.status === 201){
-        const emptyString = ''
-        yield setLoginDetails(emptyString)
-        yield setUserDetails(emptyString)
-        yield setMobileNumber(emptyString)
+        yield setLoginDetails(null)
+        yield setUserDetails(null)
+        yield setMobileNumber(null)
       }
     } catch (error) {
       console.log('error in update saga ', error)
