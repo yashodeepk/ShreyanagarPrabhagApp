@@ -22,8 +22,9 @@ import { setMobileNumber } from '../LoginScreen/actions'
   } = NetworkUtils
 
   
-  export function* updateSaga({ fetchFamilyData, navigation }) {
+  export function* updateSaga({ data }) {
     try {
+      const { fetchFamilyData, navigation } = data
       yield put(setLoader(true))
       const payload = { "person" : fetchFamilyData}
       const response = yield updateUrl.post('/update',payload)

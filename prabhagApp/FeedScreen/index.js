@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -35,6 +35,17 @@ function FeedScreen({
   const [modalStatus , setModalStatus] = useState(false)
   const [feedText, setFeedText] = useState('')
   const [imageFromGallery,setImageFromGallery] = useState('')
+  const [showPlusButton , setShowPlusButton] = useState(false)
+
+
+  useEffect(() => {
+    async function fetchData() {
+        const data = await getLoginDetails()
+        const { usertype } = JSON.parse(data)
+        setShowPlusButton(usertype === "admin")
+    }
+    fetchData();
+  }, []);
 
   const renderItem = ({ item }) => {
     return (
@@ -129,16 +140,19 @@ function FeedScreen({
           renderItem={renderItem}
         />
       </View>
-      <TouchableOpacity 
-          style={styles.plusButtonView}
-          onPress={showModal}
-      >
-        <Entypo
-          name="plus"
-          color={"#fff"}
-          size={35}
-        />
-      </TouchableOpacity>
+      {
+        showPlusButton &&
+            <TouchableOpacity 
+                style={styles.plusButtonView}
+                onPress={showModal}
+            >
+              <Entypo
+                name="plus"
+                color={"#fff"}
+                size={35}
+              />
+            </TouchableOpacity>
+        }
       <Modal
         visible={modalStatus}
         onBackdropPress={() => {
