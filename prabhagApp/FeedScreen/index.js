@@ -50,9 +50,9 @@ function FeedScreen({
 
   const renderItem = ({ item }) => {
     return (
-      <View style={{margin:10}}>
-        <Image style={{height:250,width:'100%'}} source={{uri: item.imgUrl}} />
-        <Text style={{fontWeight:'bold',fontSize:18,marginTop:10}}>{item.title}</Text>
+      <View style={styles.margin10}>
+        <Image style={styles.renderItemImage} source={{uri: item.imgUrl}} />
+        <Text style={styles.renderItemText}>{item.title}</Text>
       </View>
     )
   }
@@ -92,11 +92,21 @@ function FeedScreen({
             />
         </View>
         <View style={[styles.uploadButtonView,styles.flexRow,styles.justifyContentCenter]}>
-          <TouchableOpacity style={styles.deleteFeedButton} onPress={onCloseModal}>
-              <Text style={[styles.textStyleForButtonText,styles.textColor]}>Close</Text>
+          <TouchableOpacity 
+            style={styles.deleteFeedButton} 
+            onPress={onCloseModal}
+          >
+              <Text style={[styles.textStyleForButtonText,styles.textColor]}>
+                Close
+              </Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.uploadFeed} onPress={openImagePickerAsync}>
-              <Text style={styles.textStyleForButtonText}>Show Preview</Text>
+            <TouchableOpacity 
+              style={styles.uploadFeed} 
+              onPress={openImagePickerAsync}
+            >
+              <Text style={styles.textStyleForButtonText}>
+                Show Preview
+              </Text>
             </TouchableOpacity>
         </View>
       </>
@@ -156,9 +166,6 @@ function FeedScreen({
         }
       <Modal
         visible={modalStatus}
-        onBackdropPress={() => {
-          setModalStatus(false)
-        }}
         style={styles.modalContainer}
       >
         <View style={styles.modalMainView}>
@@ -179,6 +186,18 @@ function FeedScreen({
 }
 
 const styles = StyleSheet.create({
+  renderItemText: {
+    fontFamily: 'Rubik-Bold',
+    fontSize:18,
+    marginTop:10,
+  },
+  renderItemImage:{
+    height:250,
+    width:'100%',
+  },
+  margin10:{
+    margin:10
+  },
   justifyContentCenter : {
     justifyContent:'center'
   },

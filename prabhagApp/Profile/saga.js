@@ -1,5 +1,4 @@
 import {
-    select,
     takeEvery,
     put,
   } from 'redux-saga/effects';
@@ -16,6 +15,7 @@ import { setLoginDetails } from "../utils/asyncStorage";
 import { setUserDetails } from "../MainApp/actions";
 import { setMobileNumber } from '../LoginScreen/actions'
 import { Alert } from "react-native";
+
   const { 
     updateUrl,
     familyMemberUrl,
@@ -33,10 +33,6 @@ import { Alert } from "react-native";
         yield setLoginDetails(emptyString)
         yield setUserDetails(emptyString)
         yield setMobileNumber(emptyString)
-        navigation.dispatch(NavigationActions.reset({ 
-                    index: 0,
-                    actions: [ NavigationActions.navigate({ routeName: 'LoginApp'})]
-                }))
       }
     } catch (error) {
       console.log('error in update saga ', error)
