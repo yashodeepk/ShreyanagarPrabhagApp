@@ -47,6 +47,7 @@ function Profile({
     editableArray,
     setFamilyData,
     setEditedFamilyData,
+    navigation,
 }){
 
     useEffect(() => {
@@ -94,7 +95,7 @@ function Profile({
             {
               text: 'Yes',
               onPress: () => {
-                updateUserProfile(fetchFamilyData)
+                updateUserProfile({fetchFamilyData,navigation})
               },
             },
             { text: 'No', onPress: () => null },

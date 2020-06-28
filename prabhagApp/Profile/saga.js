@@ -22,16 +22,20 @@ import { setMobileNumber } from '../LoginScreen/actions'
   } = NetworkUtils
 
   
-  export function* updateSaga({ data }) {
+  export function* updateSaga({ fetchFamilyData, navigation }) {
     try {
       yield put(setLoader(true))
-      const payload = { "person" : data}
+      const payload = { "person" : fetchFamilyData}
       const response = yield updateUrl.post('/update',payload)
       if(response.status === 200 || response.status === 201){
         const emptyString = ''
         yield setLoginDetails(emptyString)
         yield setUserDetails(emptyString)
         yield setMobileNumber(emptyString)
+        navigation.dispatch(NavigationActions.reset({ 
+                    index: 0,
+                    actions: [ NavigationActions.navigate({ routeName: 'LoginApp'})]
+                }))
       }
     } catch (error) {
       console.log('error in update saga ', error)
