@@ -445,7 +445,7 @@ function Profile({
             <FlatList 
                 data={fetchFamilyData.toJS()}
                 renderItem={renderItem}
-                extraData={[editableArray.toJS(),buttonStatus]}
+                extraData={[editableArray.toJS()]}
                 ListFooterComponent={renderFooterComponent}
             />
         </SafeAreaView>
