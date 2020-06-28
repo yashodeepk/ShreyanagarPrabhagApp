@@ -2,17 +2,14 @@ import React, { useEffect, useState } from "react";
 import {
  View,
  Text,
- StyleSheet,
  Image,
  TextInput,
- ScrollView,
  TouchableOpacity,
  FlatList,
 } from "react-native";
 import { getLoginDetails } from "../utils/asyncStorage";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Entypo } from 'react-native-vector-icons';
-
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import injectSaga from '../utils/injectSaga';
