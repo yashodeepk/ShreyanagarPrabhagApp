@@ -12,6 +12,9 @@ import {
     setCopyFamilyData,
     setEditedFamilyData,
   } from "./actions";
+import { setLoginDetails } from "../utils/asyncStorage";
+import { setUserDetails } from "../MainApp/actions";
+import { setMobileNumber } from '../LoginScreen/actions'
 
   const { 
     updateUrl,
@@ -24,7 +27,12 @@ import {
       yield put(setLoader(true))
       const payload = { "person" : data}
       const response = yield updateUrl.post('/update',payload)
-      console.log('response is , ', response.data)
+      if(response.status === 200 || response.status === 201){
+        const emptyString = ''
+        yield setLoginDetails(emptyString)
+        yield setUserDetails(emptyString)
+        yield setMobileNumber(emptyString)
+      }
     } catch (error) {
       console.log('error in update saga ', error)
     } finally {

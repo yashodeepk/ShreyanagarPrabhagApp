@@ -6,6 +6,7 @@ import {
  TextInput,
  TouchableOpacity,
  FlatList,
+ Alert,
 } from "react-native";
 import { getLoginDetails } from "../utils/asyncStorage";
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -85,8 +86,25 @@ function Profile({
         setFamilyData(copyData)
     }
 
+    function logout() {
+        Alert.alert(
+          'On Success You will be Logged Out',
+          'Are you sure that you want to continue?',
+          [
+            {
+              text: 'Yes',
+              onPress: () => {
+                updateUserProfile(fetchFamilyData)
+              },
+            },
+            { text: 'No', onPress: () => null },
+          ],
+          { cancelable: false },
+        )
+      }
+
     function onUpdateButtonPressed(){
-        updateUserProfile(fetchFamilyData)
+        logout()
     }
 
     const renderItem = ({ item , index}) => {
