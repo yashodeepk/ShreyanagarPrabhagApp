@@ -83,9 +83,9 @@ function FeedScreen({
   const renderInputTextAndUploadButton = () => (
       <>
         <View style={styles.feedText}>
-            <Text style={styles.textStyle}>Please Enter the Title of the Feed</Text>
+            <Text style={styles.textStyle}>Please Enter the Caption for the Feed</Text>
             <TextInput 
-              placeholder="Enter Feed Title"
+              placeholder="Enter Feed Caption"
               value={feedText}
               onChangeText={text => setFeedText(text)}
               style={styles.textInputStyle}
@@ -105,7 +105,7 @@ function FeedScreen({
               onPress={openImagePickerAsync}
             >
               <Text style={styles.textStyleForButtonText}>
-                Show Preview
+                Add Image
               </Text>
             </TouchableOpacity>
         </View>
