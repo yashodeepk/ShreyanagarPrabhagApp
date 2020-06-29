@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseURL = 'https://us-central1-todo-bca74.cloudfunctions.net/app'
+const baseURL = 'https://us-central1-shreyanagarapp.cloudfunctions.net/app'
 
 class NetworkUtils {
   static auth = axios.create({
