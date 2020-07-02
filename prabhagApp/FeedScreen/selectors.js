@@ -2,7 +2,7 @@ import { createSelector } from 'reselect';
 
 const selectFeedDomain = state => state.get('Feed');
 
-export const getMobileNumber = () => 
+export const getFeedData = () => 
 createSelector(selectFeedDomain, subState => 
   subState.get('data')  
 )

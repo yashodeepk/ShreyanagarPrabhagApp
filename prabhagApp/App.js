@@ -11,8 +11,8 @@ const store = configureStore(initialState);
 
 const fetchFonts = () => {
   return Font.loadAsync({
-    'Rubik-Bold': require('./assets/fonts/Rubik-Bold.ttf'),
-    'Rubik-Medium': require('./assets/fonts/Rubik-Medium.ttf'),
+    'Rubik-Bold': require('./assets/fonts/Roboto-Bold.ttf'),
+    'Rubik-Medium': require('./assets/fonts/Roboto-Medium.ttf'),
     });
 };
 

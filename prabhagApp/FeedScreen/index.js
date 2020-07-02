@@ -23,6 +23,7 @@ import { FlatList } from "react-native-gesture-handler";
 import { 
   DATA,
   uploadImage,
+  getFeed,
 } from "./actions";
 import {
   Entypo,
@@ -30,12 +31,19 @@ import {
 import * as ImagePicker from 'expo-image-picker';
 import Modal from 'react-native-modal';
 import { getLoginDetails } from "../utils/asyncStorage";
-import { getLoaderValue } from "./selectors";
+import { 
+  getLoaderValue,
+  getFeedData,
+} from "./selectors";
+import searchNotFoundImg from "../assets/searchnotfound.png";
+const LIMIT = 10
 
 function FeedScreen({ 
   navigation,
   getLoaderValue,
   uploadImage,
+  getFeed,
+  getFeedData,
 }) {
 
   const [modalStatus , setModalStatus] = useState(false)
@@ -43,7 +51,11 @@ function FeedScreen({
   const [imageFromGallery,setImageFromGallery] = useState('')
   const [showPlusButton , setShowPlusButton] = useState(false)
   const [userInfo , setUserInfo] = useState(null)
+  const [pageNo , setPageNo] = useState(1)
 
+  useEffect(() => {
+    getFeed({pageNo,LIMIT})
+  },[])
 
   useEffect(() => {
     async function fetchData() {
@@ -61,9 +73,10 @@ function FeedScreen({
 
   const renderItem = ({ item }) => {
     return (
-      <View style={styles.margin10}>
-        <Image style={styles.renderItemImage} source={{uri: item.imgUrl}} />
-        <Text style={styles.renderItemText}>{item.title}</Text>
+      <View style={styles.margin10} key={item.id}>
+        <Image style={styles.renderItemImage} source={{uri: item.imageURL}} />
+        <Text style={styles.renderItemText}>{item.discription}</Text>
+        <Text style={styles.renderItemText}>{`Posted by ${item.name}`}</Text>
       </View>
     )
   }
@@ -181,18 +194,37 @@ function FeedScreen({
       </View>
     </View>
   )
+
+  const onEndReached = () => {
+    if(getFeedData.totalPages !== pageNo){
+      getFeed({pageNo,LIMIT})
+      setPageNo(page+1)
+    }
+  }
+
+  const renderEmptyListComponent = () => {
+    return (
+      <View style={styles.imgView}>
+        <Image
+          style={styles.imgStyle}
+          resizeMode="contain"
+          source={searchNotFoundImg}
+        />
+      </View>
+    )
+  }
     
   return (
     <SafeAreaView style={styles.safeAreaView}>
-      <View style={styles.headerView}>
-        <Text style={{fontSize: 30, color:"#fff"}}>V.No. 0.1.4</Text>
-      </View>
-      <View style={styles.container}>
         <FlatList 
-          data={DATA}
+          data={getFeedData.responseData}
           renderItem={renderItem}
+          extraData={getFeedData}
+          onEndReachedThreshold={0.1}
+          onEndReached={onEndReached}
+          ListEmptyComponent={renderEmptyListComponent}
+          contentContainerStyle={{ flexGrow: 1 }}
         />
-      </View>
       {
         showPlusButton &&
             <TouchableOpacity 
@@ -228,17 +260,22 @@ function FeedScreen({
 }
 
 const styles = StyleSheet.create({
+  imgStyle: {
+    width: 300,
+    height: 300,
+  },
   renderItemText: {
     fontFamily: 'Rubik-Bold',
     fontSize:18,
     marginTop:10,
+    textAlign:'center',
   },
   renderItemImage:{
     height:250,
     width:'100%',
   },
   margin10:{
-    margin:10
+    margin:10,
   },
   justifyContentCenter : {
     justifyContent:'center'
@@ -361,7 +398,7 @@ const styles = StyleSheet.create({
   },
   safeAreaView:{
     flex: 1,
-    backgroundColor: '#F7882F',
+    // backgroundColor: '#F7882F',
   },
   headerView:{
     height: 90,
@@ -373,10 +410,12 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = createStructuredSelectorCreator({
   getLoaderValue,
+  getFeedData,
 });
 
 const mapDispatchToProps = {
   uploadImage,
+  getFeed,
 };
 
 const withConnect = connect(

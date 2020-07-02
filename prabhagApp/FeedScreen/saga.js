@@ -7,6 +7,8 @@ import {
 import { 
   UPLOAD_IMAGE,
   setLoaderFeed,
+  GET_FEED,
+  setFeed,
 } from "./actions";
 import NetworkUtils from "../utils/NetworkUtils";
 import firebase from "../utils/firebase";
@@ -51,6 +53,24 @@ export function* uploadImageSaga({ data }) {
   }
 }
 
+export function* getFeedSaga({ data }){
+  try {
+    yield put(setLoaderFeed(true));
+    const { pageNo, LIMIT} = data
+    const response = yield updateUrl.get(`/getfeed/${pageNo}&${LIMIT}`);
+    const obj = {
+      responseData : response.data.response,
+      totalPages : response.data.pagedata.totalpages,
+    }
+    yield put(setFeed(obj))
+  } catch (error) {
+    console.log('error ', error)
+  }finally{
+    yield put(setLoaderFeed(false));
+  }
+}
+
 export default function* fetchData() {
   yield takeEvery(UPLOAD_IMAGE, uploadImageSaga);
+  yield takeEvery(GET_FEED,getFeedSaga)
 }

@@ -288,3 +288,11 @@ export function getFeed(data) {
     data,
   };
 }
+
+export const SET_FEED = 'boilerplate/LoginScreen/SET_FEED';
+export function setFeed(data) {
+  return {
+    type: SET_FEED,
+    data,
+  };
+}
