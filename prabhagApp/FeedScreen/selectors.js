@@ -6,3 +6,8 @@ export const getMobileNumber = () =>
 createSelector(selectFeedDomain, subState => 
   subState.get('data')  
 )
+
+export const getLoaderValue = () => 
+createSelector(selectFeedDomain, subState => 
+  subState.get('loader')  
+)

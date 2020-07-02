@@ -20,33 +20,44 @@ import Loader from '../utils/Loader';
 import reducer from './reducer';
 import saga from './saga';
 import { FlatList } from "react-native-gesture-handler";
-import { DATA } from "./actions";
+import { 
+  DATA,
+  uploadImage,
+} from "./actions";
 import {
   Entypo,
 } from 'react-native-vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import Modal from 'react-native-modal';
 import { getLoginDetails } from "../utils/asyncStorage";
-
+import { getLoaderValue } from "./selectors";
 
 function FeedScreen({ 
   navigation,
+  getLoaderValue,
+  uploadImage,
 }) {
 
   const [modalStatus , setModalStatus] = useState(false)
   const [feedText, setFeedText] = useState('')
   const [imageFromGallery,setImageFromGallery] = useState('')
   const [showPlusButton , setShowPlusButton] = useState(false)
+  const [userInfo , setUserInfo] = useState(null)
 
 
   useEffect(() => {
     async function fetchData() {
         const data = await getLoginDetails()
-        const { usertype } = JSON.parse(data)
-        setShowPlusButton(usertype === "admin")
+        const userInfo = JSON.parse(data)
+        setShowPlusButton(userInfo.usertype === "admin")
+        setUserInfo(userInfo)
     }
     fetchData();
   }, []);
+
+  if (getLoaderValue) {
+    return <Loader isLoading={getLoaderValue} />;
+  }
 
   const renderItem = ({ item }) => {
     return (
@@ -117,6 +128,37 @@ function FeedScreen({
     setFeedText('')
   }
 
+  const uploadFeed = () => {
+
+    const name = `${feedText}.jpg`;
+    const body = new FormData();
+
+    body.append("picture", {
+      uri: imageFromGallery,
+      name,
+      type: "image/jpg"
+    });
+
+    const closeModalOnSuccess = () => {
+      setImageFromGallery(null)
+      setFeedText('')
+      setModalStatus(false)
+    }
+
+    const user = {
+      name: userInfo.name || '',
+      title: feedText,
+      callback: closeModalOnSuccess,
+    }
+
+    const payload = { 
+      body : body, 
+      userInfo :  user,
+    }
+    
+    uploadImage(payload)
+  }
+
   const showFeedPreview = () => (
     <View style={styles.showFeedPreviewView}>
       <View style={styles.imageView}>
@@ -133,7 +175,7 @@ function FeedScreen({
           <TouchableOpacity style={styles.deleteFeedButton} onPress={onDeleteButtonPress}>
             <Text style={[styles.textStyleForButtonText,styles.textColor]}>Delete</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.uploadFeed} onPress={() => {}}>
+          <TouchableOpacity style={styles.uploadFeed} onPress={uploadFeed}>
             <Text style={styles.textStyleForButtonText}>Upload Feed</Text>
           </TouchableOpacity>
       </View>
@@ -330,9 +372,11 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = createStructuredSelectorCreator({
+  getLoaderValue,
 });
 
 const mapDispatchToProps = {
+  uploadImage,
 };
 
 const withConnect = connect(
