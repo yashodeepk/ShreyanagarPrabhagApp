@@ -43,7 +43,12 @@ export function* uploadImageSaga({ data }) {
 
       if(uploadFeedResponse.status === 200){
          yield call(userInfo.callback)
-         getFeedSaga({ pageNo:1, LIMIT:10 })
+         const response = yield updateUrl.get(`/getfeed/1&10`);
+         const obj = {
+           responseData : response.data.response,
+           totalPages : response.data.pagedata.totalpages,
+         }
+         yield put(setFeed(obj))
       }
     }
   } catch (error) {
