@@ -43,6 +43,7 @@ export function* uploadImageSaga({ data }) {
 
       if(uploadFeedResponse.status === 200){
          yield call(userInfo.callback)
+         getFeedSaga({ pageNo:1, LIMIT:10 })
       }
     }
   } catch (error) {
