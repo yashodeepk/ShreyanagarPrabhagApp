@@ -458,12 +458,14 @@ function Profile({
                     source={profileImg}
                 />
             </View>
+			<View style={styles.container}>
             <FlatList 
                 data={fetchFamilyData.toJS()}
                 renderItem={renderItem}
                 extraData={[editableArray.toJS()]}
                 ListFooterComponent={renderFooterComponent}
             />
+			</View>
         </SafeAreaView>
     )
 }

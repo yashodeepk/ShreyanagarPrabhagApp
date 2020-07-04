@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import { MaterialIndicator } from 'react-native-indicators';
+import { DotIndicator } from 'react-native-indicators';
 
-const SKY_BLUE_COLOR = 'rgb(88,204,182)';
+const SKY_BLUE_COLOR = '#FFA500';
 
 
 export default class Loader extends Component {
@@ -19,10 +19,10 @@ export default class Loader extends Component {
             alignItems: 'center',
             justifyContent: 'center',
             zIndex: 9000,
-            backgroundColor: '#0009',
+            backgroundColor: 'rgba(52, 52, 52, 0.1)',
           }}
         >
-          <MaterialIndicator color={SKY_BLUE_COLOR} />
+          <DotIndicator color={SKY_BLUE_COLOR} />
         </View>
       );
     } else {

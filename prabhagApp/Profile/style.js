@@ -1,5 +1,9 @@
 import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
+	container:{
+		flex:1,
+		backgroundColor:'#eee',
+	},
     bottomBorderStyle: {
         borderBottomColor: '#fff',
         borderBottomWidth: 1,
@@ -34,7 +38,7 @@ export const styles = StyleSheet.create({
     },
     flexOne:{
         flex:1,
-        backgroundColor:'#fff'
+        backgroundColor:'#FFA900'
     },
     center:{
         flex:1,
@@ -46,12 +50,13 @@ export const styles = StyleSheet.create({
         height: 100, 
         width: 100, 
         borderRadius: 100,
+		elevation:5,
     },
     detailAddBoxNotEditable: {
-        height:100,
-        borderWidth:1,
-        borderColor:'black',
-        backgroundColor:'#eee',
+        height:'auto',
+        //borderWidth:1,
+        //borderColor:'black',
+        backgroundColor:'#ddd',
         margin:10,
         borderRadius:5,
         flex: 0.9,
@@ -59,9 +64,9 @@ export const styles = StyleSheet.create({
         padding:10,
     },
     detailAddBoxEditable: {
-        height:100,
-        borderWidth:1,
-        borderColor:'black',
+        height:'auto',
+        //borderWidth:1,
+        //borderColor:'black',
         backgroundColor:'#fff',
         margin:10,
         borderRadius:5,
@@ -78,9 +83,9 @@ export const styles = StyleSheet.create({
     },
     detailBoxNotEditable : {
         height:55,
-        borderWidth:1,
-        borderColor:'black',
-        backgroundColor:'#eee',
+        //borderWidth:1,
+        //borderColor:'black',
+        backgroundColor:'#ddd',
         margin:10,
         borderRadius:5,
         alignItems:'center',
@@ -90,8 +95,8 @@ export const styles = StyleSheet.create({
     },
     detailBoxEditable : {
         height:55,
-        borderWidth:1,
-        borderColor:'black',
+        //borderWidth:1,
+        //borderColor:'black',
         backgroundColor:'#fff',
         margin:10,
         borderRadius:5,
@@ -113,7 +118,9 @@ export const styles = StyleSheet.create({
         fontFamily: 'Rubik-Bold',
     },
     alignItemsCenter: {
-        alignItems:'center'
+        alignItems:'center',
+		backgroundColor: '#FFA500',
+		elevation:5,
     },
     flexDirColumn :{ 
         flexDirection:'column',
@@ -145,11 +152,13 @@ export const styles = StyleSheet.create({
     textCenter : {
         textAlign:'center',
         fontFamily:'Rubik-Medium',
+		marginTop:5,
+		marginBottom:5,
     },
     profileHeadingName : {
         borderBottomWidth:1,
-        borderBottomColor:'#F7882F',
+        borderBottomColor:'#fff',
         fontFamily:'Rubik-Bold',
-        color : '#F7882F',
+        color : '#fff',
     }
 })

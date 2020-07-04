@@ -11,6 +11,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import iconImage from "../assets/main.png";
 import {
   createStructuredSelectorCreator,
 } from '../utils/commonFunctions';
@@ -76,7 +77,7 @@ function FeedScreen({
       <View style={styles.margin10} key={item.id}>
         <Image style={styles.renderItemImage} source={{uri: item.imageURL}} />
         <Text style={styles.renderItemText}>{item.discription}</Text>
-        <Text style={styles.renderItemText}>{`Posted by ${item.name}`}</Text>
+        <Text style={styles.renderItemText1}>{`Posted by ${item.name}`}</Text>
       </View>
     )
   }
@@ -216,6 +217,26 @@ function FeedScreen({
     
   return (
     <SafeAreaView style={styles.safeAreaView}>
+	<View style={styles.headerView}>
+	<View style={styles.flexRow}>
+		<View style={styles.logostyle}>
+			<Image 
+				source={iconImage}
+				style={{
+					width:60,
+					height:60,
+				}}
+			/>
+		</View>
+		<Text style={styles.headerText}>
+              Shreyanagar prabhag {'\n'} 
+			  <Text style={styles.headerText1}>
+				Maheshwari mandal
+			  </Text>	
+        </Text>
+	</View>	
+    </View>
+	<View style = {styles.container}>
         <FlatList 
           data={getFeedData.responseData}
           renderItem={renderItem}
@@ -255,6 +276,7 @@ function FeedScreen({
           }
         </View>
       </Modal>
+	  </View>
     </SafeAreaView>
   )
 }
@@ -264,24 +286,50 @@ const styles = StyleSheet.create({
     width: 300,
     height: 300,
   },
+  headerText:{
+	fontFamily: 'Rubik-Bold',
+    fontSize:16,
+    marginTop:8,
+	marginLeft: 5,
+	color: '#fff',
+  },
+  headerText1: {
+	fontFamily: 'Rubik-Bold',
+    fontSize:10,
+    marginTop:2,
+    marginLeft: 5,
+	color: '#fff',
+  },
   renderItemText: {
-    fontFamily: 'Rubik-Bold',
+    fontFamily: 'Rubik-Medium',
     fontSize:18,
     marginTop:10,
-    textAlign:'center',
+	marginLeft: 10,
+    textAlign:'left',
+  },
+  renderItemText1: {
+    fontFamily: 'Rubik-Medium',
+    fontSize:12,
+    marginTop:5,
+	marginLeft: 10,
+	marginBottom:5,
+    textAlign:'left',
+	color:'#FFA000',
   },
   renderItemImage:{
-    height:250,
+	marginTop:10,
+    height:500,
     width:'100%',
   },
   margin10:{
-    margin:10,
+    marginBottom:20,
+	backgroundColor: '#fff',
   },
   justifyContentCenter : {
     justifyContent:'center'
   },
   textColor:{
-    color:'#F7882F'
+    color:'#FFA500'
   },
   showFeedPreviewView:{
     flex:1,
@@ -306,14 +354,14 @@ const styles = StyleSheet.create({
       height:55,
       width:200,
       borderRadius:10,
-      backgroundColor:'#F7882F',
+      backgroundColor:'#FFA500',
       justifyContent:'center',
     },
   deleteFeedButton: {
     height:55,
     width:150,
     borderRadius:10,
-    borderColor:'#F7882F',
+    borderColor:'#FFA500',
     borderWidth:1,
     justifyContent:'center',
     margin:10,
@@ -323,7 +371,7 @@ const styles = StyleSheet.create({
     height:55,
     width:150,
     borderRadius:10,
-    backgroundColor:'#F7882F',
+    backgroundColor:'#FFA500',
     justifyContent:'center',
     margin:10,
   },
@@ -360,7 +408,7 @@ const styles = StyleSheet.create({
     textAlign:'center',
     fontSize:20,
     fontFamily: 'Rubik-Bold',
-    color:'#F7882F',
+    color:'#FFA500',
     margin:20,
   },
   modalMainView:{
@@ -383,28 +431,33 @@ const styles = StyleSheet.create({
       position:'absolute',
       right:20,
       bottom:20,
-      height:75,
-      width:75,
-      borderRadius:75,
+      height:50,
+      width:50,
+      borderRadius:50,
       elevation:5,
-      backgroundColor:'#F7882F',
+      backgroundColor:'#FFA500',
       flex:1,
       justifyContent:"center",
       alignItems:'center',
   },
   container: {
     flex: 1,
-    backgroundColor: '#fff'
+    backgroundColor: '#eee',
+	elevation: 2,
   },
   safeAreaView:{
     flex: 1,
-    // backgroundColor: '#F7882F',
+    backgroundColor: '#FFA900',
   },
   headerView:{
     height: 90,
-    backgroundColor: '#F7882F',
+    backgroundColor: '#FFA500',
     justifyContent: 'center',
     padding:20,
+	elevation: 5,
+  },
+  flexRow:{
+	  flexDirection: 'row',
   },
 });
 

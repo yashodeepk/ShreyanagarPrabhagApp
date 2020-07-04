@@ -142,7 +142,7 @@ function SearchScreen({
       <View style={[styles.flexOne,]}>
         <View style={styles.renderModalDataImage}>
           <Image
-            style={{ height: 50, width: 50, borderRadius: 50 }}
+            style={{ height: 50, width: 50, borderRadius: 50, marginTop: 10 }}
             source={profileImg}
           />
         </View>
@@ -199,7 +199,7 @@ function SearchScreen({
           elevation: 5,
           margin: 10,
           padding: 10,
-          borderColor: '#F7882F',
+          borderColor: '#FFA500',
           borderWidth: 0.5,
           borderRadius: 10,
         }}>
@@ -235,7 +235,7 @@ function SearchScreen({
           <FontAwesome
             style={styles.iconStyle}
             name="chevron-right"
-            color={"#F7882F"}
+            color={"#FFA500"}
             size={16}
           />
         </View>
@@ -280,7 +280,7 @@ function SearchScreen({
             <FontAwesome
               style={styles.iconStyle}
               name="search"
-              color={"#F7882F"}
+              color={"#FFA500"}
               size={16}
             />
             <TextInput
@@ -355,21 +355,22 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#eee',
   },
   safeAreaViewStyle: {
     flex: 1,
-    backgroundColor: '#F7882F',
+    backgroundColor: '#FFA900',
   },
   headerView: {
     height: 90,
-    backgroundColor: '#F7882F',
+    backgroundColor: '#FFA500',
     flex: 0,
     justifyContent: 'flex-end',
+	elevation:5,
   },
   logoutView: {
     height: 40,
-    backgroundColor: '#F7882F',
+    backgroundColor: '#FFA500',
     alignItems: 'flex-end',
     justifyContent: 'center',
     marginRight: 5,
@@ -417,12 +418,11 @@ const styles = StyleSheet.create({
   },
   modalStyle: {
     backgroundColor: 'white',
-    padding:20,
     minHeight: 375,
     elevation: 10,
     borderRadius: 5,
     margin: 20,
-    borderColor: '#F7882F',
+    borderColor: '#FFA500',
     borderWidth: 0.5,
     borderRadius: 10,
     overflow:'scroll',
@@ -439,23 +439,32 @@ const styles = StyleSheet.create({
   renderModalDataImage: {
     alignItems: 'center',
     flex: 0,
-    margin: 10,
+	height: 70,
+    marginBottom: 5,
+	borderTopLeftRadius: 5,
+	borderTopRightRadius: 5,
+	backgroundColor: '#FFA500',
   },
   renderModalTextView: {
     flex: 1,
+	paddingLeft: 20,
+	paddingRight: 20,
+	paddingBottom: 20,
     // justifyContent: "center",
     // alignItems: 'center',
     justifyContent:"space-between",
 
   },
   renderModalTextBold: {
+	width: '40%',  
     fontSize: 14,
     fontFamily: 'Rubik-Bold'
   },
   renderModalTextNormal: {
+	width: '90%',  
     fontSize: 14,
     fontFamily:'Rubik-Medium',
-    marginLeft: 20
+    marginLeft: 2
   },
   flexRow: {
     flexDirection: 'row',
@@ -481,7 +490,7 @@ fontSize14 : {
   fontSize: 14,
 },
 highLightedColor: {
-  color: '#F7882F'
+  color: '#FFA500'
 }
 });
 
