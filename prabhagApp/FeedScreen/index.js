@@ -446,7 +446,7 @@ const styles = StyleSheet.create({
     margin:20,
   },
   modalMainView:{
-    height: 'auto',
+    height: 500,
     backgroundColor:'#FFA500',
     margin:20,
 	borderRadius:5,
