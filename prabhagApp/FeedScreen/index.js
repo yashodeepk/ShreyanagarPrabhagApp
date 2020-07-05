@@ -216,7 +216,7 @@ function FeedScreen({
     )
   }
 
-  const openAppDevelopedByModal = () => setOpenInfoModal(true)
+  const openAppDevelopedByModal = () => setOpenInfoModal(false) // change this to true to open the modal 
   
   const onCloseAppInfoModal = () => setOpenInfoModal(false)
     
