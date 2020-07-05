@@ -1,6 +1,7 @@
 import {
     takeEvery,
     put,
+    call,
   } from 'redux-saga/effects';
   import NetworkUtils from "../utils/NetworkUtils";
   import { 
@@ -11,9 +12,6 @@ import {
     setCopyFamilyData,
     setEditedFamilyData,
   } from "./actions";
-import { setLoginDetails } from "../utils/asyncStorage";
-import { setUserDetails } from "../MainApp/actions";
-import { setMobileNumber } from '../LoginScreen/actions'
 import { Alert } from "react-native";
 
   const { 
@@ -24,14 +22,12 @@ import { Alert } from "react-native";
   
   export function* updateSaga({ data }) {
     try {
-      const { fetchFamilyData, navigation } = data
+      const { fetchFamilyData, callback } = data
       yield put(setLoader(true))
       const payload = { "person" : fetchFamilyData}
       const response = yield updateUrl.post('/update',payload)
       if(response.status === 200 || response.status === 201){
-        yield setLoginDetails("")
-        yield setUserDetails("")
-        yield setMobileNumber("")
+        yield call(callback)
       }
     } catch (error) {
       console.log('error in update saga ', error)
