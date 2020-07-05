@@ -260,6 +260,7 @@ function FeedScreen({
             </TouchableOpacity>
         }
       <Modal
+		animationType = {"fade"} 
         visible={modalStatus}
         style={styles.modalContainer}
       >

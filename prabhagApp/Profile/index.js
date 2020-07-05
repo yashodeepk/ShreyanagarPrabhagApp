@@ -459,12 +459,12 @@ function Profile({
                 />
             </View>
 			<View style={styles.container}>
-            <FlatList 
-                data={fetchFamilyData.toJS()}
-                renderItem={renderItem}
-                extraData={[editableArray.toJS()]}
-                ListFooterComponent={renderFooterComponent}
-            />
+				<FlatList 
+					data={fetchFamilyData.toJS()}
+					renderItem={renderItem}
+					extraData={[editableArray.toJS()]}
+					ListFooterComponent={renderFooterComponent}
+				/>
 			</View>
         </SafeAreaView>
     )

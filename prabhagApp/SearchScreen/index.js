@@ -299,6 +299,7 @@ function SearchScreen({
                     <Loader isLoading={isLoading} />
                 }
                 <Modal
+				  animationType = {"fade"} 
                   visible={modalStatus}
                   onBackButtonPress={() => {
                     setSingleUserDataNull()
