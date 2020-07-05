@@ -33,12 +33,20 @@ import {
     setEditedFamilyData,
     showUpdateButton,
 } from "./actions";
+
+import { setLoginDetails } from "../utils/asyncStorage";
+import { setUserDetails } from "../MainApp/actions";
+import { setMobileNumber } from '../LoginScreen/actions'
+
 import Loader from '../utils/Loader';
 import { styles } from './style';
 import profileImg from "../assets/propic.png";
 
 
 function Profile({
+    setMobileNumber,
+    setUserDetails,
+    setLoginDetails,
     getLoaderValue,
     updateUserProfile,
     fetchFamilyData,
@@ -81,9 +89,9 @@ function Profile({
         return JSON.parse(JSON.stringify(data))
     }
 
-    const onTextInputChange = ({value,key,index}) => { 
+    const onTextInputChange = ({value,key,index}) => {
         const copyData = deepCopy(fetchFamilyData)
-        copyData[index][`${key}`] = value
+        copyData[index][`${key}`] = key === 'mobileno' ? Number(value) : value
         setFamilyData(copyData)
     }
 
@@ -95,7 +103,12 @@ function Profile({
             {
               text: 'Yes',
               onPress: () => {
-                updateUserProfile({fetchFamilyData,navigation})
+                const callback = () => {
+                    setMobileNumber("")
+                    setUserDetails("")
+                    setLoginDetails("")
+                }
+                updateUserProfile({fetchFamilyData,callback})
               },
             },
             { text: 'No', onPress: () => null },
@@ -485,6 +498,9 @@ const mapDispatchToProps = {
     setFamilyData,
     setEditedFamilyData,
     showUpdateButton,
+    setMobileNumber,
+    setUserDetails,
+    setLoginDetails,
 };
 
 const withConnect = connect(

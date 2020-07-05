@@ -53,6 +53,7 @@ function FeedScreen({
   const [showPlusButton , setShowPlusButton] = useState(false)
   const [userInfo , setUserInfo] = useState(null)
   const [pageNo , setPageNo] = useState(1)
+  const [openInfoModal, setOpenInfoModal] = useState(true)
 
   useEffect(() => {
     getFeed({pageNo,LIMIT})
@@ -214,28 +215,39 @@ function FeedScreen({
       </View>
     )
   }
+
+  const openAppDevelopedByModal = () => setOpenInfoModal(true)
+  
+  const onCloseAppInfoModal = () => setOpenInfoModal(false)
     
   return (
-    <SafeAreaView style={styles.safeAreaView}>
-	<View style={styles.headerView}>
-	<View style={styles.flexRow}>
-		<View style={styles.logostyle}>
-			<Image 
-				source={iconImage}
-				style={{
-					width:60,
-					height:60,
-				}}
-			/>
-		</View>
-		<Text style={styles.headerText}>
-              Shreyanagar prabhag {'\n'} 
-			  <Text style={styles.headerText1}>
-				Maheshwari mandal
-			  </Text>	
+  <SafeAreaView style={styles.safeAreaView}>
+    <View style={styles.headerView}>
+      <View style={styles.flexRow}>
+        <View style={styles.logostyle}>
+          <Image 
+            source={iconImage}
+            style={{
+              width:60,
+              height:60,
+            }}
+          />
+        </View>
+        <Text style={styles.headerText}>
+                  Shreyanagar prabhag {'\n'} 
+            <Text style={styles.headerText1}>
+            Maheshwari mandal
+            </Text>	
         </Text>
-	</View>	
-    </View>
+      </View>	
+      <TouchableOpacity onPress={openAppDevelopedByModal} style={{justifyContent:'center'}}>
+          <Entypo 
+            name="info-with-circle"
+            size={35}
+            color="#FFF"
+          />
+      </TouchableOpacity>
+  </View>
 	<View style = {styles.container}>
         <FlatList 
           data={getFeedData.responseData}
@@ -260,7 +272,7 @@ function FeedScreen({
             </TouchableOpacity>
         }
       <Modal
-		animationType = {"fade"} 
+		    animationType = {"fade"} 
         visible={modalStatus}
         style={styles.modalContainer}
       >
@@ -275,6 +287,28 @@ function FeedScreen({
               ? renderInputTextAndUploadButton()
               : showFeedPreview()
           }
+        </View>
+      </Modal>
+      <Modal
+		    animationType = {"fade"} 
+        visible={openInfoModal}
+        style={styles.modalContainer}
+        onBackButtonPress={onCloseAppInfoModal}
+        onBackdropPress={onCloseAppInfoModal}
+      >
+        <View style={styles.modalMainView}>
+          <View>
+            <Text style={styles.modalHeading}>
+              Shreyanagar Prabhag App 
+            </Text>
+          </View>
+          <View>
+            <Text style={styles.modalHeading}>Prabhag Pramukh - Rameshwar karwa</Text>
+          </View>
+          <View>
+            <Text style={styles.modalHeading}>App Developed by</Text>
+            <Text style={styles.modalHeading}>Yashodeep Kacholiya</Text>
+          </View>
         </View>
       </Modal>
 	  </View>
@@ -455,7 +489,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFA500',
     justifyContent: 'center',
     padding:20,
-	elevation: 5,
+    elevation: 5,
+    justifyContent:"space-between",
+    flexDirection:'row',
   },
   flexRow:{
 	  flexDirection: 'row',
