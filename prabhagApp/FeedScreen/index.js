@@ -53,7 +53,7 @@ function FeedScreen({
   const [showPlusButton , setShowPlusButton] = useState(false)
   const [userInfo , setUserInfo] = useState(null)
   const [pageNo , setPageNo] = useState(1)
-  const [openInfoModal, setOpenInfoModal] = useState(true)
+  const [openInfoModal, setOpenInfoModal] = useState(false)
 
   useEffect(() => {
     getFeed({pageNo,LIMIT})
@@ -243,7 +243,7 @@ function FeedScreen({
       <TouchableOpacity onPress={openAppDevelopedByModal} style={{justifyContent:'center'}}>
           <Entypo 
             name="info-with-circle"
-            size={35}
+            size={25}
             color="#FFF"
           />
       </TouchableOpacity>
@@ -306,8 +306,7 @@ function FeedScreen({
             <Text style={styles.modalHeading}>Prabhag Pramukh - Rameshwar karwa</Text>
           </View>
           <View>
-            <Text style={styles.modalHeading}>App Developed by</Text>
-            <Text style={styles.modalHeading}>Yashodeep Kacholiya</Text>
+            <Text style={styles.modalHeading}>App Developed by {'\n'} {'\n'} Yashodeep Kacholiya and Saurabh Kacholiya</Text>
           </View>
         </View>
       </Modal>
@@ -447,15 +446,17 @@ const styles = StyleSheet.create({
     margin:20,
   },
   modalMainView:{
-    minHeight:500,
-    backgroundColor:'#fff',
+    height: 'auto',
+    backgroundColor:'#FFA500',
     margin:20,
+	borderRadius:5,
   },
   modalHeading: {
     textAlign:'center',
     margin:20,
     fontFamily: 'Rubik-Bold',
-    fontSize:20,
+    fontSize:18,
+	color: '#fff',
   },
   modalContainer: {
     flex: 1,
