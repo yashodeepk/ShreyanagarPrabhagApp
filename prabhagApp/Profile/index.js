@@ -89,9 +89,9 @@ function Profile({
         return JSON.parse(JSON.stringify(data))
     }
 
-    const onTextInputChange = ({value,key,index}) => { 
+    const onTextInputChange = ({value,key,index}) => {
         const copyData = deepCopy(fetchFamilyData)
-        copyData[index][`${key}`] = value
+        copyData[index][`${key}`] = key === 'mobileno' ? Number(value) : value
         setFamilyData(copyData)
     }
 
