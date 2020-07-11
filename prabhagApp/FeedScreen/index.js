@@ -7,6 +7,8 @@ import {
   TextInput,
   TouchableOpacity,
   Alert,
+  Dimensions,
+  ScrollView,
 } from "react-native";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { connect } from 'react-redux';
@@ -37,7 +39,18 @@ import {
   getFeedData,
 } from "./selectors";
 import searchNotFoundImg from "../assets/searchnotfound.png";
+import Carousel from 'react-native-banner-carousel';
 const LIMIT = 10
+
+const BannerWidth = Dimensions.get('window').width;
+const BannerHeight = 260;
+
+
+const images = [
+    "Happy Birthday Ramesh!!",
+    "Happy Marriage Anniversary Suresh!!",
+    "Happy Birthday Aruna!!"
+];
 
 function FeedScreen({ 
   navigation,
@@ -216,6 +229,20 @@ function FeedScreen({
     )
   }
 
+  const renderPage = (image, index) => {
+        return (
+            <View key={index} style = {{height: 50, marginLeft: 20, marginRight: 20,marginTop: 20}}>
+                <Text style={{
+					fontFamily: 'Rubik-Medium',
+					fontSize:15,
+					textAlign:'center',
+					}}>
+					{image} 
+			    </Text>
+            </View>
+        )
+  }
+	
   const openAppDevelopedByModal = () => setOpenInfoModal(false) // change this to true to open the modal 
   
   const onCloseAppInfoModal = () => setOpenInfoModal(false)
@@ -249,6 +276,18 @@ function FeedScreen({
       </TouchableOpacity>
   </View>
 	<View style = {styles.container}>
+	<ScrollView>
+	<View style = {styles.scrollercontainer}>
+	   <Carousel
+            autoplay
+            autoplayTimeout={2000}
+            loop
+            index={0}
+            pageSize={BannerWidth}
+        >
+			{images.map((image, index) => renderPage(image, index))}
+        </Carousel>
+	</View>
         <FlatList 
           data={getFeedData.responseData}
           renderItem={renderItem}
@@ -310,12 +349,19 @@ function FeedScreen({
           </View>
         </View>
       </Modal>
+	  </ScrollView>
 	  </View>
     </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
+  scrollercontainer: {
+		flex: 1,
+        justifyContent: 'center',
+		marginBottom:10,
+		backgroundColor: '#FFF',
+  },
   imgStyle: {
     width: 300,
     height: 300,
