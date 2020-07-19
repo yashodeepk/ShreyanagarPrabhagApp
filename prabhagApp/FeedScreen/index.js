@@ -47,9 +47,9 @@ const BannerHeight = 260;
 
 
 const images = [
-    "Happy Birthday Ramesh!!",
-    "Happy Marriage Anniversary Suresh!!",
-    "Happy Birthday Aruna!!"
+    // "Happy Birthday Ramesh!!",
+    // "Happy Marriage Anniversary Suresh!!",
+    // "Happy Birthday Aruna!!"
 ];
 
 function FeedScreen({ 
@@ -243,7 +243,7 @@ function FeedScreen({
         )
   }
 	
-  const openAppDevelopedByModal = () => setOpenInfoModal(false) // change this to true to open the modal 
+  const openAppDevelopedByModal = () => setOpenInfoModal(true) 
   
   const onCloseAppInfoModal = () => setOpenInfoModal(false)
     
@@ -260,34 +260,39 @@ function FeedScreen({
             }}
           />
         </View>
-        <Text style={styles.headerText}>
-                  Shreyanagar prabhag {'\n'} 
-            <Text style={styles.headerText1}>
-            Maheshwari mandal
+        <Text style={styles.headerText1}>
+                Maheshwari mandal {'\n'} 
+            <Text style={styles.headerText}>
+                Shreyanagar prabhag
             </Text>	
         </Text>
       </View>	
-      <TouchableOpacity onPress={openAppDevelopedByModal} style={{justifyContent:'center'}}>
-          <Entypo 
-            name="info-with-circle"
-            size={25}
-            color="#FFF"
-          />
-      </TouchableOpacity>
-  </View>
-	<View style = {styles.container}>
-	<ScrollView>
-	<View style = {styles.scrollercontainer}>
-	   <Carousel
-            autoplay
-            autoplayTimeout={2000}
-            loop
-            index={0}
-            pageSize={BannerWidth}
-        >
-			{images.map((image, index) => renderPage(image, index))}
-        </Carousel>
-	</View>
+        <TouchableOpacity onPress={openAppDevelopedByModal} style={{justifyContent:'center'}}>
+            <Entypo 
+              name="info-with-circle"
+              size={25}
+              color="#FFF"
+            />
+        </TouchableOpacity>
+      </View>
+	    <View style = {styles.container}>
+        {
+          !!images.length && (
+            <View style = {styles.scrollercontainer}>
+              <Carousel
+                  autoplay
+                  autoplayTimeout={2000}
+                  loop
+                  index={0}
+                  pageSize={BannerWidth}
+              >
+                { 
+                    images.map((image, index) => renderPage(image, index))
+                }
+              </Carousel>
+            </View>
+          )
+        }
         <FlatList 
           data={getFeedData.responseData}
           renderItem={renderItem}
@@ -335,7 +340,7 @@ function FeedScreen({
         onBackButtonPress={onCloseAppInfoModal}
         onBackdropPress={onCloseAppInfoModal}
       >
-        <View style={styles.modalMainView}>
+        <View style={styles.userInfoModalStyle}>
           <View>
             <Text style={styles.modalHeading}>
               Shreyanagar Prabhag App 
@@ -349,13 +354,17 @@ function FeedScreen({
           </View>
         </View>
       </Modal>
-	  </ScrollView>
 	  </View>
     </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
+  imgView : {
+    justifyContent: "center",
+    alignItems: 'center',
+    flex:1,
+  },
   scrollercontainer: {
 		flex: 1,
         justifyContent: 'center',
@@ -495,14 +504,20 @@ const styles = StyleSheet.create({
     height: 500,
     backgroundColor:'#FFA500',
     margin:20,
-	borderRadius:5,
+	  borderRadius:5,
+  },
+  userInfoModalStyle:{
+    height: 300,
+    backgroundColor:'#FFA500',
+    margin:20,
+	  borderRadius:5,
   },
   modalHeading: {
     textAlign:'center',
     margin:20,
     fontFamily: 'Rubik-Bold',
     fontSize:18,
-	color: '#fff',
+	  color: '#fff',
   },
   modalContainer: {
     flex: 1,

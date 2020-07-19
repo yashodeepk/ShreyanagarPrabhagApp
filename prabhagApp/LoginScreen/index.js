@@ -1,4 +1,4 @@
-import React , { useState, useRef } from "react";
+import React , { useRef } from "react";
 import {
   View,
   Text,
@@ -20,7 +20,7 @@ import reducer from './reducer';
 import saga from './saga';
 import GradientButton from "../utils/GradientButton";
 import flagImage from "../assets/Flag_of_India.png";
-import iconImage from "../assets/icon.png";
+import iconImage from "../assets/loginimg.jpeg";
 import { 
   setMobileNumber,
   loginAction
@@ -32,6 +32,22 @@ import {
 } from './selectors';
 import firebase from "../utils/firebase";
 import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
+import styled from 'styled-components';
+import { LinearGradient } from 'expo-linear-gradient';
+
+const MainContainer = styled(LinearGradient)`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+`;
+
+<MainContainer
+  colors={['rgba(255,255,0,0.7)', '#FFA500']}
+  start={[0, 1]}
+  end={[1, 0]}
+>
+
+</MainContainer> 
 
 function Login({ 
   navigation,
@@ -69,17 +85,16 @@ function Login({
         ref={recaptchaVerifier}
         firebaseConfig={firebase.app().options}
       />
-       <View style={styles.iconStyle}>
-          <Image 
-            source={iconImage}
-            resizeMode="center"
-            style={{
-              width:250,
-              height:250,
-            }}
-          />
-        </View>
-      <View style={styles.container}>
+      <MainContainer
+        colors={['rgba(255,255,0,0.7)', '#FFA500']}
+        start={[0, 1]}
+        end={[1, 0]}
+      >
+        <Image 
+          source={iconImage}
+          resizeMode="contain"
+          style={styles.iconStyle}
+        />
         <View style={styles.centerView}>
             <View style={styles.imgView}>
                 <Image 
@@ -97,6 +112,7 @@ function Login({
                   onChangeText={text => setMobileNumber(text)}
                   keyboardType="numeric"
                   maxLength={10}
+                  style={{color:'#fff'}}
               />
             </View>
         </View>
@@ -110,7 +126,7 @@ function Login({
                 </View>
               )
            }
-      </View>
+      </MainContainer>
     </SafeAreaView>
   )
 }
@@ -123,20 +139,21 @@ const styles = StyleSheet.create({
   },
   flex:{
     flex:1,
-    backgroundColor:"#fff"
+    backgroundColor:"#FFA500"
   },
   centerView:{
     width: '90%',
-    borderColor: 'black',
+    borderColor: '#fff',
     borderWidth:1,
     borderRadius:10,
     height: 70,
     padding:10,
-    flexDirection:'row'
+    flexDirection:'row',
+    marginTop:40,
   },
   textStyle:{
     fontSize:14,
-    color:'#0A0B09',
+    color: '#fff',
     textAlignVertical:'center',
   },
   imgView:{
@@ -146,13 +163,13 @@ const styles = StyleSheet.create({
     justifyContent:"space-evenly",
     alignItems:'center',
     width:60,
-    borderRightColor:'black',
+    borderRightColor:'#fff',
     borderRightWidth:1,
   },
   inputTextView:{
     flex: 1,
     padding:10,
-    textAlign:'center'
+    textAlign:'center',
   },
   buttonStyle:{
       position:'absolute',
@@ -160,10 +177,10 @@ const styles = StyleSheet.create({
       right: 20,
   },
   iconStyle: {
-    position:'absolute',
-    top:Dimensions.get('window').height * 0.1,
-    left: Dimensions.get('window').width * 0.23,
-    margin:10,
+      width:150,
+      height:150,
+      zIndex:1,
+      alignSelf:'center',
   }
 });
 
