@@ -17,7 +17,7 @@ import injectSaga from '../utils/injectSaga';
 import injectReducer from '../utils/injectReducer';
 import reducer from './reducer';
 import saga from './saga';
-
+import { TextInputMask } from "react-native-masked-text";
 import { createStructuredSelectorCreator } from '../utils/commonFunctions';
 import { 
     getLoaderValue,
@@ -318,11 +318,18 @@ function Profile({
                         <Text style={styles.textStyle}>
                             DOB - 
                         </Text>
-                        <TextInput 
+                        <TextInputMask
+                            placeholder={"DD/MM/YYYY"}
                             style={styles.textInputStyle}
                             editable={editableArray.toJS()[index][`dob`]}
                             value={item.dob}
                             onChangeText={(value) => onTextInputChange({value,key:'dob',index})}
+                            maxLength={10}
+                            keyboardType={"numeric"}
+                            type={"datetime"}
+                            options={{
+                                format: "DD/MM/YYYY",
+                            }}
                         />
                     </View>
                     <TouchableOpacity style={styles.editIcon}>
@@ -345,11 +352,18 @@ function Profile({
                             <Text style={styles.textStyle}>
                                 DOM - 
                             </Text>
-                            <TextInput 
+                             <TextInputMask
+                                placeholder={"DD/MM/YYYY"}
                                 style={styles.textInputStyle}
                                 editable={editableArray.toJS()[index][`dom`]}
                                 value={item.dom}
                                 onChangeText={(value) => onTextInputChange({value,key:'dom',index})}
+                                maxLength={10}
+                                keyboardType={"numeric"}
+                                type={"datetime"}
+                                options={{
+                                    format: "DD/MM/YYYY",
+                                }}
                             />
                         </View>
                         <TouchableOpacity style={styles.editIcon}>

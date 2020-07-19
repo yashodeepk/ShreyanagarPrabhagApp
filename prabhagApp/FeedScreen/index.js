@@ -234,7 +234,7 @@ function FeedScreen({
 
   const renderPage = (obj) => {
         return (
-            <View key={obj.id} style = {{height: 50, marginLeft: 20, marginRight: 20,marginTop: 20}}>
+            <View key={obj.id} style = {{ height: 70,marginLeft: 20, marginRight: 20,marginTop: 20}}>
                 <Text style={{
                     fontFamily: 'Rubik-Medium',
                     fontSize:15,
