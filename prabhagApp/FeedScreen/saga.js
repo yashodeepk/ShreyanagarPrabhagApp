@@ -9,6 +9,8 @@ import {
   setLoaderFeed,
   GET_FEED,
   setFeed,
+  GET_BIRTHDAY,
+  setBirthday,
 } from "./actions";
 import NetworkUtils from "../utils/NetworkUtils";
 import firebase from "../utils/firebase";
@@ -76,7 +78,20 @@ export function* getFeedSaga({ data }){
   }
 }
 
+export function* getBirthdaySaga(){
+  try {
+    yield put(setLoaderFeed(true));
+    const response = yield updateUrl.get(`/getTodayBirthday/`);
+    yield put(setBirthday(response.data))
+  } catch (error) {
+    console.log('error ', error)
+  }finally{
+    yield put(setLoaderFeed(false));
+  }
+}
+
 export default function* fetchData() {
   yield takeEvery(UPLOAD_IMAGE, uploadImageSaga);
   yield takeEvery(GET_FEED,getFeedSaga)
+  yield takeEvery(GET_BIRTHDAY,getBirthdaySaga)
 }

@@ -27,6 +27,7 @@ import {
   DATA,
   uploadImage,
   getFeed,
+  getBirthday,
 } from "./actions";
 import {
   Entypo,
@@ -37,6 +38,7 @@ import { getLoginDetails } from "../utils/asyncStorage";
 import { 
   getLoaderValue,
   getFeedData,
+  getBirthdaysSelector,
 } from "./selectors";
 import searchNotFoundImg from "../assets/searchnotfound.png";
 import Carousel from 'react-native-banner-carousel';
@@ -46,11 +48,7 @@ const BannerWidth = Dimensions.get('window').width;
 const BannerHeight = 260;
 
 
-const images = [
-    // "Happy Birthday Ramesh!!",
-    // "Happy Marriage Anniversary Suresh!!",
-    // "Happy Birthday Aruna!!"
-];
+
 
 function FeedScreen({ 
   navigation,
@@ -58,6 +56,8 @@ function FeedScreen({
   uploadImage,
   getFeed,
   getFeedData,
+  getBirthday,
+  birthdays,
 }) {
 
   const [modalStatus , setModalStatus] = useState(false)
@@ -70,6 +70,7 @@ function FeedScreen({
 
   useEffect(() => {
     getFeed({pageNo,LIMIT})
+    getBirthday()
   },[])
 
   useEffect(() => {
@@ -95,6 +96,8 @@ function FeedScreen({
       </View>
     )
   }
+
+  console.log('birthdays is ', birthdays)
 
   const openImagePickerAsync = async() => {
 
@@ -229,16 +232,17 @@ function FeedScreen({
     )
   }
 
-  const renderPage = (image, index) => {
+  const renderPage = (obj) => {
         return (
-            <View key={index} style = {{height: 50, marginLeft: 20, marginRight: 20,marginTop: 20}}>
+            <View key={obj.id} style = {{height: 50, marginLeft: 20, marginRight: 20,marginTop: 20}}>
                 <Text style={{
-					fontFamily: 'Rubik-Medium',
-					fontSize:15,
-					textAlign:'center',
-					}}>
-					{image} 
-			    </Text>
+                    fontFamily: 'Rubik-Medium',
+                    fontSize:15,
+                    textAlign:'center',
+				      	  }}
+                >
+					            {obj.name} 
+			          </Text>
             </View>
         )
   }
@@ -246,6 +250,24 @@ function FeedScreen({
   const openAppDevelopedByModal = () => setOpenInfoModal(true) 
   
   const onCloseAppInfoModal = () => setOpenInfoModal(false)
+
+  const renderHeader = () => {
+    return (
+      <View style = {styles.scrollercontainer}>
+        <Carousel
+            autoplay
+            autoplayTimeout={2000}
+            loop
+            index={0}
+            pageSize={BannerWidth}
+        >
+          { 
+              birthdays.map((obj) => renderPage(obj))
+          }
+        </Carousel>
+      </View>
+    )
+  }
     
   return (
   <SafeAreaView style={styles.safeAreaView}>
@@ -276,23 +298,6 @@ function FeedScreen({
         </TouchableOpacity>
       </View>
 	    <View style = {styles.container}>
-        {
-          !!images.length && (
-            <View style = {styles.scrollercontainer}>
-              <Carousel
-                  autoplay
-                  autoplayTimeout={2000}
-                  loop
-                  index={0}
-                  pageSize={BannerWidth}
-              >
-                { 
-                    images.map((image, index) => renderPage(image, index))
-                }
-              </Carousel>
-            </View>
-          )
-        }
         <FlatList 
           data={getFeedData.responseData}
           renderItem={renderItem}
@@ -301,6 +306,7 @@ function FeedScreen({
           onEndReached={onEndReached}
           ListEmptyComponent={renderEmptyListComponent}
           contentContainerStyle={{ flexGrow: 1 }}
+          ListHeaderComponent={renderHeader}
         />
       {
         showPlusButton &&
@@ -563,11 +569,13 @@ const styles = StyleSheet.create({
 const mapStateToProps = createStructuredSelectorCreator({
   getLoaderValue,
   getFeedData,
+  birthdays: getBirthdaysSelector,
 });
 
 const mapDispatchToProps = {
   uploadImage,
   getFeed,
+  getBirthday,
 };
 
 const withConnect = connect(

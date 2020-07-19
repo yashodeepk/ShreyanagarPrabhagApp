@@ -11,3 +11,8 @@ export const getLoaderValue = () =>
 createSelector(selectFeedDomain, subState => 
   subState.get('loader')  
 )
+
+export const getBirthdaysSelector = () => 
+createSelector(selectFeedDomain, subState => 
+  subState.get('birthdays')  
+)
