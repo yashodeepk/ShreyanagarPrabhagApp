@@ -376,18 +376,18 @@ const styles = StyleSheet.create({
     height: 300,
   },
   headerText:{
-	fontFamily: 'Rubik-Bold',
+	  fontFamily: 'Rubik-Bold',
     fontSize:16,
-    marginTop:8,
-	marginLeft: 5,
-	color: '#fff',
+    marginTop:2,
+    marginLeft:5,
+    color: '#fff',
   },
   headerText1: {
-	fontFamily: 'Rubik-Bold',
+	  fontFamily: 'Rubik-Bold',
     fontSize:10,
-    marginTop:2,
+    marginTop: 8,
     marginLeft: 5,
-	color: '#fff',
+	  color: '#fff',
   },
   renderItemText: {
     fontFamily: 'Rubik-Medium',
@@ -412,7 +412,7 @@ const styles = StyleSheet.create({
   },
   margin10:{
     marginBottom:20,
-	backgroundColor: '#fff',
+	  backgroundColor: '#fff',
   },
   justifyContentCenter : {
     justifyContent:'center'
@@ -502,7 +502,7 @@ const styles = StyleSheet.create({
   },
   modalMainView:{
     height: 500,
-    backgroundColor:'#FFA500',
+    backgroundColor:'#FFF',
     margin:20,
 	  borderRadius:5,
   },

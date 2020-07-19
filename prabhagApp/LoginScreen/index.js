@@ -182,7 +182,6 @@ const styles = StyleSheet.create({
       zIndex:1,
       position:'absolute',
       top:0,
-      elevation:2,
   }
 });
 
