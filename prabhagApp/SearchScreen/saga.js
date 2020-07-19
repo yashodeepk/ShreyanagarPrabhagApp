@@ -32,7 +32,7 @@ export function* setSearchTermSaga({ data }) {
     const response = yield searchUrl.post('',payload);
     if (response.status === 200 || response.status === 201) {
         const savedData = yield select(getSearchTermData())
-        yield put(setSearchTermData([...savedData,...response.data.response]))
+        yield put(setSearchTermData([...response.data.response,...savedData,]))
         yield put(setTotalPageNo(response.data.pagedata.totalpages))
     }
   } catch (error) {
@@ -44,6 +44,7 @@ export function* setSearchTermSaga({ data }) {
 
 export function* getResultFromSearchTermSaga({ data }) {
   try {
+    yield put(setSearchTermData([]))
     yield put(setLoader(true))
     const payload = {
       pageNo: data.page,
