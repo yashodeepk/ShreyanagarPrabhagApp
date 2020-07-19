@@ -108,7 +108,12 @@ function Profile({
                     setUserDetails("")
                     setLoginDetails("")
                 }
-                updateUserProfile({fetchFamilyData,callback})
+                console.log('fetchFamilyData -',fetchFamilyData)
+                const obj = {
+                    fetchFamilyData,
+                    callback,
+                }
+                updateUserProfile(obj)
               },
             },
             { text: 'No', onPress: () => null },
