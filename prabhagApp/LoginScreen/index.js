@@ -20,7 +20,7 @@ import reducer from './reducer';
 import saga from './saga';
 import GradientButton from "../utils/GradientButton";
 import flagImage from "../assets/Flag_of_India.png";
-import iconImage from "../assets/loginimg.jpeg";
+import iconImage from "../assets/loginimg.png";
 import { 
   setMobileNumber,
   loginAction
@@ -177,10 +177,12 @@ const styles = StyleSheet.create({
       right: 20,
   },
   iconStyle: {
-      width:150,
-      height:150,
+      width:250,
+      height:250,
       zIndex:1,
-      alignSelf:'center',
+      position:'absolute',
+      top:0,
+      elevation:2,
   }
 });
 
