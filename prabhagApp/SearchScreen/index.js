@@ -258,8 +258,9 @@ function SearchScreen({
   const onEndReached = () => {
     if(totalPageNo !== page){
       const limit = 10
-      searchTermAction({searchTerm: savedSearchTerm,page,limit})
-      setPageNo(page+1)   
+      const newPageNo = page + 1
+      searchTermAction({searchTerm: savedSearchTerm,page : newPageNo,limit})
+      setPageNo(newPageNo)   
     }
   }
 
