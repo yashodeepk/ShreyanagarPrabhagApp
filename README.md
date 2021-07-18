@@ -1,8 +1,7 @@
 # ShreyanagarPrabhagApp
 
 App build with React Native.
-
-1.Connecting people of same community for blood donation, advertisement,festivals celebration, and updating people for new education scheme and courses.
+Connecting people of same community for blood donation, advertisement,festivals celebration, and updating people for new education scheme and courses.
 Backend is written in node and hosted on firebase. Front-end is written in react-native using expo.
 
 # ScreenShots
